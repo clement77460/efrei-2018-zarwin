@@ -23,15 +23,13 @@ namespace zombieLand
             }
         }
 
-        public List<Walker> getWalkers()
-        {
-            return this.walkers;
-        }
+        public List<Walker> getWalkers()=> this.walkers;
+        
 
         public void killWalker()
         {
             this.walkers.RemoveAt(0); //mettre de l'aléatoire
-            Console.Write("[ZOMBIE] il resre :");
+            Console.Write("[ZOMBIE] il reste :");
             Console.Write(this.walkers.Count);
             Console.ReadLine();
         }

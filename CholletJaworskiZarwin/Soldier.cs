@@ -38,16 +38,16 @@ namespace zombieLand
             }
         }
 
-
+        public int getHealth() => this.health;
 
         public void toString()
         {
             Console.WriteLine("je suis le soldat numero :{0}", this.soldierId);
         }
 
-        public void reduceHealth()
+        public void reduceHealth(int value)
         {
-            this.health--;
+            this.health-=value;
             Console.Write("[SOLDAT {0}] il me reste :");
             Console.Write(this.health);
             Console.ReadLine();

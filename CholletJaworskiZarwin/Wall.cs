@@ -16,10 +16,8 @@ namespace zombieLand
             Console.ReadLine();
         }
 
-        public int getHealth()
-        {
-            return health;
-        }
+        public int getHealth() => health;
+        
 
     }
 }

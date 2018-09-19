@@ -7,43 +7,36 @@ namespace zombieLand
     class Game
     {
         City city;
-        Wave wave;
 
         public Game()
         {
             this.city = new City(3);
-            this.wave = new Wave(10);
+            
         }
 
         public void gameLoop()
         {
-
-            foreach(Soldier sold in city.getSoldiers())
+            while (city.getSoldiers().Count != 0)
             {
-                sold.toString();
+                Wave wave = new Wave(10);
+                this.attack(wave);
             }
-
-
-            foreach (Walker walk in wave.getWalkers())
-            {
-                walk.toString();
-            }
-
             
-            this.attack();
         }
 
-        private void attack()
+        private void attack(Wave wave)
         {
             
-            this.approachPhase();
+                
+                this.approachPhase();
 
-            while (city.getSoldiers().Count != 0 && wave.getWalkers().Count != 0)
-            {
-                this.siegePhase();
-            }
+                while (city.getSoldiers().Count != 0 && wave.getWalkers().Count != 0)
+                {
+                    this.siegePhase(wave);
+                }
 
-            this.diplayAttackWinner();
+                this.diplayAttackWinner();
+            
 
         }
 
@@ -60,16 +53,16 @@ namespace zombieLand
             Console.ReadLine();
         }
 
-        private void siegePhase()
+        private void siegePhase(Wave wave)
         {
             //tant qu'il y a des soldats et zombies
             
-            this.soldiersAttackingWalkers();
-            this.walkersAttackingWall();
+            this.soldiersAttackingWalkers(wave);
+            this.walkersAttackingWall(wave);
             
         }
 
-        private void soldiersAttackingWalkers()
+        private void soldiersAttackingWalkers(Wave wave)
         {
             foreach(Soldier soldier in city.getSoldiers())
             {
@@ -80,7 +73,7 @@ namespace zombieLand
             }
         }
 
-        private void walkersAttackingWall()
+        private void walkersAttackingWall(Wave wave)
         {
             foreach (Walker walker in wave.getWalkers())
             {
@@ -92,7 +85,7 @@ namespace zombieLand
                 {
                     if (city.getSoldiers().Count != 0) //on vérifie si la liste n'est pas vide
                     {
-                        city.getSoldiers()[0].reduceHealth();
+                        city.reduceSoldierHealth(1);
                     }
                 }
             }
