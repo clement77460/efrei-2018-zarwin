@@ -1,46 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using CholletJaworskiZarwin;
 
 namespace zombieLand
 {
     class City
     {
+        private List<Soldier> soldiers;
+        private Wall wall;
 
-        List<Soldier> soldiers;
-        Wall wall;
+        public Wall Wall => this.wall;
 
-        public City(int numberOfSoldiers)
+        public City(int numberOfSoldiers, int wallHealth)
         {
-            wall = new Wall();
+            wall = new Wall(wallHealth);
+
+            // Populate the city with Soldiers
             soldiers = new List<Soldier>();
-
-            this.createSoldiers(numberOfSoldiers);
-        }
-
-
-        private void createSoldiers(int numberOfSoldiers)
-        {
-            for(int i=0;i< numberOfSoldiers; i++)
+            for (int i = 0; i < numberOfSoldiers; i++)
             {
                 soldiers.Add(new Soldier());
             }
         }
-
-
-        public List<Soldier> getSoldiers() => this.soldiers;
-
-        public Wall getWall() => this.wall;
         
-        public void reduceSoldierHealth(int value)
+        public void HurtSoldiers(int damages, DamageDispatcher damageDispatcher)
         {
-            soldiers[0].reduceHealth(value);
+            damageDispatcher.DispatchDamage(damages, soldiers);
+        }
 
-            if (soldiers[0].getHealth() == 0)
+        public void DefendFromHorde(Horde horde)
+        {
+            foreach(Soldier soldier in this.soldiers)
             {
-                this.soldiers.RemoveAt(0);
-                Console.Write("[soldat] MORT");
+                soldier.Defend(horde);
             }
+        }
+
+        public int GetNumberSoldiersAlive()
+        {
+            int numberSoldiersAlive = 0;
+            foreach (Soldier soldier in this.soldiers)
+            {
+                if (soldier.HealthPoints > 0)
+                {
+                    numberSoldiersAlive++;
+                }
+            }
+            return numberSoldiersAlive;
+        }
+
+        public Boolean AreAllSoldiersDead()
+        {
+            foreach(Soldier soldier in this.soldiers)
+            {
+                if(soldier.HealthPoints > 0)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

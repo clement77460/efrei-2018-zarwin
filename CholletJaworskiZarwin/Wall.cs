@@ -6,18 +6,21 @@ namespace zombieLand
 {
     class Wall
     {
-        int health = 10;
+        private int health;
 
-        public void reduceHealth(int value)
-        {
-            this.health-=value;
-            Console.Write("[MUR] il reste :");
-            Console.Write(this.health);
-            Console.ReadLine();
+        public int Health => health;
+
+        public Wall(int health) {
+            this.health = health;
         }
 
-        public int getHealth() => health;
-        
-
+        public void WeakenWall(int value)
+        {
+            this.health -= value;
+            if(this.health < 0)
+            {
+                this.health = 0;
+            }
+        }
     }
 }

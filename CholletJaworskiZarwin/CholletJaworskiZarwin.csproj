@@ -9,4 +9,10 @@
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Zarwin.Shared.Contracts\Zarwin.Shared.Contracts.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="EmptyInterface.cs" />
+  </ItemGroup>
 </Project>
