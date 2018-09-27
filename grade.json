@@ -1,0 +1,23 @@
+{
+  "Evaluation de qualité": {
+    "Nommages variables": 1.0,
+    "Nommages et types de membres": 1.0,
+    "Structure fonctions": 1.0,
+    "Structure classes": 1.0,
+    "Pas de duplications de code": 1.0,
+    "Séparation de responsabilités": 1.0,
+    "Encapsulation": 1.0,
+    "Tests unitaires": 1.0
+  },
+  "Coefficient de qualité": 1.0,
+  "Résultats des tests": {
+    "Complétude": {
+      "Total": 1,
+      "Succès": 1,
+      "Taux": 1.0
+    }
+  },
+  "Note de livraison": 10.0,
+  "Note de complétude": 10.0,
+  "Note totale": 20.0
+}

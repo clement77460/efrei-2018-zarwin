@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Zarwin.Shared.Grader": {
+      "commandName": "Project",
+      "workingDirectory": ".."
+    }
+  }
+}
