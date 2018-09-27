@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Zarwin.Shared.Grader\Zarwin.Shared.Grader.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Zarwin.Shared.Contracts\Zarwin.Shared.Contracts.csproj" />
+    <ProjectReference Include="..\Zarwin.Shared.Grader\Zarwin.Shared.Grader.csproj" />
   </ItemGroup>
 
 </Project>
