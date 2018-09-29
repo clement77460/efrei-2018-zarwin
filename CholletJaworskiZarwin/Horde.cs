@@ -31,7 +31,10 @@ namespace zombieLand
         {
             // Walkers are little entites, so we remove it from the list, 
             // not the same as the soldiers.
-            this.walkers.RemoveAt(0);
+            if(this.walkers.Count > 0)
+            {
+                this.walkers.RemoveAt(0);
+            }
         }
 
         public int GetNumberWalkersAlive()

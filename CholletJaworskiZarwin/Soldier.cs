@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Zarwin.Shared.Contracts.Core;
 
 namespace zombieLand
@@ -24,9 +22,10 @@ namespace zombieLand
 
         public Soldier()
         {
-            Soldier.soldierCounterId++;
+            this.soldierId = Soldier.soldierCounterId;
             this.level = 1;
             this.health = 3 + this.level;
+            Soldier.soldierCounterId++;
         }
 
         public void Hurt(int damage)
@@ -43,7 +42,7 @@ namespace zombieLand
         public void Defend(Horde horde)
         {
             // The soldier kill 1 walker, plus 1 every 10 level he reached
-            horde.KillWalkers(1 + (this.level % 10));
+            horde.KillWalkers(1 + ((this.level % 10)-1));
         }
 
         public override String ToString()

@@ -7,25 +7,29 @@ namespace zombieLand
         private const int WALL_HEALTH = 3;
         private const int NB_SOLDIERS = 3;
         private const int NB_WALKERS_PER_HORDE = 10;
+        private const int NB_HORDES = 1;
 
         static void Main(string[] args)
         {
-            Game game = new Game(WALL_HEALTH, NB_SOLDIERS, NB_WALKERS_PER_HORDE);
+            Game game = new Game(WALL_HEALTH, NB_SOLDIERS, NB_WALKERS_PER_HORDE, NB_HORDES);
 
-            while(!game.IsFinished())
+            while (!game.IsFinished())
             {
-                game.Turn();
                 Console.WriteLine(game.Message);
-                Console.WriteLine(game.ToString());
-            }
+                game.Turn();
+                PressEnter();
 
-            Console.WriteLine(game.Message);
+                Console.WriteLine(game);
+                Console.WriteLine("The Wall has " + game.WallHealth + "HP left.");
+                Console.WriteLine(game.SoldiersStats());
+
+            }
 
         }
 
-        private void PressEnter()
+        private static void PressEnter()
         {
-            Console.WriteLine("Press Enter to continue...");
+            Console.WriteLine("\nPress Enter to continue...");
             ConsoleKeyInfo c;
             do
             {

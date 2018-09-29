@@ -13,13 +13,13 @@ namespace zombieLand
 
         public City(int numberOfSoldiers, int wallHealth)
         {
-            wall = new Wall(wallHealth);
+            this.wall = new Wall(wallHealth);
 
             // Populate the city with Soldiers
-            soldiers = new List<Soldier>();
+            this.soldiers = new List<Soldier>();
             for (int i = 0; i < numberOfSoldiers; i++)
             {
-                soldiers.Add(new Soldier());
+                this.soldiers.Add(new Soldier());
             }
         }
         
@@ -47,6 +47,17 @@ namespace zombieLand
                 }
             }
             return numberSoldiersAlive;
+        }
+
+        public String SoldiersStats()
+        {
+            String stats = "";
+            foreach(Soldier soldier in this.soldiers)
+            {
+                stats += "Soldier " + soldier.Id + " : " + soldier.HealthPoints + "HP. \n";
+            }
+
+            return stats;
         }
 
         public Boolean AreAllSoldiersDead()

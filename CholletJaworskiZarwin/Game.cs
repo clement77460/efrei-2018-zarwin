@@ -11,6 +11,7 @@ namespace zombieLand
         private int nbWalkersPerHorde;
         private Horde currentHorde;
         private int turn;
+        private int nbHordes;
 
         private DamageDispatcher damageDispatcher;
 
@@ -18,19 +19,22 @@ namespace zombieLand
         // display it in a console for example.
         private String message;
 
-        public Game(int wallHealth, int nbSoldiers, int nbWalkersPerWave)
+        public Game(int wallHealth, int nbSoldiers, int nbWalkersPerHorde, int nbHordes)
         {
             this.city = new City(nbSoldiers, wallHealth);
-            this.nbWalkersPerHorde = nbWalkersPerWave;
             this.damageDispatcher = new DamageDispatcher();
+            this.nbWalkersPerHorde = nbWalkersPerHorde;
+            this.nbHordes = nbHordes;
             this.turn = 0;
+            this.message = "2078, Villejuif. The city has been fortified because of a Walkers invasion. \n" + 
+                nbSoldiers + " soldiers are defending the city. Some Walkers are coming to the West of the Wall...";
         }
 
         public String Message => this.message;
 
         public void Turn()
         {
-            if(!this.IsFinished())
+            if (!this.IsFinished())
             {
                 // First turn is approach phase
                 if (this.turn == 0)
@@ -38,24 +42,26 @@ namespace zombieLand
                     // Create the horde
                     this.currentHorde = new Horde(nbWalkersPerHorde);
                     this.message = "The horde is coming. Brace yourselves.";
-                    this.turn++;
-
                 }
                 // Then comes the siege phase
                 else
                 {
                     city.DefendFromHorde(this.currentHorde);
                     currentHorde.AttackCity(this.city, this.damageDispatcher);
-                    this.message = this.ToString();
-                    this.turn++;
+                    this.message = "The fight goes on.";
+
                 }
+                this.turn++;
+
+                // Create a new horde if needed.
+                this.ManageHordes();
             }
 
-            // Check if the game is finished to set a message or not
+            // Check if the game is finished (AFTER the turn) to set a message or not
             if(this.IsFinished())
             {
                 this.message = "The game is finished.";
-                if(this.city.GetNumberSoldiersAlive() > 0)
+                if(this.city.GetNumberSoldiersAlive() > 0 && this.nbHordes == 0)
                 {
                     this.message += " Soldiers defeated the walkers.";
                 } else {
@@ -65,15 +71,39 @@ namespace zombieLand
 
         }
 
+        private void ManageHordes()
+        {
+
+            if(this.currentHorde.GetNumberWalkersAlive() == 0 && this.nbHordes > 0)
+            {
+                this.currentHorde = new Horde(this.nbWalkersPerHorde);
+                this.nbHordes--;
+                this.message = "Uh, it seems that another horde is coming...";
+                this.turn = 0;
+            }
+        }
+
         public Boolean IsFinished()
         {
-            return (this.city.GetNumberSoldiersAlive() == 0) || (this.currentHorde.GetNumberWalkersAlive() == 0);
+            if (this.currentHorde == null)
+            {
+                return false;
+            }
+
+            return (this.city.GetNumberSoldiersAlive() == 0 || this.currentHorde.GetNumberWalkersAlive() == 0);
         }
+
+        public String SoldiersStats()
+        {
+            return this.city.SoldiersStats();
+        }
+
+        public int WallHealth => this.city.Wall.Health;
 
         public override String ToString()
         {
-            String soldiers = "Soldiers are " + this.city.GetNumberSoldiersAlive() + " left.";
-            String walkers = this.currentHorde.GetNumberWalkersAlive() + " walker(s) still attacking.";
+            String soldiers = "Soldiers are " + this.city.GetNumberSoldiersAlive() + " left. ";
+            String walkers = this.currentHorde.GetNumberWalkersAlive() + " walker(s) are attacking. ";
             String current_turn = "This is the turn " + this.turn + ".";
 
             return soldiers + walkers + current_turn;
