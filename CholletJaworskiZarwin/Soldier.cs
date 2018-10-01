@@ -1,57 +1,53 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using Zarwin.Shared.Contracts.Core;
 
 namespace zombieLand
 {
-    class Soldier
+    class Soldier : ISoldier
     {
 
-        static int id = 0;
+        // ID counter which increments each new Soldier
+        static int soldierCounterId = 0;
 
-        int level=1;
-        int soldierId;
-        int maxHealth;
-        int NumberOfTarget = 1;
+        private readonly int soldierId;
+        private int level;
+        private int health;
 
-        int health;
-        
+
+        // Accessors
+        public int Id => this.soldierId;
+        public int HealthPoints => this.health;
+        public int Level => this.level;
+
+
         public Soldier()
         {
-            this.soldierId = id;
-            Soldier.id++;
-            this.maxHealth = 3 + level;
-            this.health = maxHealth;
+            this.soldierId = Soldier.soldierCounterId;
+            this.level = 1;
+            this.health = 3 + this.level;
+            Soldier.soldierCounterId++;
         }
 
-        public void levelUp()
+        public void Hurt(int damage)
+        {
+            this.health -= damage;
+        }
+
+        public void LevelUp()
         {
             this.level++;
-            //ou juste ajouter ancien level - nouveau lvl???
-            this.maxHealth += level;
-            this.health += level;
-            
-
-            if (this.level % 10 == 0)
-            {
-                this.NumberOfTarget++;
-            }
+            this.health += this.level;
         }
 
-        public int getHealth() => this.health;
-
-        public void toString()
+        public void Defend(Horde horde)
         {
-            Console.WriteLine("je suis le soldat numero :{0}", this.soldierId);
+            // The soldier kill 1 walker, plus 1 every 10 level he reached
+            horde.KillWalkers(1 + ((this.level % 10)-1));
         }
 
-        public void reduceHealth(int value)
+        public override String ToString()
         {
-            this.health-=value;
-            Console.Write("[SOLDAT {0}] il me reste :");
-            Console.Write(this.health);
-            Console.ReadLine();
+            return "Je suis le soldat numero " + this.soldierId;
         }
-
     }
 }
