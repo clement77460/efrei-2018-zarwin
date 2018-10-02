@@ -1,7 +1,7 @@
 ﻿using System;
 using CholletJaworskiZarwin;
 
-namespace zombieLand
+namespace CholletJaworskiZarwin
 {
     class Game
     {

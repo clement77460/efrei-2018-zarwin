@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace zombieLand
+namespace CholletJaworskiZarwin
 {
     class Program
     {

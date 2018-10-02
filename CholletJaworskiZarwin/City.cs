@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using CholletJaworskiZarwin;
 
-namespace zombieLand
+namespace CholletJaworskiZarwin
 {
-    class City
+    public class City
     {
         private List<Soldier> soldiers;
         private Wall wall;

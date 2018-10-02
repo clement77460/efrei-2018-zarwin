@@ -10,6 +10,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CholletJaworskiZarwin", "Ch
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zarwin.Shared.Grader", "Zarwin.Shared.Grader\Zarwin.Shared.Grader.csproj", "{FD72B4B5-3B56-4AD2-89D6-EEF218D0696D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChollerJaworskiZarwin.test", "ChollerJaworskiZarwin.test\ChollerJaworskiZarwin.test.csproj", "{29D52A4A-F283-4A38-A120-B617C1F3EA06}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{FD72B4B5-3B56-4AD2-89D6-EEF218D0696D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD72B4B5-3B56-4AD2-89D6-EEF218D0696D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD72B4B5-3B56-4AD2-89D6-EEF218D0696D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29D52A4A-F283-4A38-A120-B617C1F3EA06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29D52A4A-F283-4A38-A120-B617C1F3EA06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29D52A4A-F283-4A38-A120-B617C1F3EA06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29D52A4A-F283-4A38-A120-B617C1F3EA06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

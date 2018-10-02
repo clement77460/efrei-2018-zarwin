@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace zombieLand
+namespace CholletJaworskiZarwin
 {
-    class Wall
+    public class Wall
     {
         private int health;
 

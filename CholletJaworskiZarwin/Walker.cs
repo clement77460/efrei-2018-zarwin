@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using CholletJaworskiZarwin;
 
-namespace zombieLand
+namespace CholletJaworskiZarwin
 {
     class Walker
     {

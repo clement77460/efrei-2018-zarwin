@@ -1,9 +1,9 @@
 ﻿using System;
 using Zarwin.Shared.Contracts.Core;
 
-namespace zombieLand
+namespace CholletJaworskiZarwin
 {
-    class Soldier : ISoldier
+    public class Soldier : ISoldier
     {
 
         // ID counter which increments each new Soldier
@@ -28,6 +28,14 @@ namespace zombieLand
             Soldier.soldierCounterId++;
         }
 
+        public Soldier(int id,int level)
+        {
+            this.soldierId = id;
+            this.level = level;
+            this.health = level + 3;
+        }
+    
+
         public void Hurt(int damage)
         {
             this.health -= damage;
@@ -36,7 +44,7 @@ namespace zombieLand
         public void LevelUp()
         {
             this.level++;
-            this.health += this.level;
+            this.health += 1;
         }
 
         public void Defend(Horde horde)

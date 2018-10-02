@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using CholletJaworskiZarwin;
 
-namespace zombieLand
+namespace CholletJaworskiZarwin
 {
-    class Horde
+    public class Horde
     {
 
         private List<Walker> walkers;
@@ -27,14 +27,16 @@ namespace zombieLand
             }
         }
 
-        public void KillWalker()
+        public bool KillWalker()
         {
             // Walkers are little entites, so we remove it from the list, 
             // not the same as the soldiers.
             if(this.walkers.Count > 0)
             {
                 this.walkers.RemoveAt(0);
+                return true;
             }
+            return false;
         }
 
         public int GetNumberWalkersAlive()
@@ -49,5 +51,6 @@ namespace zombieLand
                 this.KillWalker();
             }
         }
+
     }
 }
