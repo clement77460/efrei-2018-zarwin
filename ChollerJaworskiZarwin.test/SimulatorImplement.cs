@@ -14,12 +14,29 @@ namespace ChollerJaworskiZarwin.test
     {
         public Result Run(Parameters parameters)
         {
+
+
+
+            int domageToDo = 0; //retour de la fonction a creer
             
+            List<WaveResult> wr = new List<WaveResult>();
+
             SoldierParameters[] sp = parameters.SoldierParameters;
-            Soldier[] soldier = new Soldier[1];
-            soldier[0]= new Soldier(sp[0].Id, sp[0].Level);
-            SoldierState[] st=new SoldierState[1];
-            st[0] =new SoldierState(soldier[0].Id, soldier[0].Level, soldier[0].HealthPoints);
+
+            //building soldiers (one function toDo)
+            Soldier[] soldier = new Soldier[sp.Length];
+            for (int i = 0; i < sp.Length; i++)
+            {
+                soldier[i] = new Soldier(sp[i].Id, sp[i].Level);
+            }
+
+            //building soldiersState (one function toDO)
+            List<SoldierState> st = new List<SoldierState>();
+            for (int i = 0; i < sp.Length; i++)
+            {
+                st.Add(new SoldierState(soldier[i].Id, soldier[i].Level, soldier[i].HealthPoints));
+            }
+            
 
             Wall wall = new Wall(parameters.CityParameters.WallHealthPoints);
 
@@ -30,38 +47,57 @@ namespace ChollerJaworskiZarwin.test
             
             
 
-            TurnResult[] tr = new TurnResult[2];
-            tr[0]= new TurnResult(st, hs, wall.Health);
+            TurnResult trInit = new TurnResult(st.ToArray(), hs, wall.Health);
+            List<TurnResult> tr=new List<TurnResult>();
 
-            //soldat attaque
-            foreach (Soldier s in soldier)
+            if (soldier.Length == 0)
             {
-                if (horde.KillWalker())
-                {
-                    s.LevelUp();
-                }
+                wr.Add(new WaveResult(trInit, tr.ToArray()));
+                return new Result(wr.ToArray());
             }
-            //zombie attaque pas besoin pour le premier test a generaliser !!
 
-            //parameters.DamageDispatcher.DispatchDamage(1, soldier);
+            tr.Add(trInit);
+            while (soldier.Length > 0 && horde.GetNumberWalkersAlive()>0)
+            {
+                Debug.WriteLine("-----------------------");
+                Debug.WriteLine(horde.GetNumberWalkersAlive());
+                
+                //soldat attaque
+                foreach (Soldier s in soldier)
+                {
+                    if (horde.KillWalker())
+                    {
+                        s.LevelUp();
+                    }
+                }
 
-            //permet de voir du print quand on execute le test en débogage 
-            Debug.WriteLine("---------------------------------");
-            Debug.WriteLine(horde.GetNumberWalkersAlive());
-            Debug.WriteLine(soldier[0].HealthPoints);
+                
+                
 
-            //refreshing all xxxxState
-            st[0] = new SoldierState(soldier[0].Id, soldier[0].Level, soldier[0].HealthPoints);
-            hs = new HordeState(horde.GetNumberWalkersAlive());
+                //zombie attaque pas besoin pour le premier test a generaliser !!
+                for (int i = 0; i < horde.GetNumberWalkersAlive(); i++)
+                {
+                    domageToDo++;
+                }
+                parameters.DamageDispatcher.DispatchDamage(domageToDo, soldier);
+                domageToDo = 0;
 
-            //completing new turn with new xxxxState
-            tr[1]=new TurnResult(st, hs, wall.Health);
-            
+
+                //refreshing all xxxxState
+                st.Clear();
+                for (int i = 0; i < sp.Length; i++)
+                {
+                    st.Add(new SoldierState(soldier[i].Id, soldier[i].Level, soldier[i].HealthPoints));
+                }
+                hs = new HordeState(horde.GetNumberWalkersAlive());
+
+                //completing new turn with new xxxxState
+                tr.Add(new TurnResult(st.ToArray(), hs, wall.Health));
+            }
+
             //pour le premier test qu'une vague donc a generaliser !
-            WaveResult[] wr = new WaveResult[1];
-            wr[0] = new WaveResult(tr[0], tr);
-
-            return new Result(wr);
+            wr.Add(new WaveResult(trInit, tr.ToArray()));
+            return new Result(wr.ToArray());
         }
     }
 }
