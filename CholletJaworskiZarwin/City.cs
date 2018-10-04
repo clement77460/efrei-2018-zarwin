@@ -76,5 +76,10 @@ namespace CholletJaworskiZarwin
         {
             return this.wall;
         }
+
+        public List<Soldier> GetSoldiers()
+        {
+            return this.soldiers;
+        }
     }
 }

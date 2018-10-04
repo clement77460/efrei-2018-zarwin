@@ -12,34 +12,34 @@ namespace CholletJaworskiZarwin
     {
         private Parameters parameters;
 
-        private List<WaveResult> wr = new List<WaveResult>();
-        private SoldierParameters[] sp;
+        private List<WaveResult> waveResult = new List<WaveResult>();
+        private SoldierParameters[] soldierParameter;
 
         private Soldier[] soldier;
-        private List<SoldierState> st = new List<SoldierState>();
+        private List<SoldierState> soldierState = new List<SoldierState>();
 
-        private HordeState hs;
+        private HordeState hordeState;
         private Wall wall;
         private Horde horde;
 
-        private TurnResult trInit;
-        private List<TurnResult> tr = new List<TurnResult>();
+        private TurnResult turnInit;
+        private List<TurnResult> turnResults = new List<TurnResult>();
 
         public GameEngine(Parameters parameters)
         {
             this.parameters = parameters;
-            sp = parameters.SoldierParameters;
+            soldierParameter = parameters.SoldierParameters;
 
-            soldier = new Soldier[sp.Length];
-            this.buildingSoldiers(sp, soldier);
+            soldier = new Soldier[soldierParameter.Length];
+            this.buildingSoldiers(soldierParameter, soldier);
 
-            this.refreshingSoldierState(st, soldier);
+            this.refreshingSoldierState(soldierState, soldier);
 
             wall = new Wall(parameters.CityParameters.WallHealthPoints);
             horde = new Horde(parameters.HordeParameters.Size);
-            hs = new HordeState(horde.GetNumberWalkersAlive());
+            hordeState = new HordeState(horde.GetNumberWalkersAlive());
 
-            trInit = new TurnResult(st.ToArray(), hs, wall.Health);
+            turnInit = new TurnResult(soldierState.ToArray(), hordeState, wall.Health);
         }
 
 
@@ -47,35 +47,38 @@ namespace CholletJaworskiZarwin
         {
             if (soldier.Length == 0)
             {
-                Debug.WriteLine("--------------------------------");
-                Debug.WriteLine("--------------------------------");
-                wr.Add(new WaveResult(trInit, tr.ToArray()));
-                return new Result(wr.ToArray());
+                waveResult.Add(new WaveResult(turnInit, turnResults.ToArray()));
+                return new Result(waveResult.ToArray());
             }
 
-            tr.Add(trInit);
+            turnResults.Add(turnInit);
             while (soldier.Length > 0 && horde.GetNumberWalkersAlive() > 0)
             {
 
-                //soldiers attacking
-                this.soldiersAttacking(soldier, horde);
-
-                //Horde Attacking
-                this.hordeDoingDomages(parameters, horde, soldier);
-
-
-                //refreshing all xxxxState
-                this.refreshingSoldierState(st, soldier);
-                hs = new HordeState(horde.GetNumberWalkersAlive());
-
-                //completing new turn with new xxxxState
-                tr.Add(new TurnResult(st.ToArray(), hs, wall.Health));
+                this.DoingTurnActions();
             }
 
             //pour le premier test qu'une vague donc a generaliser !
-            wr.Add(new WaveResult(trInit, tr.ToArray()));
+            waveResult.Add(new WaveResult(turnInit, turnResults.ToArray()));
 
-            return new Result(wr.ToArray());
+            return new Result(waveResult.ToArray());
+        }
+
+        private void DoingTurnActions()
+        {
+            //soldiers attacking
+            this.soldiersAttacking(soldier, horde);
+
+            //Horde Attacking
+            this.hordeDoingDomages(parameters, horde, soldier);
+
+
+            //refreshing all xxxxState
+            this.refreshingSoldierState(soldierState, soldier);
+            hordeState = new HordeState(horde.GetNumberWalkersAlive());
+
+            //completing new turn with new xxxxState
+            turnResults.Add(new TurnResult(soldierState.ToArray(), hordeState, wall.Health));
         }
 
         private void hordeDoingDomages(Parameters parameters, Horde horde, Soldier[] soldier)
@@ -118,6 +121,9 @@ namespace CholletJaworskiZarwin
                 }
             }
         }
+
+       
+
 
     }
 }

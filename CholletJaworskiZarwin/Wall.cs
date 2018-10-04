@@ -22,5 +22,10 @@ namespace CholletJaworskiZarwin
                 this.health = 0;
             }
         }
+
+        public int GetHealh()
+        {
+            return this.health;
+        }
     }
 }
