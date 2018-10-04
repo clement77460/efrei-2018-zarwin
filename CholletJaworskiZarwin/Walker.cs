@@ -5,7 +5,7 @@ using CholletJaworskiZarwin;
 
 namespace CholletJaworskiZarwin
 {
-    class Walker
+    public class Walker
     {
         // ID counter which increments each new Walker
         static int walkerCounterId = 0;

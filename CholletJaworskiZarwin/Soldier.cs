@@ -1,5 +1,6 @@
 ﻿using System;
 using Zarwin.Shared.Contracts.Core;
+using System.Diagnostics;
 
 namespace CholletJaworskiZarwin
 {
@@ -50,7 +51,10 @@ namespace CholletJaworskiZarwin
         public void Defend(Horde horde)
         {
             // The soldier kill 1 walker, plus 1 every 10 level he reached
-            horde.KillWalkers(1 + ((this.level % 10)-1));
+            decimal calcul = 1+(level-1)/10;
+            int numberToKill=Convert.ToInt32(Math.Floor(calcul));
+          
+            horde.KillWalkers(numberToKill);
         }
 
         public override String ToString()

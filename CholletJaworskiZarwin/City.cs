@@ -71,5 +71,10 @@ namespace CholletJaworskiZarwin
             }
             return true;
         }
+
+        public Wall GetWall()
+        {
+            return this.wall;
+        }
     }
 }
