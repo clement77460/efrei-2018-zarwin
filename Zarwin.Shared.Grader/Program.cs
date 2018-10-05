@@ -10,7 +10,7 @@ namespace Zarwin.Shared.Grader
     class Program
     {
         private static int _firstVersion = 2;
-        private static int _currentVersion = 1;
+        private static int _currentVersion = 2;
 
         private static readonly string[] _defaultQualityCriteria = new[]
         {
