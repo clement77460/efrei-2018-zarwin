@@ -2,6 +2,7 @@
 
 namespace CholletJaworskiZarwin
 {
+
     class Program
     {
         private const int WALL_HEALTH = 3;
@@ -9,7 +10,7 @@ namespace CholletJaworskiZarwin
         private const int NB_WALKERS_PER_HORDE = 10;
         private const int NB_HORDES = 1;
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Game game = new Game(WALL_HEALTH, NB_SOLDIERS, NB_WALKERS_PER_HORDE, NB_HORDES);
 
@@ -17,6 +18,7 @@ namespace CholletJaworskiZarwin
             {
                 Console.WriteLine(game.Message);
                 game.Turn();
+               
                 PressEnter();
 
                 Console.WriteLine(game);
@@ -26,7 +28,6 @@ namespace CholletJaworskiZarwin
             }
 
         }
-
         private static void PressEnter()
         {
             Console.WriteLine("\nPress Enter to continue...");
@@ -34,6 +35,7 @@ namespace CholletJaworskiZarwin
             do
             {
                 c = Console.ReadKey();
+
             } while (c.Key != ConsoleKey.Enter);
         }
     }

@@ -8,9 +8,12 @@ namespace CholletJaworskiZarwin
     public class Walker
     {
         // ID counter which increments each new Walker
-        static int walkerCounterId = 0;
+        public static int walkerCounterId = 0;
 
         private readonly int idWalker;
+
+        // Accessors
+        public int Id => this.idWalker;
 
         public Walker()
         {

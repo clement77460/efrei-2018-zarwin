@@ -8,7 +8,7 @@ namespace CholletJaworskiZarwin
     {
 
         // ID counter which increments each new Soldier
-        static int soldierCounterId = 0;
+        public static int soldierCounterId = 0; //public because of the test
 
         private readonly int soldierId;
         private int level;

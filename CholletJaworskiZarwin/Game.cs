@@ -1,9 +1,16 @@
 ﻿using System;
 using CholletJaworskiZarwin;
 
+/**
+ * 
+ * NEED TO BE ADAPTED WITH GAME ENGINE FOR V3
+ * 
+**/
+
+
 namespace CholletJaworskiZarwin
 {
-    class Game
+    public class Game
     {
 
         private City city;
@@ -36,21 +43,16 @@ namespace CholletJaworskiZarwin
         {
             if (!this.IsFinished())
             {
-                // First turn is approach phase
-                if (this.turn == 0)
-                {
-                    // Create the horde
-                    this.currentHorde = new Horde(nbWalkersPerHorde);
-                    this.message = "The horde is coming. Brace yourselves.";
-                }
+                // Create the horde
+                this.currentHorde = new Horde(nbWalkersPerHorde);
+                this.message = "The horde is coming. Brace yourselves.";
+                
                 // Then comes the siege phase
-                else
-                {
-                    city.DefendFromHorde(this.currentHorde);
-                    currentHorde.AttackCity(this.city, this.damageDispatcher);
-                    this.message = "The fight goes on.";
 
-                }
+                city.DefendFromHorde(this.currentHorde);
+                currentHorde.AttackCity(this.city, this.damageDispatcher);
+                this.message = "The fight goes on.";
+
                 this.turn++;
 
                 // Create a new horde if needed.
@@ -74,7 +76,8 @@ namespace CholletJaworskiZarwin
         private void ManageHordes()
         {
 
-            if(this.currentHorde.GetNumberWalkersAlive() == 0 && this.nbHordes > 0)
+            if(this.currentHorde.GetNumberWalkersAlive() == 0 && this.nbHordes > 1)
+                //prise en compte de la vague actuelle
             {
                 this.currentHorde = new Horde(this.nbWalkersPerHorde);
                 this.nbHordes--;

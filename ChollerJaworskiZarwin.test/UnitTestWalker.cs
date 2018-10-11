@@ -9,13 +9,17 @@ namespace ChollerJaworskiZarwin.test
     public class UnitTestWalker
     {
 
-
+        
         [Fact]
         public void walkerAttackingCity_redirectingOnWall()
         {
             Walker w = new Walker();
             City city = new City(1, 5);
             w.AttackCity(city,new DamageDispatcher());
+            w.ToString();
+
+            int idWalker = w.Id; //impossible to get 0 its a random execution so no ASSERT.EQUAL()
+            
             Assert.Equal(4, city.GetWall().Health);
            
         }
@@ -23,6 +27,7 @@ namespace ChollerJaworskiZarwin.test
         [Fact]
         public void walkerAttackingCity_redirectingOnSoldiers()
         {
+            Walker.walkerCounterId = 0;
             Walker w = new Walker();
             City city = new City(1, 0);
             w.AttackCity(city, new DamageDispatcher());

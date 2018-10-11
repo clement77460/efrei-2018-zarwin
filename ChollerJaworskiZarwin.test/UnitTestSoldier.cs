@@ -12,8 +12,12 @@ namespace ChollerJaworskiZarwin.test
         public void CreatingLvl1Soldier()
         {
             Soldier s = new Soldier();
+            
             Assert.Equal(4, s.HealthPoints);
             Assert.Equal(1, s.Level);
+            Assert.NotEmpty(s.ToString());
+            int id = s.Id; //impossible to get 0 its a random execution so no ASSERT.EQUAL()
+            
         }
 
         [Fact]

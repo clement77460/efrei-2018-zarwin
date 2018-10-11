@@ -17,11 +17,11 @@ namespace Zarwin.Shared.Grader
 
         public double Run(TestParameter parameter)
         {
-            CleanupFiles();
+            //CleanupFiles();
             ExecuteProcess(parameter);
             var result = ReadResult();
 
-            CleanupFiles();
+            //CleanupFiles();
             return result;
         }
 

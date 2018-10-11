@@ -6,12 +6,14 @@ using Zarwin.Shared.Contracts;
 using Zarwin.Shared.Contracts.Input;
 using Zarwin.Shared.Contracts.Output;
 using System.Diagnostics;
+using Xunit;
 
 
 namespace ChollerJaworskiZarwin.test
 {
-    class SimulatorImplement : IInstantSimulator
+    public class SimulatorImplement : IInstantSimulator
     {
+        
         public Result Run(Parameters parameters)
         {
             GameEngine ge = new GameEngine(parameters);

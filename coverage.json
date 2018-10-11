@@ -1,0 +1,1162 @@
+{
+  "C:\\Users\\Clément\\Documents\\Anne2EcoleInge\\C#\\PROJET\\efrei-2018-zarwin\\ChollerJaworskiZarwin.test\\bin\\Debug\\netcoreapp2.1\\CholletJaworskiZarwin.dll": {
+    "C:\\Users\\Clément\\Documents\\Anne2EcoleInge\\C#\\PROJET\\efrei-2018-zarwin\\CholletJaworskiZarwin\\City.cs": {
+      "CholletJaworskiZarwin.City": {
+        "CholletJaworskiZarwin.Wall CholletJaworskiZarwin.City::get_Wall()": {
+          "Lines": {
+            "12": 22
+          },
+          "Branches": []
+        },
+        "System.Void CholletJaworskiZarwin.City::HurtSoldiers(System.Int32,CholletJaworskiZarwin.DamageDispatcher)": {
+          "Lines": {
+            "27": 2,
+            "28": 2,
+            "29": 2
+          },
+          "Branches": []
+        },
+        "System.Void CholletJaworskiZarwin.City::DefendFromHorde(CholletJaworskiZarwin.Horde)": {
+          "Lines": {
+            "32": 6,
+            "33": 70,
+            "34": 26,
+            "35": 26,
+            "36": 26,
+            "37": 6
+          },
+          "Branches": [
+            {
+              "Line": 33,
+              "Offset": 41,
+              "EndOffset": 16,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 26
+            },
+            {
+              "Line": 33,
+              "Offset": 41,
+              "EndOffset": 43,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 6
+            }
+          ]
+        },
+        "System.Int32 CholletJaworskiZarwin.City::GetNumberSoldiersAlive()": {
+          "Lines": {
+            "40": 13,
+            "41": 13,
+            "42": 161,
+            "43": 61,
+            "44": 61,
+            "45": 61,
+            "46": 61,
+            "47": 61,
+            "48": 61,
+            "49": 13,
+            "50": 13
+          },
+          "Branches": [
+            {
+              "Line": 42,
+              "Offset": 54,
+              "EndOffset": 18,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 61
+            },
+            {
+              "Line": 44,
+              "Offset": 38,
+              "EndOffset": 40,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 61
+            },
+            {
+              "Line": 44,
+              "Offset": 38,
+              "EndOffset": 46,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 61
+            },
+            {
+              "Line": 42,
+              "Offset": 54,
+              "EndOffset": 56,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 13
+            }
+          ]
+        },
+        "System.String CholletJaworskiZarwin.City::SoldiersStats()": {
+          "Lines": {
+            "54": 2,
+            "55": 2,
+            "56": 18,
+            "57": 6,
+            "58": 6,
+            "59": 6,
+            "61": 2,
+            "62": 2
+          },
+          "Branches": [
+            {
+              "Line": 56,
+              "Offset": 107,
+              "EndOffset": 22,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 6
+            },
+            {
+              "Line": 56,
+              "Offset": 107,
+              "EndOffset": 109,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            }
+          ]
+        },
+        "System.Boolean CholletJaworskiZarwin.City::AreAllSoldiersDead()": {
+          "Lines": {
+            "65": 2,
+            "66": 9,
+            "67": 2,
+            "68": 2,
+            "69": 1,
+            "70": 1,
+            "72": 1,
+            "73": 1,
+            "74": 2
+          },
+          "Branches": [
+            {
+              "Line": 66,
+              "Offset": 51,
+              "EndOffset": 16,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 2
+            },
+            {
+              "Line": 68,
+              "Offset": 36,
+              "EndOffset": 38,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 68,
+              "Offset": 36,
+              "EndOffset": 43,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            },
+            {
+              "Line": 66,
+              "Offset": 51,
+              "EndOffset": 53,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            }
+          ]
+        },
+        "CholletJaworskiZarwin.Wall CholletJaworskiZarwin.City::GetWall()": {
+          "Lines": {
+            "77": 2,
+            "78": 2,
+            "79": 2
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.List`1<CholletJaworskiZarwin.Soldier> CholletJaworskiZarwin.City::GetSoldiers()": {
+          "Lines": {
+            "82": 1,
+            "83": 1,
+            "84": 1
+          },
+          "Branches": []
+        },
+        "System.Void CholletJaworskiZarwin.City::.ctor(System.Int32,System.Int32)": {
+          "Lines": {
+            "14": 8,
+            "15": 8,
+            "16": 8,
+            "19": 8,
+            "20": 64,
+            "21": 24,
+            "22": 24,
+            "23": 24,
+            "24": 8
+          },
+          "Branches": [
+            {
+              "Line": 20,
+              "Offset": 64,
+              "EndOffset": 35,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 24
+            },
+            {
+              "Line": 20,
+              "Offset": 64,
+              "EndOffset": 66,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 8
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\Clément\\Documents\\Anne2EcoleInge\\C#\\PROJET\\efrei-2018-zarwin\\CholletJaworskiZarwin\\DamageDispatcher.cs": {
+      "CholletJaworskiZarwin.DamageDispatcher": {
+        "System.Void CholletJaworskiZarwin.DamageDispatcher::DispatchDamage(System.Int32,System.Collections.Generic.IEnumerable`1<Zarwin.Shared.Contracts.Core.ISoldier>)": {
+          "Lines": {
+            "11": 2,
+            "12": 7,
+            "13": 2,
+            "15": 2,
+            "16": 2,
+            "18": 2,
+            "19": 2,
+            "21": 2,
+            "22": 2,
+            "23": 2,
+            "24": 2
+          },
+          "Branches": [
+            {
+              "Line": 12,
+              "Offset": 110,
+              "EndOffset": 3,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 2
+            },
+            {
+              "Line": 12,
+              "Offset": 61,
+              "EndOffset": 63,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 12,
+              "Offset": 70,
+              "EndOffset": 72,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 12,
+              "Offset": 70,
+              "EndOffset": 95,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 3
+            },
+            {
+              "Line": 12,
+              "Offset": 61,
+              "EndOffset": 105,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            },
+            {
+              "Line": 12,
+              "Offset": 110,
+              "EndOffset": 112,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 2
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\Clément\\Documents\\Anne2EcoleInge\\C#\\PROJET\\efrei-2018-zarwin\\CholletJaworskiZarwin\\Game.cs": {
+      "CholletJaworskiZarwin.Game": {
+        "System.String CholletJaworskiZarwin.Game::get_Message()": {
+          "Lines": {
+            "40": 1
+          },
+          "Branches": []
+        },
+        "System.Void CholletJaworskiZarwin.Game::Turn()": {
+          "Lines": {
+            "43": 5,
+            "44": 5,
+            "45": 5,
+            "47": 5,
+            "48": 5,
+            "52": 5,
+            "53": 5,
+            "54": 5,
+            "56": 5,
+            "59": 5,
+            "60": 5,
+            "63": 5,
+            "64": 2,
+            "65": 2,
+            "66": 2,
+            "67": 0,
+            "68": 0,
+            "69": 2,
+            "70": 2,
+            "71": 2,
+            "72": 2,
+            "74": 5
+          },
+          "Branches": [
+            {
+              "Line": 44,
+              "Offset": 12,
+              "EndOffset": 14,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 5
+            },
+            {
+              "Line": 44,
+              "Offset": 12,
+              "EndOffset": 118,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 5
+            },
+            {
+              "Line": 63,
+              "Offset": 126,
+              "EndOffset": 128,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 2
+            },
+            {
+              "Line": 66,
+              "Offset": 152,
+              "EndOffset": 154,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 2
+            },
+            {
+              "Line": 66,
+              "Offset": 152,
+              "EndOffset": 165,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 66,
+              "Offset": 168,
+              "EndOffset": 170,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 66,
+              "Offset": 168,
+              "EndOffset": 196,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 2
+            },
+            {
+              "Line": 63,
+              "Offset": 126,
+              "EndOffset": 221,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 5
+            }
+          ]
+        },
+        "System.Void CholletJaworskiZarwin.Game::ManageHordes()": {
+          "Lines": {
+            "77": 5,
+            "79": 5,
+            "81": 1,
+            "82": 1,
+            "83": 1,
+            "84": 1,
+            "85": 1,
+            "86": 1,
+            "87": 5
+          },
+          "Branches": [
+            {
+              "Line": 79,
+              "Offset": 12,
+              "EndOffset": 14,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 79,
+              "Offset": 12,
+              "EndOffset": 25,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 79,
+              "Offset": 28,
+              "EndOffset": 30,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 79,
+              "Offset": 28,
+              "EndOffset": 81,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 5
+            }
+          ]
+        },
+        "System.Boolean CholletJaworskiZarwin.Game::IsFinished()": {
+          "Lines": {
+            "90": 13,
+            "91": 13,
+            "92": 4,
+            "93": 4,
+            "96": 9,
+            "97": 13
+          },
+          "Branches": [
+            {
+              "Line": 91,
+              "Offset": 12,
+              "EndOffset": 14,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 4
+            },
+            {
+              "Line": 91,
+              "Offset": 12,
+              "EndOffset": 19,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 9
+            },
+            {
+              "Line": 96,
+              "Offset": 30,
+              "EndOffset": 32,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 9
+            },
+            {
+              "Line": 96,
+              "Offset": 30,
+              "EndOffset": 48,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.String CholletJaworskiZarwin.Game::SoldiersStats()": {
+          "Lines": {
+            "100": 1,
+            "101": 1,
+            "102": 1
+          },
+          "Branches": []
+        },
+        "System.Int32 CholletJaworskiZarwin.Game::get_WallHealth()": {
+          "Lines": {
+            "104": 1
+          },
+          "Branches": []
+        },
+        "System.String CholletJaworskiZarwin.Game::ToString()": {
+          "Lines": {
+            "107": 1,
+            "108": 1,
+            "109": 1,
+            "110": 1,
+            "112": 1,
+            "113": 1
+          },
+          "Branches": []
+        },
+        "System.Void CholletJaworskiZarwin.Game::.ctor(System.Int32,System.Int32,System.Int32,System.Int32)": {
+          "Lines": {
+            "29": 4,
+            "30": 4,
+            "31": 4,
+            "32": 4,
+            "33": 4,
+            "34": 4,
+            "35": 4,
+            "36": 4,
+            "37": 4,
+            "38": 4
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\Clément\\Documents\\Anne2EcoleInge\\C#\\PROJET\\efrei-2018-zarwin\\CholletJaworskiZarwin\\GameEngine.cs": {
+      "CholletJaworskiZarwin.GameEngine": {
+        "Zarwin.Shared.Contracts.Output.Result CholletJaworskiZarwin.GameEngine::GameLoop()": {
+          "Lines": {
+            "47": 3,
+            "48": 3,
+            "49": 1,
+            "50": 1,
+            "51": 1,
+            "54": 2,
+            "55": 5,
+            "56": 3,
+            "58": 3,
+            "59": 3,
+            "62": 2,
+            "64": 2,
+            "65": 3
+          },
+          "Branches": [
+            {
+              "Line": 48,
+              "Offset": 13,
+              "EndOffset": 15,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 48,
+              "Offset": 13,
+              "EndOffset": 69,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 55,
+              "Offset": 126,
+              "EndOffset": 89,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 3
+            },
+            {
+              "Line": 55,
+              "Offset": 105,
+              "EndOffset": 107,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 5
+            },
+            {
+              "Line": 55,
+              "Offset": 105,
+              "EndOffset": 123,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 55,
+              "Offset": 126,
+              "EndOffset": 128,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 2
+            }
+          ]
+        },
+        "System.Void CholletJaworskiZarwin.GameEngine::DoingTurnActions()": {
+          "Lines": {
+            "68": 3,
+            "70": 3,
+            "73": 3,
+            "77": 3,
+            "78": 3,
+            "81": 3,
+            "82": 3
+          },
+          "Branches": []
+        },
+        "System.Void CholletJaworskiZarwin.GameEngine::hordeDoingDomages(Zarwin.Shared.Contracts.Input.Parameters,CholletJaworskiZarwin.Horde,CholletJaworskiZarwin.Soldier[])": {
+          "Lines": {
+            "85": 3,
+            "86": 3,
+            "89": 8,
+            "90": 1,
+            "91": 1,
+            "92": 1,
+            "93": 3,
+            "94": 3,
+            "95": 3
+          },
+          "Branches": [
+            {
+              "Line": 89,
+              "Offset": 28,
+              "EndOffset": 7,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            },
+            {
+              "Line": 89,
+              "Offset": 28,
+              "EndOffset": 30,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            }
+          ]
+        },
+        "System.Void CholletJaworskiZarwin.GameEngine::refreshingSoldierState(System.Collections.Generic.List`1<Zarwin.Shared.Contracts.Output.SoldierState>,CholletJaworskiZarwin.Soldier[])": {
+          "Lines": {
+            "98": 6,
+            "99": 6,
+            "100": 22,
+            "101": 5,
+            "102": 5,
+            "103": 5,
+            "104": 6
+          },
+          "Branches": [
+            {
+              "Line": 100,
+              "Offset": 62,
+              "EndOffset": 12,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 5
+            },
+            {
+              "Line": 100,
+              "Offset": 62,
+              "EndOffset": 64,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 6
+            }
+          ]
+        },
+        "System.Void CholletJaworskiZarwin.GameEngine::buildingSoldiers(Zarwin.Shared.Contracts.Input.SoldierParameters[],CholletJaworskiZarwin.Soldier[])": {
+          "Lines": {
+            "107": 3,
+            "108": 10,
+            "109": 2,
+            "110": 2,
+            "111": 2,
+            "112": 3
+          },
+          "Branches": [
+            {
+              "Line": 108,
+              "Offset": 43,
+              "EndOffset": 5,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 108,
+              "Offset": 43,
+              "EndOffset": 45,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            }
+          ]
+        },
+        "System.Void CholletJaworskiZarwin.GameEngine::soldiersAttacking(CholletJaworskiZarwin.Soldier[],CholletJaworskiZarwin.Horde)": {
+          "Lines": {
+            "115": 3,
+            "116": 15,
+            "117": 3,
+            "118": 3,
+            "119": 3,
+            "120": 3,
+            "121": 3,
+            "122": 3,
+            "123": 3
+          },
+          "Branches": [
+            {
+              "Line": 116,
+              "Offset": 41,
+              "EndOffset": 8,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 3
+            },
+            {
+              "Line": 118,
+              "Offset": 21,
+              "EndOffset": 23,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 118,
+              "Offset": 21,
+              "EndOffset": 32,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            },
+            {
+              "Line": 116,
+              "Offset": 41,
+              "EndOffset": 43,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 3
+            }
+          ]
+        },
+        "System.Void CholletJaworskiZarwin.GameEngine::.ctor(Zarwin.Shared.Contracts.Input.Parameters)": {
+          "Lines": {
+            "15": 3,
+            "19": 3,
+            "26": 3,
+            "28": 3,
+            "29": 3,
+            "30": 3,
+            "31": 3,
+            "33": 3,
+            "34": 3,
+            "36": 3,
+            "38": 3,
+            "39": 3,
+            "40": 3,
+            "42": 3,
+            "43": 3
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\Clément\\Documents\\Anne2EcoleInge\\C#\\PROJET\\efrei-2018-zarwin\\CholletJaworskiZarwin\\Horde.cs": {
+      "CholletJaworskiZarwin.Horde": {
+        "System.Void CholletJaworskiZarwin.Horde::AttackCity(CholletJaworskiZarwin.City,CholletJaworskiZarwin.DamageDispatcher)": {
+          "Lines": {
+            "23": 5,
+            "24": 33,
+            "25": 9,
+            "26": 9,
+            "27": 9,
+            "28": 5
+          },
+          "Branches": [
+            {
+              "Line": 24,
+              "Offset": 42,
+              "EndOffset": 16,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 9
+            },
+            {
+              "Line": 24,
+              "Offset": 42,
+              "EndOffset": 44,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 5
+            }
+          ]
+        },
+        "System.Boolean CholletJaworskiZarwin.Horde::KillWalker()": {
+          "Lines": {
+            "31": 40,
+            "34": 40,
+            "35": 28,
+            "36": 28,
+            "37": 28,
+            "39": 12,
+            "40": 40
+          },
+          "Branches": [
+            {
+              "Line": 34,
+              "Offset": 17,
+              "EndOffset": 19,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 28
+            },
+            {
+              "Line": 34,
+              "Offset": 17,
+              "EndOffset": 37,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 12
+            }
+          ]
+        },
+        "System.Int32 CholletJaworskiZarwin.Horde::GetNumberWalkersAlive()": {
+          "Lines": {
+            "43": 38,
+            "44": 38,
+            "45": 38
+          },
+          "Branches": []
+        },
+        "System.Void CholletJaworskiZarwin.Horde::KillWalkers(System.Int32)": {
+          "Lines": {
+            "48": 32,
+            "49": 136,
+            "50": 36,
+            "51": 36,
+            "52": 36,
+            "53": 32
+          },
+          "Branches": [
+            {
+              "Line": 49,
+              "Offset": 24,
+              "EndOffset": 5,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 36
+            },
+            {
+              "Line": 49,
+              "Offset": 24,
+              "EndOffset": 26,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 32
+            }
+          ]
+        },
+        "System.Void CholletJaworskiZarwin.Horde::.ctor(System.Int32)": {
+          "Lines": {
+            "13": 18,
+            "14": 18,
+            "15": 18,
+            "16": 188,
+            "17": 76,
+            "18": 76,
+            "19": 76,
+            "20": 18
+          },
+          "Branches": [
+            {
+              "Line": 16,
+              "Offset": 52,
+              "EndOffset": 23,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 76
+            },
+            {
+              "Line": 16,
+              "Offset": 52,
+              "EndOffset": 54,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 18
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\Clément\\Documents\\Anne2EcoleInge\\C#\\PROJET\\efrei-2018-zarwin\\CholletJaworskiZarwin\\Program.cs": {
+      "CholletJaworskiZarwin.Program": {
+        "System.Void CholletJaworskiZarwin.Program::Main(System.String[])": {
+          "Lines": {
+            "13": 0,
+            "14": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "21": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "27": 0,
+            "29": 0
+          },
+          "Branches": [
+            {
+              "Line": 16,
+              "Offset": 103,
+              "EndOffset": 14,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 16,
+              "Offset": 103,
+              "EndOffset": 105,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void CholletJaworskiZarwin.Program::PressEnter()": {
+          "Lines": {
+            "31": 0,
+            "32": 0,
+            "35": 0,
+            "36": 0,
+            "38": 0,
+            "39": 0
+          },
+          "Branches": [
+            {
+              "Line": 38,
+              "Offset": 36,
+              "EndOffset": 12,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 38,
+              "Offset": 36,
+              "EndOffset": 38,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\Users\\Clément\\Documents\\Anne2EcoleInge\\C#\\PROJET\\efrei-2018-zarwin\\CholletJaworskiZarwin\\Soldier.cs": {
+      "CholletJaworskiZarwin.Soldier": {
+        "System.Int32 CholletJaworskiZarwin.Soldier::get_Id()": {
+          "Lines": {
+            "19": 13
+          },
+          "Branches": []
+        },
+        "System.Int32 CholletJaworskiZarwin.Soldier::get_HealthPoints()": {
+          "Lines": {
+            "20": 87
+          },
+          "Branches": []
+        },
+        "System.Int32 CholletJaworskiZarwin.Soldier::get_Level()": {
+          "Lines": {
+            "21": 8
+          },
+          "Branches": []
+        },
+        "System.Void CholletJaworskiZarwin.Soldier::Hurt(System.Int32)": {
+          "Lines": {
+            "41": 4,
+            "42": 4,
+            "43": 4
+          },
+          "Branches": []
+        },
+        "System.Void CholletJaworskiZarwin.Soldier::LevelUp()": {
+          "Lines": {
+            "46": 4,
+            "47": 4,
+            "48": 4,
+            "49": 4
+          },
+          "Branches": []
+        },
+        "System.Void CholletJaworskiZarwin.Soldier::Defend(CholletJaworskiZarwin.Horde)": {
+          "Lines": {
+            "52": 31,
+            "54": 31,
+            "55": 31,
+            "57": 31,
+            "58": 31
+          },
+          "Branches": []
+        },
+        "System.String CholletJaworskiZarwin.Soldier::ToString()": {
+          "Lines": {
+            "61": 1,
+            "62": 1,
+            "63": 1
+          },
+          "Branches": []
+        },
+        "System.Void CholletJaworskiZarwin.Soldier::.ctor()": {
+          "Lines": {
+            "24": 29,
+            "25": 29,
+            "26": 29,
+            "27": 29,
+            "28": 29,
+            "29": 29,
+            "30": 29
+          },
+          "Branches": []
+        },
+        "System.Void CholletJaworskiZarwin.Soldier::.ctor(System.Int32,System.Int32)": {
+          "Lines": {
+            "32": 6,
+            "33": 6,
+            "34": 6,
+            "35": 6,
+            "36": 6,
+            "37": 6
+          },
+          "Branches": []
+        },
+        "System.Void CholletJaworskiZarwin.Soldier::.cctor()": {
+          "Lines": {
+            "11": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\Clément\\Documents\\Anne2EcoleInge\\C#\\PROJET\\efrei-2018-zarwin\\CholletJaworskiZarwin\\Walker.cs": {
+      "CholletJaworskiZarwin.Walker": {
+        "System.Int32 CholletJaworskiZarwin.Walker::get_Id()": {
+          "Lines": {
+            "16": 1
+          },
+          "Branches": []
+        },
+        "System.Void CholletJaworskiZarwin.Walker::AttackCity(CholletJaworskiZarwin.City,CholletJaworskiZarwin.DamageDispatcher)": {
+          "Lines": {
+            "25": 11,
+            "27": 11,
+            "28": 10,
+            "29": 10,
+            "30": 10,
+            "32": 1,
+            "33": 1,
+            "34": 1,
+            "35": 11
+          },
+          "Branches": [
+            {
+              "Line": 27,
+              "Offset": 17,
+              "EndOffset": 19,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 10
+            },
+            {
+              "Line": 27,
+              "Offset": 17,
+              "EndOffset": 36,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        },
+        "System.String CholletJaworskiZarwin.Walker::ToString()": {
+          "Lines": {
+            "38": 1,
+            "39": 1,
+            "40": 1
+          },
+          "Branches": []
+        },
+        "System.Void CholletJaworskiZarwin.Walker::.ctor()": {
+          "Lines": {
+            "18": 78,
+            "19": 78,
+            "20": 78,
+            "21": 78,
+            "22": 78
+          },
+          "Branches": []
+        },
+        "System.Void CholletJaworskiZarwin.Walker::.cctor()": {
+          "Lines": {
+            "11": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\Users\\Clément\\Documents\\Anne2EcoleInge\\C#\\PROJET\\efrei-2018-zarwin\\CholletJaworskiZarwin\\Wall.cs": {
+      "CholletJaworskiZarwin.Wall": {
+        "System.Int32 CholletJaworskiZarwin.Wall::get_Health()": {
+          "Lines": {
+            "11": 22
+          },
+          "Branches": []
+        },
+        "System.Void CholletJaworskiZarwin.Wall::WeakenWall(System.Int32)": {
+          "Lines": {
+            "18": 11,
+            "19": 11,
+            "20": 11,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 11
+          },
+          "Branches": [
+            {
+              "Line": 20,
+              "Offset": 26,
+              "EndOffset": 28,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 20,
+              "Offset": 26,
+              "EndOffset": 37,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 11
+            }
+          ]
+        },
+        "System.Int32 CholletJaworskiZarwin.Wall::GetHealh()": {
+          "Lines": {
+            "27": 0,
+            "28": 0,
+            "29": 0
+          },
+          "Branches": []
+        },
+        "System.Void CholletJaworskiZarwin.Wall::.ctor(System.Int32)": {
+          "Lines": {
+            "13": 26,
+            "14": 13,
+            "15": 13
+          },
+          "Branches": []
+        }
+      }
+    }
+  }
+}

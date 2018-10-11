@@ -49,6 +49,7 @@ namespace CholletJaworskiZarwin
             return numberSoldiersAlive;
         }
 
+        
         public String SoldiersStats()
         {
             String stats = "";
