@@ -888,52 +888,18 @@
     },
     "C:\\Users\\Clément\\Documents\\Anne2EcoleInge\\C#\\PROJET\\efrei-2018-zarwin\\CholletJaworskiZarwin\\Program.cs": {
       "CholletJaworskiZarwin.Program": {
-        "System.Void CholletJaworskiZarwin.Program::Main(System.String[])": {
-          "Lines": {
-            "13": 0,
-            "14": 0,
-            "16": 0,
-            "17": 0,
-            "18": 0,
-            "19": 0,
-            "21": 0,
-            "23": 0,
-            "24": 0,
-            "25": 0,
-            "27": 0,
-            "29": 0
-          },
-          "Branches": [
-            {
-              "Line": 16,
-              "Offset": 103,
-              "EndOffset": 14,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 0
-            },
-            {
-              "Line": 16,
-              "Offset": 103,
-              "EndOffset": 105,
-              "Path": 0,
-              "Ordinal": 0,
-              "Hits": 0
-            }
-          ]
-        },
         "System.Void CholletJaworskiZarwin.Program::PressEnter()": {
           "Lines": {
-            "31": 0,
-            "32": 0,
+            "34": 0,
             "35": 0,
-            "36": 0,
             "38": 0,
-            "39": 0
+            "39": 0,
+            "41": 0,
+            "42": 0
           },
           "Branches": [
             {
-              "Line": 38,
+              "Line": 41,
               "Offset": 36,
               "EndOffset": 12,
               "Path": 1,
@@ -941,7 +907,7 @@
               "Hits": 0
             },
             {
-              "Line": 38,
+              "Line": 41,
               "Offset": 36,
               "EndOffset": 38,
               "Path": 0,
@@ -1107,19 +1073,19 @@
       "CholletJaworskiZarwin.Wall": {
         "System.Int32 CholletJaworskiZarwin.Wall::get_Health()": {
           "Lines": {
-            "11": 22
+            "11": 23
           },
           "Branches": []
         },
         "System.Void CholletJaworskiZarwin.Wall::WeakenWall(System.Int32)": {
           "Lines": {
-            "18": 11,
-            "19": 11,
-            "20": 11,
-            "21": 0,
-            "22": 0,
-            "23": 0,
-            "24": 11
+            "18": 12,
+            "19": 12,
+            "20": 12,
+            "21": 1,
+            "22": 1,
+            "23": 1,
+            "24": 12
           },
           "Branches": [
             {
@@ -1128,7 +1094,7 @@
               "EndOffset": 28,
               "Path": 0,
               "Ordinal": 0,
-              "Hits": 0
+              "Hits": 1
             },
             {
               "Line": 20,
@@ -1136,23 +1102,15 @@
               "EndOffset": 37,
               "Path": 1,
               "Ordinal": 1,
-              "Hits": 11
+              "Hits": 12
             }
           ]
         },
-        "System.Int32 CholletJaworskiZarwin.Wall::GetHealh()": {
-          "Lines": {
-            "27": 0,
-            "28": 0,
-            "29": 0
-          },
-          "Branches": []
-        },
         "System.Void CholletJaworskiZarwin.Wall::.ctor(System.Int32)": {
           "Lines": {
-            "13": 26,
-            "14": 13,
-            "15": 13
+            "13": 28,
+            "14": 14,
+            "15": 14
           },
           "Branches": []
         }

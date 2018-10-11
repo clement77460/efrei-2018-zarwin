@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<coverage line-rate="0,914" branch-rate="0,868" version="1.9" timestamp="1539284347" lines-covered="275" lines-valid="301" branches-covered="59" branches-valid="68">
+<coverage line-rate="0,972" branch-rate="0,909" version="1.9" timestamp="1539284615" lines-covered="278" lines-valid="286" branches-covered="60" branches-valid="66">
   <sources>
     <source>C:\Users\Clément\Documents\Anne2EcoleInge\C#\PROJET\efrei-2018-zarwin\CholletJaworskiZarwin\</source>
   </sources>
   <packages>
-    <package name="CholletJaworskiZarwin" line-rate="0,914" branch-rate="0,868" complexity="0">
+    <package name="CholletJaworskiZarwin" line-rate="0,972" branch-rate="0,909" complexity="0">
       <classes>
         <class name="CholletJaworskiZarwin.City" filename="City.cs" line-rate="1" branch-rate="1" complexity="0">
           <methods>
@@ -804,68 +804,32 @@
         </class>
         <class name="CholletJaworskiZarwin.Program" filename="Program.cs" line-rate="0" branch-rate="0" complexity="0">
           <methods>
-            <method name="Main" signature="(System.String[])" line-rate="0" branch-rate="0">
-              <lines>
-                <line number="13" hits="0" branch="False" />
-                <line number="14" hits="0" branch="False" />
-                <line number="16" hits="0" branch="True" condition-coverage="0% (0/2)">
-                  <conditions>
-                    <condition number="103" type="jump" coverage="0%" />
-                  </conditions>
-                </line>
-                <line number="17" hits="0" branch="False" />
-                <line number="18" hits="0" branch="False" />
-                <line number="19" hits="0" branch="False" />
-                <line number="21" hits="0" branch="False" />
-                <line number="23" hits="0" branch="False" />
-                <line number="24" hits="0" branch="False" />
-                <line number="25" hits="0" branch="False" />
-                <line number="27" hits="0" branch="False" />
-                <line number="29" hits="0" branch="False" />
-              </lines>
-            </method>
             <method name="PressEnter" signature="()" line-rate="0" branch-rate="0">
               <lines>
-                <line number="31" hits="0" branch="False" />
-                <line number="32" hits="0" branch="False" />
+                <line number="34" hits="0" branch="False" />
                 <line number="35" hits="0" branch="False" />
-                <line number="36" hits="0" branch="False" />
-                <line number="38" hits="0" branch="True" condition-coverage="0% (0/2)">
+                <line number="38" hits="0" branch="False" />
+                <line number="39" hits="0" branch="False" />
+                <line number="41" hits="0" branch="True" condition-coverage="0% (0/2)">
                   <conditions>
                     <condition number="36" type="jump" coverage="0%" />
                   </conditions>
                 </line>
-                <line number="39" hits="0" branch="False" />
+                <line number="42" hits="0" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="13" hits="0" branch="False" />
-            <line number="14" hits="0" branch="False" />
-            <line number="16" hits="0" branch="True" condition-coverage="0% (0/2)">
-              <conditions>
-                <condition number="103" type="jump" coverage="0%" />
-              </conditions>
-            </line>
-            <line number="17" hits="0" branch="False" />
-            <line number="18" hits="0" branch="False" />
-            <line number="19" hits="0" branch="False" />
-            <line number="21" hits="0" branch="False" />
-            <line number="23" hits="0" branch="False" />
-            <line number="24" hits="0" branch="False" />
-            <line number="25" hits="0" branch="False" />
-            <line number="27" hits="0" branch="False" />
-            <line number="29" hits="0" branch="False" />
-            <line number="31" hits="0" branch="False" />
-            <line number="32" hits="0" branch="False" />
+            <line number="34" hits="0" branch="False" />
             <line number="35" hits="0" branch="False" />
-            <line number="36" hits="0" branch="False" />
-            <line number="38" hits="0" branch="True" condition-coverage="0% (0/2)">
+            <line number="38" hits="0" branch="False" />
+            <line number="39" hits="0" branch="False" />
+            <line number="41" hits="0" branch="True" condition-coverage="0% (0/2)">
               <conditions>
                 <condition number="36" type="jump" coverage="0%" />
               </conditions>
             </line>
-            <line number="39" hits="0" branch="False" />
+            <line number="42" hits="0" branch="False" />
           </lines>
         </class>
         <class name="CholletJaworskiZarwin.Soldier" filename="Soldier.cs" line-rate="1" branch-rate="0" complexity="0">
@@ -1050,62 +1014,52 @@
             <line number="11" hits="1" branch="False" />
           </lines>
         </class>
-        <class name="CholletJaworskiZarwin.Wall" filename="Wall.cs" line-rate="0,571" branch-rate="0,5" complexity="0">
+        <class name="CholletJaworskiZarwin.Wall" filename="Wall.cs" line-rate="1" branch-rate="1" complexity="0">
           <methods>
             <method name="get_Health" signature="()" line-rate="1" branch-rate="0">
               <lines>
-                <line number="11" hits="22" branch="False" />
+                <line number="11" hits="23" branch="False" />
               </lines>
             </method>
-            <method name="WeakenWall" signature="(System.Int32)" line-rate="0,571" branch-rate="0,5">
+            <method name="WeakenWall" signature="(System.Int32)" line-rate="1" branch-rate="1">
               <lines>
-                <line number="18" hits="11" branch="False" />
-                <line number="19" hits="11" branch="False" />
-                <line number="20" hits="11" branch="True" condition-coverage="50% (1/2)">
+                <line number="18" hits="12" branch="False" />
+                <line number="19" hits="12" branch="False" />
+                <line number="20" hits="12" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="26" type="jump" coverage="50%" />
+                    <condition number="26" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="21" hits="0" branch="False" />
-                <line number="22" hits="0" branch="False" />
-                <line number="23" hits="0" branch="False" />
-                <line number="24" hits="11" branch="False" />
-              </lines>
-            </method>
-            <method name="GetHealh" signature="()" line-rate="0" branch-rate="0">
-              <lines>
-                <line number="27" hits="0" branch="False" />
-                <line number="28" hits="0" branch="False" />
-                <line number="29" hits="0" branch="False" />
+                <line number="21" hits="1" branch="False" />
+                <line number="22" hits="1" branch="False" />
+                <line number="23" hits="1" branch="False" />
+                <line number="24" hits="12" branch="False" />
               </lines>
             </method>
             <method name=".ctor" signature="(System.Int32)" line-rate="1" branch-rate="0">
               <lines>
-                <line number="13" hits="26" branch="False" />
-                <line number="14" hits="13" branch="False" />
-                <line number="15" hits="13" branch="False" />
+                <line number="13" hits="28" branch="False" />
+                <line number="14" hits="14" branch="False" />
+                <line number="15" hits="14" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="11" hits="22" branch="False" />
-            <line number="18" hits="11" branch="False" />
-            <line number="19" hits="11" branch="False" />
-            <line number="20" hits="11" branch="True" condition-coverage="50% (1/2)">
+            <line number="11" hits="23" branch="False" />
+            <line number="18" hits="12" branch="False" />
+            <line number="19" hits="12" branch="False" />
+            <line number="20" hits="12" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="26" type="jump" coverage="50%" />
+                <condition number="26" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="21" hits="0" branch="False" />
-            <line number="22" hits="0" branch="False" />
-            <line number="23" hits="0" branch="False" />
-            <line number="24" hits="11" branch="False" />
-            <line number="27" hits="0" branch="False" />
-            <line number="28" hits="0" branch="False" />
-            <line number="29" hits="0" branch="False" />
-            <line number="13" hits="26" branch="False" />
-            <line number="14" hits="13" branch="False" />
-            <line number="15" hits="13" branch="False" />
+            <line number="21" hits="1" branch="False" />
+            <line number="22" hits="1" branch="False" />
+            <line number="23" hits="1" branch="False" />
+            <line number="24" hits="12" branch="False" />
+            <line number="13" hits="28" branch="False" />
+            <line number="14" hits="14" branch="False" />
+            <line number="15" hits="14" branch="False" />
           </lines>
         </class>
       </classes>

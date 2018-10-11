@@ -23,9 +23,5 @@ namespace CholletJaworskiZarwin
             }
         }
 
-        public int GetHealh()
-        {
-            return this.health;
-        }
     }
 }

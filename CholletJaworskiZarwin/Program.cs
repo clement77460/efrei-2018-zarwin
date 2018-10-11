@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CholletJaworskiZarwin
 {
@@ -10,6 +11,7 @@ namespace CholletJaworskiZarwin
         private const int NB_WALKERS_PER_HORDE = 10;
         private const int NB_HORDES = 1;
 
+        [ExcludeFromCodeCoverage]
         private static void Main(string[] args)
         {
             Game game = new Game(WALL_HEALTH, NB_SOLDIERS, NB_WALKERS_PER_HORDE, NB_HORDES);

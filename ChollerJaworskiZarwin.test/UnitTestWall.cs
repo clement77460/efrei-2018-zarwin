@@ -24,6 +24,14 @@ namespace ChollerJaworskiZarwin.test
             Assert.Equal(3, wall.Health);
         }
 
+        [Fact]
+        public void OverkillingWall()
+        {
+            Wall wall = new Wall(5);
+            wall.WeakenWall(10);
+            Assert.Equal(0, wall.Health);
+        }
+
 
     }
 }
