@@ -886,6 +886,38 @@
         }
       }
     },
+    "C:\\Users\\Clément\\Documents\\Anne2EcoleInge\\C#\\PROJET\\efrei-2018-zarwin\\CholletJaworskiZarwin\\Program.cs": {
+      "CholletJaworskiZarwin.Program": {
+        "System.Void CholletJaworskiZarwin.Program::PressEnter()": {
+          "Lines": {
+            "34": 0,
+            "35": 0,
+            "38": 0,
+            "39": 0,
+            "41": 0,
+            "42": 0
+          },
+          "Branches": [
+            {
+              "Line": 41,
+              "Offset": 36,
+              "EndOffset": 12,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 41,
+              "Offset": 36,
+              "EndOffset": 38,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
     "C:\\Users\\Clément\\Documents\\Anne2EcoleInge\\C#\\PROJET\\efrei-2018-zarwin\\CholletJaworskiZarwin\\Soldier.cs": {
       "CholletJaworskiZarwin.Soldier": {
         "System.Int32 CholletJaworskiZarwin.Soldier::get_Id()": {
