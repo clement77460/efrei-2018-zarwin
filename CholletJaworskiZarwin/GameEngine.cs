@@ -10,12 +10,14 @@ namespace CholletJaworskiZarwin
 {
     public class GameEngine
     {
+        private bool testTime;
+
         private Parameters parameters;
 
         private List<WaveResult> waveResult = new List<WaveResult>();
         private SoldierParameters[] soldierParameter;
 
-        private Soldier[] soldier;
+        private List<Soldier> soldier= new List<Soldier>();
         private List<SoldierState> soldierState = new List<SoldierState>();
 
         private HordeState hordeState;
@@ -25,15 +27,16 @@ namespace CholletJaworskiZarwin
         private TurnResult turnInit;
         private List<TurnResult> turnResults = new List<TurnResult>();
 
-        public GameEngine(Parameters parameters)
+        public GameEngine(Parameters parameters,bool test=true)
         {
+            this.testTime = test;
             this.parameters = parameters;
             soldierParameter = parameters.SoldierParameters;
 
-            soldier = new Soldier[soldierParameter.Length];
-            this.buildingSoldiers(soldierParameter, soldier);
+            
+            this.buildingSoldiers(soldierParameter);
 
-            this.refreshingSoldierState(soldierState, soldier);
+            this.refreshingSoldierState(soldierState);
 
             wall = new Wall(parameters.CityParameters.WallHealthPoints);
             horde = new Horde(parameters.HordeParameters.Size);
@@ -45,17 +48,22 @@ namespace CholletJaworskiZarwin
 
         public Result GameLoop()
         {
-            if (soldier.Length == 0)
+            if (soldier.Count == 0)
             {
                 waveResult.Add(new WaveResult(turnInit, turnResults.ToArray()));
                 return new Result(waveResult.ToArray());
             }
 
             turnResults.Add(turnInit);
-            while (soldier.Length > 0 && horde.GetNumberWalkersAlive() > 0)
+            while (soldier.Count > 0 && horde.GetNumberWalkersAlive() > 0)
             {
 
                 this.DoingTurnActions();
+                if (!testTime)
+                {
+                    this.displayMsg();
+                    this.PressEnter();
+                }
             }
 
             //pour le premier test qu'une vague donc a generaliser !
@@ -67,51 +75,69 @@ namespace CholletJaworskiZarwin
         private void DoingTurnActions()
         {
             //soldiers attacking
-            this.soldiersAttacking(soldier, horde);
+            this.soldiersAttacking(horde);
 
             //Horde Attacking
-            this.hordeDoingDomages(parameters, horde, soldier);
+            this.hordeDoingDomages(parameters, horde);
 
 
             //refreshing all xxxxState
-            this.refreshingSoldierState(soldierState, soldier);
+            this.refreshingSoldierState(soldierState);
             hordeState = new HordeState(horde.GetNumberWalkersAlive());
 
             //completing new turn with new xxxxState
             turnResults.Add(new TurnResult(soldierState.ToArray(), hordeState, wall.Health));
         }
 
-        private void hordeDoingDomages(Parameters parameters, Horde horde, Soldier[] soldier)
+        private void hordeDoingDomages(Parameters parameters, Horde horde)
         {
             int domageToDo = 0;
 
-            //zombie attaque pas besoin pour le premier test a generaliser !!
+            
             for (int i = 0; i < horde.GetNumberWalkersAlive(); i++)
             {
                 domageToDo++;
             }
-            parameters.DamageDispatcher.DispatchDamage(domageToDo, soldier);
+            if (wall.Health > 0)
+            {
+                wall.WeakenWall(domageToDo);
+            }
+            else
+            {
+                parameters.DamageDispatcher.DispatchDamage(domageToDo, soldier);
+            }
+            
+            foreach(Soldier s in soldier.ToArray())
+            {
+                if (s.HealthPoints <= 0)
+                {
+                    soldier.Remove(s);
+                }
+            }
+
+
             domageToDo = 0;
         }
 
-        private void refreshingSoldierState(List<SoldierState> st, Soldier[] soldier)
+        private void refreshingSoldierState(List<SoldierState> st)
         {
             st.Clear();
-            for (int i = 0; i < soldier.Length; i++)
+            for (int i = 0; i < soldier.Count; i++)
             {
                 st.Add(new SoldierState(soldier[i].Id, soldier[i].Level, soldier[i].HealthPoints));
             }
         }
 
-        private void buildingSoldiers(SoldierParameters[] sp, Soldier[] soldier)
+        private void buildingSoldiers(SoldierParameters[] sp)
         {
             for (int i = 0; i < sp.Length; i++)
             {
-                soldier[i] = new Soldier(sp[i].Id, sp[i].Level);
+                soldier.Add(new Soldier(sp[i].Id, sp[i].Level));
+        
             }
         }
 
-        private void soldiersAttacking(Soldier[] soldier, Horde horde)
+        private void soldiersAttacking(Horde horde)
         {
             foreach (Soldier s in soldier)
             {
@@ -122,8 +148,25 @@ namespace CholletJaworskiZarwin
             }
         }
 
-       
+        private void PressEnter()
+        {
+            Console.WriteLine("\nPress Enter to continue...");
+            ConsoleKeyInfo c;
+            do
+            {
+                c = Console.ReadKey();
 
+            } while (c.Key != ConsoleKey.Enter);
+        }
 
+        private void displayMsg()
+        {
+            Console.WriteLine("il reste : {0} walkers", horde.GetNumberWalkersAlive());
+            Console.WriteLine("le wall possède : {0} pdv", wall.Health);
+            foreach(Soldier s in soldier)
+            {
+                Console.WriteLine(s.ToString());
+            }
+        }
     }
 }

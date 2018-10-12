@@ -59,7 +59,7 @@ namespace CholletJaworskiZarwin
 
         public override String ToString()
         {
-            return "Je suis le soldat numero " + this.soldierId;
+            return "Je suis le soldat numero " + this.soldierId + " pv = "+this.HealthPoints;
         }
     }
 }

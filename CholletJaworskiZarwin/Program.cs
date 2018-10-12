@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Zarwin.Shared.Contracts.Input;
+using Zarwin.Shared.Tests;
 
 namespace CholletJaworskiZarwin
 {
@@ -14,32 +17,21 @@ namespace CholletJaworskiZarwin
         [ExcludeFromCodeCoverage]
         private static void Main(string[] args)
         {
-            Game game = new Game(WALL_HEALTH, NB_SOLDIERS, NB_WALKERS_PER_HORDE, NB_HORDES);
+            //Creating 2 soldiers
+            List<SoldierParameters> sp=new List<SoldierParameters>();
+            sp.Add(new SoldierParameters(0, 1));
+            sp.Add(new SoldierParameters(1, 1));
 
-            while (!game.IsFinished())
-            {
-                Console.WriteLine(game.Message);
-                game.Turn();
-               
-                PressEnter();
+            GameEngine gameEngine = new GameEngine(new Parameters(
+                1,
+                new FirstSoldierDamageDispatcher(),
+                new HordeParameters(10),
+                new CityParameters(5),
+                sp.ToArray()),false);
 
-                Console.WriteLine(game);
-                Console.WriteLine("The Wall has " + game.WallHealth + "HP left.");
-                Console.WriteLine(game.SoldiersStats());
-
-            }
+            gameEngine.GameLoop();
 
         }
-        [ExcludeFromCodeCoverage]
-        private static void PressEnter()
-        {
-            Console.WriteLine("\nPress Enter to continue...");
-            ConsoleKeyInfo c;
-            do
-            {
-                c = Console.ReadKey();
-
-            } while (c.Key != ConsoleKey.Enter);
-        }
+        
     }
 }
