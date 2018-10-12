@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<coverage line-rate="0,972" branch-rate="0,909" version="1.9" timestamp="1539284615" lines-covered="278" lines-valid="286" branches-covered="60" branches-valid="66">
+<coverage line-rate="0,993" branch-rate="0,938" version="1.9" timestamp="1539327469" lines-covered="278" lines-valid="280" branches-covered="60" branches-valid="64">
   <sources>
     <source>C:\Users\Clément\Documents\Anne2EcoleInge\C#\PROJET\efrei-2018-zarwin\CholletJaworskiZarwin\</source>
   </sources>
   <packages>
-    <package name="CholletJaworskiZarwin" line-rate="0,972" branch-rate="0,909" complexity="0">
+    <package name="CholletJaworskiZarwin" line-rate="0,993" branch-rate="0,938" complexity="0">
       <classes>
         <class name="CholletJaworskiZarwin.City" filename="City.cs" line-rate="1" branch-rate="1" complexity="0">
           <methods>
@@ -800,36 +800,6 @@
             <line number="18" hits="76" branch="False" />
             <line number="19" hits="76" branch="False" />
             <line number="20" hits="18" branch="False" />
-          </lines>
-        </class>
-        <class name="CholletJaworskiZarwin.Program" filename="Program.cs" line-rate="0" branch-rate="0" complexity="0">
-          <methods>
-            <method name="PressEnter" signature="()" line-rate="0" branch-rate="0">
-              <lines>
-                <line number="34" hits="0" branch="False" />
-                <line number="35" hits="0" branch="False" />
-                <line number="38" hits="0" branch="False" />
-                <line number="39" hits="0" branch="False" />
-                <line number="41" hits="0" branch="True" condition-coverage="0% (0/2)">
-                  <conditions>
-                    <condition number="36" type="jump" coverage="0%" />
-                  </conditions>
-                </line>
-                <line number="42" hits="0" branch="False" />
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="34" hits="0" branch="False" />
-            <line number="35" hits="0" branch="False" />
-            <line number="38" hits="0" branch="False" />
-            <line number="39" hits="0" branch="False" />
-            <line number="41" hits="0" branch="True" condition-coverage="0% (0/2)">
-              <conditions>
-                <condition number="36" type="jump" coverage="0%" />
-              </conditions>
-            </line>
-            <line number="42" hits="0" branch="False" />
           </lines>
         </class>
         <class name="CholletJaworskiZarwin.Soldier" filename="Soldier.cs" line-rate="1" branch-rate="0" complexity="0">

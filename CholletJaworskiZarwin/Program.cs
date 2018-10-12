@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace CholletJaworskiZarwin
 {
-
+    [ExcludeFromCodeCoverage]
     class Program
     {
         private const int WALL_HEALTH = 3;
@@ -30,6 +30,7 @@ namespace CholletJaworskiZarwin
             }
 
         }
+        [ExcludeFromCodeCoverage]
         private static void PressEnter()
         {
             Console.WriteLine("\nPress Enter to continue...");
