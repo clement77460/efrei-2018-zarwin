@@ -44,6 +44,7 @@ namespace Zarwin.Shared.Grader
                 "/p:CoverletOutputFormat=\\\"json,cobertura\\\"",
                 "/p:Exclude=\"[Zarwin.Shared.*]*\"");
 
+            process.ForwardDataAndError = true;
             process.Run();
         }
 

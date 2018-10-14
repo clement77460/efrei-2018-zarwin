@@ -8,7 +8,7 @@ namespace Zarwin.Shared.Grader
 {
     public class TestRunOperation
     {
-        private static readonly Regex _resultLine = new Regex("^Results File: (?<fileName>.*)$");
+        private static readonly Regex _resultLine = new Regex("Results File: (?<fileName>.*\\.trx)$");
 
         private readonly string _solutionDirectory;
         private readonly bool _noBuild;
@@ -32,6 +32,7 @@ namespace Zarwin.Shared.Grader
         private void ExecuteProcess()
         {
             var process = new TestProcess(_solutionDirectory, _noBuild, "--logger trx", _parameter.IncludeFilterArg);
+            process.ForwardDataAndError = true;
             process.OutputDataReceived += Process_OutputDataReceived;
             process.Run();
         }
