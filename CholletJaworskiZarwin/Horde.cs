@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using CholletJaworskiZarwin;
+using Zarwin.Shared.Contracts.Core;
 
 namespace CholletJaworskiZarwin
 {
@@ -19,7 +20,7 @@ namespace CholletJaworskiZarwin
             }
         }
 
-        public void AttackCity(City city, DamageDispatcher damageDispatcher)
+        public void AttackCity(City city, IDamageDispatcher damageDispatcher)
         {
             foreach(Walker walker in this.walkers)
             {
@@ -44,12 +45,17 @@ namespace CholletJaworskiZarwin
             return this.walkers.Count;
         }
 
-        public void KillWalkers(int amountToKill)
+        public int KillWalkers(int amountToKill)
         {
+            int nbWalkersKilled = 0;
             for (int i = 0; i < amountToKill; ++i)
             {
-                this.KillWalker();
+                if(this.KillWalker())
+                {
+                    nbWalkersKilled++;
+                }
             }
+            return nbWalkersKilled;
         }
 
     }

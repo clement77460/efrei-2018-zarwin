@@ -54,7 +54,13 @@ namespace CholletJaworskiZarwin
             decimal calcul = 1+(level-1)/10;
             int numberToKill=Convert.ToInt32(Math.Floor(calcul));
           
-            horde.KillWalkers(numberToKill);
+            // Kill walkers
+            int nbWalkersKilled = horde.KillWalkers(numberToKill);
+            // Level up for each walker killed
+            for (int i = 0; i < nbWalkersKilled; ++i)
+            {
+                this.LevelUp();
+            }
         }
 
         public override String ToString()

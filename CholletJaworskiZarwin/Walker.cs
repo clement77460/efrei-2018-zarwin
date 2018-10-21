@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using CholletJaworskiZarwin;
+using Zarwin.Shared.Contracts.Core;
 
 namespace CholletJaworskiZarwin
 {
@@ -21,7 +22,7 @@ namespace CholletJaworskiZarwin
             Walker.walkerCounterId++;
         }
 
-        public void AttackCity(City city, DamageDispatcher damageDispatcher)
+        public void AttackCity(City city, IDamageDispatcher damageDispatcher)
         {
             // If the wall still up, the walker attacks it
             if(city.Wall.Health > 0)

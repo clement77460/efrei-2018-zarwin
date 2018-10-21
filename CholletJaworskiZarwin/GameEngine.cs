@@ -17,7 +17,7 @@ namespace CholletJaworskiZarwin
         private List<WaveResult> waveResult = new List<WaveResult>();
         private SoldierParameters[] soldierParameter;
 
-        private List<Soldier> soldier= new List<Soldier>();
+        private List<Soldier> soldiers = new List<Soldier>();
         private List<SoldierState> soldierState = new List<SoldierState>();
 
         private HordeState hordeState;
@@ -48,14 +48,14 @@ namespace CholletJaworskiZarwin
 
         public Result GameLoop()
         {
-            if (soldier.Count == 0)
+            if (soldiers.Count == 0)
             {
                 waveResult.Add(new WaveResult(turnInit, turnResults.ToArray()));
                 return new Result(waveResult.ToArray());
             }
 
             turnResults.Add(turnInit);
-            while (soldier.Count > 0 && horde.GetNumberWalkersAlive() > 0)
+            while (soldiers.Count > 0 && horde.GetNumberWalkersAlive() > 0)
             {
 
                 this.DoingTurnActions();
@@ -104,14 +104,14 @@ namespace CholletJaworskiZarwin
             }
             else
             {
-                parameters.DamageDispatcher.DispatchDamage(domageToDo, soldier);
+                parameters.DamageDispatcher.DispatchDamage(domageToDo, soldiers);
             }
             
-            foreach(Soldier s in soldier.ToArray())
+            foreach(Soldier s in soldiers.ToArray())
             {
                 if (s.HealthPoints <= 0)
                 {
-                    soldier.Remove(s);
+                    soldiers.Remove(s);
                 }
             }
 
@@ -122,9 +122,9 @@ namespace CholletJaworskiZarwin
         private void refreshingSoldierState(List<SoldierState> st)
         {
             st.Clear();
-            for (int i = 0; i < soldier.Count; i++)
+            for (int i = 0; i < soldiers.Count; i++)
             {
-                st.Add(new SoldierState(soldier[i].Id, soldier[i].Level, soldier[i].HealthPoints));
+                st.Add(new SoldierState(soldiers[i].Id, soldiers[i].Level, soldiers[i].HealthPoints));
             }
         }
 
@@ -132,14 +132,14 @@ namespace CholletJaworskiZarwin
         {
             for (int i = 0; i < sp.Length; i++)
             {
-                soldier.Add(new Soldier(sp[i].Id, sp[i].Level));
+                soldiers.Add(new Soldier(sp[i].Id, sp[i].Level));
         
             }
         }
 
         private void soldiersAttacking(Horde horde)
         {
-            foreach (Soldier s in soldier)
+            foreach (Soldier s in soldiers)
             {
                 if (horde.KillWalker())
                 {
@@ -163,7 +163,7 @@ namespace CholletJaworskiZarwin
         {
             Console.WriteLine("il reste : {0} walkers", horde.GetNumberWalkersAlive());
             Console.WriteLine("le wall possède : {0} pdv", wall.Health);
-            foreach(Soldier s in soldier)
+            foreach(Soldier s in soldiers)
             {
                 Console.WriteLine(s.ToString());
             }
