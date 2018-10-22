@@ -13,7 +13,8 @@ namespace Zarwin.Shared.Tests
                 2,
                 new FirstSoldierDamageDispatcher(),
                 new HordeParameters(1),
-                new CityParameters(0));
+                new CityParameters(0),
+                new Order[0]);
 
             var actualOutput = CreateSimulator.Run(input);
 
@@ -30,6 +31,7 @@ namespace Zarwin.Shared.Tests
                 new FirstSoldierDamageDispatcher(),
                 new HordeParameters(1),
                 new CityParameters(0),
+                new Order[0],
                 new SoldierParameters(1, 1));
 
             var actualOutput = CreateSimulator.Run(input);
@@ -50,6 +52,7 @@ namespace Zarwin.Shared.Tests
                 new FirstSoldierDamageDispatcher(),
                 new HordeParameters(1),
                 new CityParameters(0),
+                new Order[0],
                 new SoldierParameters(1, 1));
 
             var actualOutput = CreateSimulator.Run(input);

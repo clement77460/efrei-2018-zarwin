@@ -1,0 +1,80 @@
+﻿{
+  "input": {
+    "wavesToRun": 1,
+    "damageDispatcher": "Zarwin.Shared.Tests.FirstSoldierDamageDispatcher, Zarwin.Shared.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "horde": {
+      "waves": [
+        {
+          "zombieTypes": [
+            {
+              "type": "Stalker",
+              "trait": "Normal",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    "soldiers": [
+      {
+        "id": 1,
+        "level": 1
+      }
+    ],
+    "city": {
+      "initialMoney": 0,
+      "wallHealthPoints": 0
+    },
+    "orders": []
+  },
+  "expectedOutput": {
+    "waves": [
+      {
+        "initialState": {
+          "soldiers": [
+            {
+              "id": 1,
+              "level": 1,
+              "healthPoints": 4
+            }
+          ],
+          "horde": {
+            "size": 1
+          },
+          "wallHealthPoints": 0,
+          "money": 0
+        },
+        "turns": [
+          {
+            "soldiers": [
+              {
+                "id": 1,
+                "level": 1,
+                "healthPoints": 4
+              }
+            ],
+            "horde": {
+              "size": 1
+            },
+            "wallHealthPoints": 0,
+            "money": 0
+          },
+          {
+            "soldiers": [
+              {
+                "id": 1,
+                "level": 2,
+                "healthPoints": 4
+              }
+            ],
+            "horde": {
+              "size": 0
+            },
+            "wallHealthPoints": 0,
+            "money": 1
+          }
+        ]
+      }
+    ]
+  }
+}

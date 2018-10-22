@@ -1,10 +1,16 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 namespace Zarwin.Shared.Grader
 {
     public class TestProcess
     {
         private readonly Process _process;
+
+        public event DataReceivedEventHandler OutputDataReceived;
+        public event DataReceivedEventHandler ErrorDataReceived;
+
+        public bool ForwardDataAndError { get; set; }
 
         public TestProcess(string solutionDirectory, bool noBuild, params string[] otherParameters)
         {
@@ -18,6 +24,23 @@ namespace Zarwin.Shared.Grader
 
             _process.StartInfo.RedirectStandardOutput = true;
             _process.StartInfo.RedirectStandardError = true;
+
+            _process.OutputDataReceived += ProcessDataReceived;
+            _process.ErrorDataReceived += ProcessErrorData;
+        }
+
+        private void ProcessDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            OutputDataReceived?.Invoke(sender, e);
+            if (ForwardDataAndError && e.Data != null)
+                Console.WriteLine(e.Data);
+        }
+
+        private void ProcessErrorData(object sender, DataReceivedEventArgs e)
+        {
+            ErrorDataReceived?.Invoke(sender, e);
+            if (ForwardDataAndError && e.Data != null)
+                Console.Error.WriteLine(e.Data);
         }
 
         public void Run()
@@ -26,12 +49,6 @@ namespace Zarwin.Shared.Grader
             _process.BeginOutputReadLine();
             _process.BeginErrorReadLine();
             _process.WaitForExit();
-        }
-
-        public event DataReceivedEventHandler OutputDataReceived
-        {
-            add { _process.OutputDataReceived += value; }
-            remove { _process.OutputDataReceived -= value; }
         }
     }
 }
