@@ -13,7 +13,7 @@ namespace ChollerJaworskiZarwin.test
 {
     public class SimulatorImplement : IInstantSimulator
     {
-        
+
         public Result Run(Parameters parameters)
         {
             //GameEngine ge = new GameEngine(parameters);
