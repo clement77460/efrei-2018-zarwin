@@ -28,6 +28,7 @@ namespace Zarwin.Shared.Grader
         {
             var branchName = args.Length > 0 ? args[0] : "local";
             var program = new Program(".", true, _currentVersion);
+            program.StepStarted += LogStep;
 
             var grade = ReadGrade() ?? new CompleteGrade();
             program.UpdateGrade(grade);
@@ -56,11 +57,20 @@ namespace Zarwin.Shared.Grader
             File.WriteAllText("grade.json", JsonConvert.SerializeObject(grade, Formatting.Indented));
         }
 
+        private static void LogStep(object sender, string step)
+        {
+            Console.WriteLine("=================================================");
+            Console.WriteLine(step.ToUpper());
+            Console.WriteLine();
+        }
+
         private readonly TestRunner _testRunner;
         private readonly CoverageRunner _coverageRunner;
 
         private readonly TestParameter _currentVersionTests;
         private readonly TestParameter _completudeTests;
+
+        public event EventHandler<string> StepStarted;
 
         public Program(string solutionDirectory, bool noBuild, int version)
         {
@@ -84,9 +94,14 @@ namespace Zarwin.Shared.Grader
 
             if (_currentVersion >= _firstVersion)
             {
+                StepStarted?.Invoke(this, $"RUNNING {_completudeTests.GradeName} TESTS");
                 grade.TestResults[_completudeTests.GradeName] = _testRunner.RunTests(_completudeTests);
+
+                StepStarted?.Invoke(this, $"RUNNING {_currentVersionTests.GradeName} TESTS");
                 grade.TestResults[_currentVersionTests.GradeName] = _testRunner.RunTests(_currentVersionTests);
             }
+
+            StepStarted?.Invoke(this, $"RUNNING TEST COVERAGE");
             grade.TestCoverage = _coverageRunner.Run(_completudeTests);
         }
 

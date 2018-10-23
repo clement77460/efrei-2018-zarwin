@@ -18,4 +18,16 @@
     <ProjectReference Include="..\Zarwin.Shared.Grader\Zarwin.Shared.Grader.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="CompleteScenarios\v2\1 soldier, 1 zombie, no wall.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CompleteScenarios\v2\1 soldier, 2 zombies, no wall.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CompleteScenarios\v2\no soldier.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
