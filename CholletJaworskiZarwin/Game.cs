@@ -45,7 +45,7 @@ namespace CholletJaworskiZarwin
             this.damageDispatcher = new DamageDispatcher();
             this.nbHordes = nbHordes;
             this.turn = 0;
-            this.message = "2078, Villejuif. The city has been fortified because of a Walkers invasion. \n" + 
+            this.message = "2078, Villejuif. The city has been fortified because of a Walkers invasion. \n" +
                 nbSoldiers + " soldiers are defending the city. Some Walkers are coming to the West of the Wall...";
 
             // Approach phase
@@ -59,14 +59,14 @@ namespace CholletJaworskiZarwin
             this.city = new City(parameters);
             this.damageDispatcher = parameters.DamageDispatcher;
             this.nbHordes = this.parameters.WavesToRun;
-            this.nbWalkersPerHorde = this.parameters.HordeParameters.Waves.Length;
+            this.nbWalkersPerHorde = this.parameters.HordeParameters.Size;
             this.currentHorde = new Horde(nbWalkersPerHorde);
             this.turn = 0;
 
             // Create initial results
             this.soldierStates = this.city.GetSoldiersStates();
             this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
-            this.turnInit = new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health,0);
+            this.turnInit = new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health);
 
             // Approach phase
             this.message = "The horde is coming. Brace yourselves.";
@@ -76,9 +76,9 @@ namespace CholletJaworskiZarwin
 
         public void Turn()
         {
-            if(this.turn == 0)
+            if (this.turn == 0)
             {
-                if(this.city.GetNumberSoldiersAlive() == 0)
+                if (this.city.GetNumberSoldiersAlive() == 0)
                 {
                     // Add turnResults to waveResults
                     this.waveResults.Add(new WaveResult(turnInit, turnResults.ToArray()));
@@ -104,7 +104,7 @@ namespace CholletJaworskiZarwin
 
 
                 // Add turn results
-                this.turnResults.Add(new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health,0));
+                this.turnResults.Add(new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health));
             }
 
             // Create a new horde if needed.
@@ -114,10 +114,12 @@ namespace CholletJaworskiZarwin
             if (this.IsFinished())
             {
                 this.message = "The game is finished.";
-                if(this.city.GetNumberSoldiersAlive() > 0 && this.nbHordes == 0)
+                if (this.city.GetNumberSoldiersAlive() > 0 && this.nbHordes == 0)
                 {
                     this.message += " Soldiers defeated the walkers.";
-                } else {
+                }
+                else
+                {
                     this.message += " The walkers defeated the soldiers.";
                 }
 

@@ -27,22 +27,22 @@ namespace CholletJaworskiZarwin
         private TurnResult turnInit;
         private List<TurnResult> turnResults = new List<TurnResult>();
 
-        public GameEngine(Parameters parameters,bool test=true)
+        public GameEngine(Parameters parameters, bool test = true)
         {
             this.testTime = test;
             this.parameters = parameters;
             soldierParameter = parameters.SoldierParameters;
 
-            
+
             this.buildingSoldiers(soldierParameter);
 
             this.refreshingSoldierState(soldierState);
 
             wall = new Wall(parameters.CityParameters.WallHealthPoints);
-            horde = new Horde(parameters.HordeParameters.Waves.Length);
+            horde = new Horde(parameters.HordeParameters.Size);
             hordeState = new HordeState(horde.GetNumberWalkersAlive());
 
-            turnInit = new TurnResult(soldierState.ToArray(), hordeState, wall.Health,0);
+            turnInit = new TurnResult(soldierState.ToArray(), hordeState, wall.Health);
         }
 
 
@@ -86,14 +86,14 @@ namespace CholletJaworskiZarwin
             hordeState = new HordeState(horde.GetNumberWalkersAlive());
 
             //completing new turn with new xxxxState
-            turnResults.Add(new TurnResult(soldierState.ToArray(), hordeState, wall.Health,0));
+            turnResults.Add(new TurnResult(soldierState.ToArray(), hordeState, wall.Health));
         }
 
         private void hordeDoingDomages(Parameters parameters, Horde horde)
         {
             int domageToDo = 0;
 
-            
+
             for (int i = 0; i < horde.GetNumberWalkersAlive(); i++)
             {
                 domageToDo++;
@@ -106,8 +106,8 @@ namespace CholletJaworskiZarwin
             {
                 parameters.DamageDispatcher.DispatchDamage(domageToDo, soldiers);
             }
-            
-            foreach(Soldier s in soldiers.ToArray())
+
+            foreach (Soldier s in soldiers.ToArray())
             {
                 if (s.HealthPoints <= 0)
                 {
@@ -133,7 +133,7 @@ namespace CholletJaworskiZarwin
             for (int i = 0; i < sp.Length; i++)
             {
                 soldiers.Add(new Soldier(sp[i].Id, sp[i].Level));
-        
+
             }
         }
 
@@ -163,7 +163,7 @@ namespace CholletJaworskiZarwin
         {
             Console.WriteLine("il reste : {0} walkers", horde.GetNumberWalkersAlive());
             Console.WriteLine("le wall possède : {0} pdv", wall.Health);
-            foreach(Soldier s in soldiers)
+            foreach (Soldier s in soldiers)
             {
                 Console.WriteLine(s.ToString());
             }

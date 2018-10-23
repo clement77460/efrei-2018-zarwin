@@ -34,7 +34,7 @@ namespace CholletJaworskiZarwin
             this.soldiers = new List<Soldier>();
             this.CreateSoldiersFromParameters(parameters.SoldierParameters);
         }
-        
+
         public void HurtSoldiers(int damages, IDamageDispatcher damageDispatcher)
         {
             damageDispatcher.DispatchDamage(damages, soldiers);
@@ -42,7 +42,7 @@ namespace CholletJaworskiZarwin
 
         public void DefendFromHorde(Horde horde)
         {
-            foreach(Soldier soldier in this.soldiers)
+            foreach (Soldier soldier in this.soldiers)
             {
                 soldier.Defend(horde);
             }
@@ -65,7 +65,7 @@ namespace CholletJaworskiZarwin
         public String SoldiersStats()
         {
             String stats = "";
-            foreach(Soldier soldier in this.soldiers)
+            foreach (Soldier soldier in this.soldiers)
             {
                 stats += "Soldier " + soldier.Id + " : " + soldier.HealthPoints + "HP. \n";
             }
@@ -75,9 +75,9 @@ namespace CholletJaworskiZarwin
 
         public Boolean AreAllSoldiersDead()
         {
-            foreach(Soldier soldier in this.soldiers)
+            foreach (Soldier soldier in this.soldiers)
             {
-                if(soldier.HealthPoints > 0)
+                if (soldier.HealthPoints > 0)
                 {
                     return false;
                 }

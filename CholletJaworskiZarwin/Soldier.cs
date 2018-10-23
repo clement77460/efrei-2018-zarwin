@@ -29,13 +29,13 @@ namespace CholletJaworskiZarwin
             Soldier.soldierCounterId++;
         }
 
-        public Soldier(int id,int level)
+        public Soldier(int id, int level)
         {
             this.soldierId = id;
             this.level = level;
             this.health = level + 3;
         }
-    
+
 
         public void Hurt(int damage)
         {
@@ -51,9 +51,9 @@ namespace CholletJaworskiZarwin
         public void Defend(Horde horde)
         {
             // The soldier kill 1 walker, plus 1 every 10 level he reached
-            decimal calcul = 1+(level-1)/10;
-            int numberToKill=Convert.ToInt32(Math.Floor(calcul));
-          
+            decimal calcul = 1 + (level - 1) / 10;
+            int numberToKill = Convert.ToInt32(Math.Floor(calcul));
+
             // Kill walkers
             int nbWalkersKilled = horde.KillWalkers(numberToKill);
             // Level up for each walker killed
@@ -65,7 +65,7 @@ namespace CholletJaworskiZarwin
 
         public override String ToString()
         {
-            return "Je suis le soldat numero " + this.soldierId + " pv = "+this.HealthPoints;
+            return "Je suis le soldat numero " + this.soldierId + " pv = " + this.HealthPoints;
         }
     }
 }

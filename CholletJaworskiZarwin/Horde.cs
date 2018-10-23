@@ -22,7 +22,7 @@ namespace CholletJaworskiZarwin
 
         public void AttackCity(City city, IDamageDispatcher damageDispatcher)
         {
-            foreach(Walker walker in this.walkers)
+            foreach (Walker walker in this.walkers)
             {
                 walker.AttackCity(city, damageDispatcher);
             }
@@ -32,7 +32,7 @@ namespace CholletJaworskiZarwin
         {
             // Walkers are little entites, so we remove it from the list, 
             // not the same as the soldiers.
-            if(this.walkers.Count > 0)
+            if (this.walkers.Count > 0)
             {
                 this.walkers.RemoveAt(0);
                 return true;
@@ -50,7 +50,7 @@ namespace CholletJaworskiZarwin
             int nbWalkersKilled = 0;
             for (int i = 0; i < amountToKill; ++i)
             {
-                if(this.KillWalker())
+                if (this.KillWalker())
                 {
                     nbWalkersKilled++;
                 }
