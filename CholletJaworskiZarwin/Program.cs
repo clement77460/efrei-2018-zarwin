@@ -18,10 +18,12 @@ namespace CholletJaworskiZarwin
         {
             Game game = new Game(WALL_HEALTH, NB_SOLDIERS, NB_WALKERS_PER_HORDE, NB_HORDES);
 
-            while (!game.IsFinished())
-            {
-                Console.WriteLine(game.Message);
-                game.Turn();
+            GameEngine gameEngine = new GameEngine(new Parameters(
+                1,
+                new FirstSoldierDamageDispatcher(),
+                new HordeParameters(10),
+                new CityParameters(5),null,
+                sp.ToArray()),false);
 
                 PressEnter();
 

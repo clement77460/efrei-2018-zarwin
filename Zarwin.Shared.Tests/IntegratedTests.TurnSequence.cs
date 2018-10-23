@@ -16,7 +16,7 @@ namespace Zarwin.Shared.Tests
                 new CityParameters(0),
                 new Order[0]);
 
-            var actualOutput = CreateSimulator.Run(input);
+            var actualOutput = CreateSimulator().Run(input);
 
             Assert.Single(actualOutput.Waves);
             Assert.Empty(actualOutput.Waves[0].Turns);
@@ -34,7 +34,7 @@ namespace Zarwin.Shared.Tests
                 new Order[0],
                 new SoldierParameters(1, 1));
 
-            var actualOutput = CreateSimulator.Run(input);
+            var actualOutput = CreateSimulator().Run(input);
 
             Assert.Single(actualOutput.Waves);
 
@@ -55,7 +55,7 @@ namespace Zarwin.Shared.Tests
                 new Order[0],
                 new SoldierParameters(1, 1));
 
-            var actualOutput = CreateSimulator.Run(input);
+            var actualOutput = CreateSimulator().Run(input);
 
             Assert.Single(actualOutput.Waves);
 
