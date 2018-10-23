@@ -26,7 +26,7 @@ namespace CholletJaworskiZarwin
                 1,
                 new FirstSoldierDamageDispatcher(),
                 new HordeParameters(10),
-                new CityParameters(5),
+                new CityParameters(5),null,
                 sp.ToArray()),false);
 
             gameEngine.GameLoop();

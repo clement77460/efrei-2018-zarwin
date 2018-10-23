@@ -39,10 +39,10 @@ namespace CholletJaworskiZarwin
             this.refreshingSoldierState(soldierState);
 
             wall = new Wall(parameters.CityParameters.WallHealthPoints);
-            horde = new Horde(parameters.HordeParameters.Size);
+            horde = new Horde(parameters.HordeParameters.Waves.Length);
             hordeState = new HordeState(horde.GetNumberWalkersAlive());
 
-            turnInit = new TurnResult(soldierState.ToArray(), hordeState, wall.Health);
+            turnInit = new TurnResult(soldierState.ToArray(), hordeState, wall.Health,0);
         }
 
 
@@ -86,7 +86,7 @@ namespace CholletJaworskiZarwin
             hordeState = new HordeState(horde.GetNumberWalkersAlive());
 
             //completing new turn with new xxxxState
-            turnResults.Add(new TurnResult(soldierState.ToArray(), hordeState, wall.Health));
+            turnResults.Add(new TurnResult(soldierState.ToArray(), hordeState, wall.Health,0));
         }
 
         private void hordeDoingDomages(Parameters parameters, Horde horde)
