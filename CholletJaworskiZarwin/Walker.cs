@@ -22,6 +22,11 @@ namespace CholletJaworskiZarwin
             Walker.walkerCounterId++;
         }
 
+
+        /**
+         * deprecated
+         * 
+        */
         public void AttackCity(City city, IDamageDispatcher damageDispatcher)
         {
             // If the wall still up, the walker attacks it

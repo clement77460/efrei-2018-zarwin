@@ -22,10 +22,12 @@ namespace CholletJaworskiZarwin
 
         public void AttackCity(City city, IDamageDispatcher damageDispatcher)
         {
+            int damage = 0;
             foreach (Walker walker in this.walkers)
             {
-                walker.AttackCity(city, damageDispatcher);
+               damage++;
             }
+            city.getAttacked(damage,damageDispatcher);
         }
 
         public bool KillWalker()

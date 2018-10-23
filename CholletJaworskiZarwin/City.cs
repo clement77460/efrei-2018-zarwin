@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Zarwin.Shared.Contracts.Core;
 using Zarwin.Shared.Contracts.Input;
 using Zarwin.Shared.Contracts.Output;
-
+using System.Diagnostics;
 namespace CholletJaworskiZarwin
 {
     public class City
@@ -40,11 +40,36 @@ namespace CholletJaworskiZarwin
             damageDispatcher.DispatchDamage(damages, soldiers);
         }
 
+        public void getAttacked(int damage, IDamageDispatcher damageDispatcher)
+        {
+
+            if (this.Wall.Health > 0)
+            {
+
+                this.Wall.WeakenWall(damage);
+            }
+            // If the wall has collapsed, the walker attack the soldiers
+            else
+            {
+                this.HurtSoldiers(damage, damageDispatcher);
+                
+                //checking if soldier is dead
+                foreach(Soldier s in soldiers.ToArray())
+                {
+                    if (s.HealthPoints <= 0)
+                        soldiers.Remove(s);
+                }
+
+            }
+            
+        }
+
         public void DefendFromHorde(Horde horde)
         {
             foreach (Soldier soldier in this.soldiers)
             {
-                soldier.Defend(horde);
+                if(soldier.HealthPoints>0)
+                    soldier.Defend(horde);
             }
         }
 
