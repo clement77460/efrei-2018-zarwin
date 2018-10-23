@@ -11,7 +11,11 @@ namespace CholletJaworskiZarwin
         private List<Soldier> soldiers;
         private Wall wall;
 
+        private int coin = 0;
+
         public Wall Wall => this.wall;
+
+        public int Coin { get => coin; }
 
         public City(int numberOfSoldiers, int wallHealth)
         {
@@ -66,10 +70,12 @@ namespace CholletJaworskiZarwin
 
         public void DefendFromHorde(Horde horde)
         {
+            int goldAmount = 0;
             foreach (Soldier soldier in this.soldiers)
             {
-                if(soldier.HealthPoints>0)
-                    soldier.Defend(horde);
+                
+                goldAmount=soldier.Defend(horde);
+                this.increaseCoin(goldAmount);
             }
         }
 
@@ -133,6 +139,11 @@ namespace CholletJaworskiZarwin
                 soldierStates.Add(new SoldierState(soldiers[i].Id, soldiers[i].Level, soldiers[i].HealthPoints));
             }
             return soldierStates;
+        }
+
+
+        public void increaseCoin(int value) {
+            this.coin += value;
         }
     }
 }

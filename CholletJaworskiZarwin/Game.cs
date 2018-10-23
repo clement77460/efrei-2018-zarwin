@@ -62,10 +62,8 @@ namespace CholletJaworskiZarwin
             this.currentHorde = new Horde(nbWalkersPerHorde);
             
 
-            // Create initial results
-            this.soldierStates = this.city.GetSoldiersStates();
-            this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
-            this.turnInit = new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health,0);
+            
+            
 
             //
             this.initTurn();
@@ -79,6 +77,10 @@ namespace CholletJaworskiZarwin
 
         private void initTurn()
         {
+            // Create initial results
+            this.soldierStates = this.city.GetSoldiersStates();
+            this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
+            this.turnInit = new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin);
             if (this.city.GetSoldiers().Count>0)
             {
                 this.turnResults.Add(this.turnInit);
@@ -106,7 +108,7 @@ namespace CholletJaworskiZarwin
 
 
                 // Add turn results
-                this.turnResults.Add(new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health,0));
+                this.turnResults.Add(new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin));
             }
 
             // Create a new horde if needed.
@@ -146,6 +148,10 @@ namespace CholletJaworskiZarwin
                     this.currentHorde = new Horde(this.nbWalkersPerHorde);
                     this.nbHordes--;
                     this.message = "Uh, it seems that another horde is coming...";
+
+                    //on vide les turnResults
+                    this.turnResults.RemoveRange(0,this.turnResults.Count);
+                    this.initTurn();
                 }
             }
             else
@@ -182,6 +188,7 @@ namespace CholletJaworskiZarwin
 
             return soldiers + walkers;
         }
+
 
     }
 }

@@ -48,7 +48,7 @@ namespace CholletJaworskiZarwin
             this.health += 1;
         }
 
-        public void Defend(Horde horde)
+        public int Defend(Horde horde)
         {
             // The soldier kill 1 walker, plus 1 every 10 level he reached
             decimal calcul = 1 + (level - 1) / 10;
@@ -61,6 +61,8 @@ namespace CholletJaworskiZarwin
             {
                 this.LevelUp();
             }
+
+            return nbWalkersKilled;
         }
 
         public override String ToString()

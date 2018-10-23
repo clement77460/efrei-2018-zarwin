@@ -80,7 +80,7 @@ namespace Zarwin.Shared.Tests
                 Version = info.GetValue<string>("version");
 
                 var jsonContent = info.GetValue<string>("content");
-
+                
                 _content = JsonConvert.DeserializeObject<ScenarioContent>(jsonContent);
             }
 
