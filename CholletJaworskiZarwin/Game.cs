@@ -78,6 +78,7 @@ namespace CholletJaworskiZarwin
         private void initTurn()
         {
             // Create initial results
+            this.city.executeOrder(turn, waveResults.Count);
             this.soldierStates = this.city.GetSoldiersStates();
             this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
             this.turnInit = new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin);
@@ -89,6 +90,7 @@ namespace CholletJaworskiZarwin
 
         public void Turn()
         {
+            
             turn++;  
             if (!this.IsFinished())
             {
@@ -102,10 +104,13 @@ namespace CholletJaworskiZarwin
                 
                 this.message = "The fight goes on.";
 
+                this.city.executeOrder(turn, waveResults.Count);
+
                 // Update stats
                 this.soldierStates = this.city.GetSoldiersStates();
                 this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
 
+                
 
                 // Add turn results
                 this.turnResults.Add(new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin));
@@ -147,9 +152,11 @@ namespace CholletJaworskiZarwin
                 {
                     this.currentHorde = new Horde(this.nbWalkersPerHorde);
                     this.nbHordes--;
+                    
                     this.message = "Uh, it seems that another horde is coming...";
 
                     //on vide les turnResults
+                    this.turn = 0;
                     this.turnResults.RemoveRange(0,this.turnResults.Count);
                     this.initTurn();
                 }

@@ -9,6 +9,7 @@ namespace CholletJaworskiZarwin
     public class City
     {
         private List<Soldier> soldiers;
+        private List<Order> orders = new List<Order>();
         private Wall wall;
 
         private int coin = 0;
@@ -19,13 +20,14 @@ namespace CholletJaworskiZarwin
 
         public City(int numberOfSoldiers, int wallHealth)
         {
+            
             this.wall = new Wall(wallHealth);
 
             // Populate the city with Soldiers
             this.soldiers = new List<Soldier>();
             for (int i = 0; i < numberOfSoldiers; i++)
             {
-                this.soldiers.Add(new Soldier());
+                this.addNewSoldier();
             }
         }
 
@@ -34,9 +36,13 @@ namespace CholletJaworskiZarwin
         {
             this.wall = new Wall(parameters.CityParameters.WallHealthPoints);
 
+            this.coin = parameters.CityParameters.InitialMoney;
             // Populate the city with Soldiers
             this.soldiers = new List<Soldier>();
             this.CreateSoldiersFromParameters(parameters.SoldierParameters);
+
+            this.orders.AddRange(parameters.Orders);
+            
         }
 
         public void HurtSoldiers(int damages, IDamageDispatcher damageDispatcher)
@@ -77,6 +83,11 @@ namespace CholletJaworskiZarwin
                 goldAmount=soldier.Defend(horde);
                 this.increaseCoin(goldAmount);
             }
+        }
+
+        public void addNewSoldier()
+        {
+            this.soldiers.Add(new Soldier());
         }
 
         public int GetNumberSoldiersAlive()
@@ -144,6 +155,34 @@ namespace CholletJaworskiZarwin
 
         public void increaseCoin(int value) {
             this.coin += value;
+        }
+        public void executeOrder(int turn,int wave)
+        {
+            foreach (Order o in orders)
+            {
+                if (o.TurnIndex == turn && o.WaveIndex==wave)
+                {
+                    if (coin >= 10)
+                    {
+                        this.coin -= 10;
+                        this.generatingOrder(o.Type);
+                    }
+                }
+            }
+        }
+
+        private void generatingOrder(OrderType type)
+        {
+            switch (type)
+            {
+                case OrderType.RecruitSoldier:
+                    this.addNewSoldier();
+                    break;
+                case OrderType.EquipWithShotgun:
+                    break;
+                case OrderType.EquipWithMachineGun:
+                    break;
+            }
         }
     }
 }

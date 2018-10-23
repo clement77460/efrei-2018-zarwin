@@ -8,7 +8,7 @@ namespace CholletJaworskiZarwin
     {
 
         // ID counter which increments each new Soldier
-        public static int soldierCounterId = 0; //public because of the test
+        public static int soldierCounterId = 1; //public because of the test
 
         private readonly int soldierId;
         private int level;
@@ -34,6 +34,7 @@ namespace CholletJaworskiZarwin
             this.soldierId = id;
             this.level = level;
             this.health = level + 3;
+            Soldier.soldierCounterId++;
         }
 
 
