@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType></DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Zarwin.Shared.Contracts\Zarwin.Shared.Contracts.csproj" />
+    <ProjectReference Include="..\Zarwin.Shared.Grader\Zarwin.Shared.Grader.csproj" />
+    <ProjectReference Include="..\Zarwin.Shared.Tests\Zarwin.Shared.Tests.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="EmptyInterface.cs" />
+  </ItemGroup>
+</Project>

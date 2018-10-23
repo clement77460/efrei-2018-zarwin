@@ -12,13 +12,13 @@ namespace Zarwin.Shared.Tests
 {
     public abstract partial class IntegratedTests
     {
-        public abstract IInstantSimulator CreateSimulator();
+        public abstract IInstantSimulator CreateSimulator { get; }
 
         [ScenarioTheory]
         [MemberData(nameof(ScenarioData), DisableDiscoveryEnumeration = false)]
         public void AllScenario(Scenario scenario)
         {
-            scenario.Run(CreateSimulator());
+            scenario.Run(CreateSimulator);
         }
 
         public static object[][] ScenarioData => Scenarios.Select(s => new object[] { s }).ToArray();
