@@ -30,6 +30,7 @@ namespace CholletJaworskiZarwin
                 Console.WriteLine(game.SoldiersStats());
 
             }
+            PressEnter();
 
         }
         [ExcludeFromCodeCoverage]

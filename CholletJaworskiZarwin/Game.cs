@@ -59,14 +59,14 @@ namespace CholletJaworskiZarwin
             this.city = new City(parameters);
             this.damageDispatcher = parameters.DamageDispatcher;
             this.nbHordes = this.parameters.WavesToRun;
-            this.nbWalkersPerHorde = this.parameters.HordeParameters.Size;
+            this.nbWalkersPerHorde = this.parameters.HordeParameters.Waves.Length;
             this.currentHorde = new Horde(nbWalkersPerHorde);
             this.turn = 0;
 
             // Create initial results
             this.soldierStates = this.city.GetSoldiersStates();
             this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
-            this.turnInit = new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health);
+            this.turnInit = new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health,0);
 
             // Approach phase
             this.message = "The horde is coming. Brace yourselves.";
@@ -104,7 +104,7 @@ namespace CholletJaworskiZarwin
 
 
                 // Add turn results
-                this.turnResults.Add(new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health));
+                this.turnResults.Add(new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health,0));
             }
 
             // Create a new horde if needed.
