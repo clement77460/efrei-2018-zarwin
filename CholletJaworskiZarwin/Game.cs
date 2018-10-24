@@ -53,6 +53,8 @@ namespace CholletJaworskiZarwin
         // Constructor for the tests
         public Game(Parameters parameters)
         {
+            Soldier.ResetId();//resetting ID before each simulations
+
             this.parameters = parameters;
             this.city = new City(parameters);
             this.damageDispatcher = parameters.DamageDispatcher;

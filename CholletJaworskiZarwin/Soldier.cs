@@ -101,5 +101,11 @@ namespace CholletJaworskiZarwin
                 }
             }
         }
+
+
+        public static void ResetId()
+        {
+            Soldier.soldierCounterId = 0;
+        }
     }
 }
