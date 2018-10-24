@@ -10,16 +10,18 @@ namespace CholletJaworskiZarwin
         // ID counter which increments each new Soldier
         public static int soldierCounterId = 1; //public because of the test
 
-        private readonly int soldierId;
+        private int soldierId;
         private int level;
         private int health;
-
+        private int killMultiplicator=1;
 
         // Accessors
         public int Id => this.soldierId;
         public int HealthPoints => this.health;
         public int Level => this.level;
 
+        private bool hasShotGun = false;
+        private bool hasMachineGun = false;
 
         public Soldier()
         {
@@ -54,7 +56,7 @@ namespace CholletJaworskiZarwin
             // The soldier kill 1 walker, plus 1 every 10 level he reached
             decimal calcul = 1 + (level - 1) / 10;
             int numberToKill = Convert.ToInt32(Math.Floor(calcul));
-
+            numberToKill = numberToKill * killMultiplicator;
             // Kill walkers
             int nbWalkersKilled = horde.KillWalkers(numberToKill);
             // Level up for each walker killed
@@ -69,6 +71,35 @@ namespace CholletJaworskiZarwin
         public override String ToString()
         {
             return "Je suis le soldat numero " + this.soldierId + " pv = " + this.HealthPoints;
+        }
+
+        public void SetShotGun()
+        {
+            this.hasShotGun = true;
+        }
+
+        public void SetMachineGun()
+        {
+            this.hasMachineGun = true;
+        }
+
+        public void updateItems(City city)
+        {
+            killMultiplicator = 1;
+            if (hasShotGun)
+            {
+                if (city.Wall.Health <= 0)
+                {
+                    killMultiplicator = 2;
+                }
+            }
+            if (hasMachineGun)
+            {
+                if (city.Wall.Health > 0)
+                {
+                    killMultiplicator = 4;
+                }
+            }
         }
     }
 }

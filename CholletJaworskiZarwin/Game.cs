@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Zarwin.Shared.Contracts.Input;
 using Zarwin.Shared.Contracts.Output;
-
 using CholletJaworskiZarwin;
 using Zarwin.Shared.Contracts.Core;
 

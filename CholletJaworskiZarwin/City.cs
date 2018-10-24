@@ -4,6 +4,8 @@ using Zarwin.Shared.Contracts.Core;
 using Zarwin.Shared.Contracts.Input;
 using Zarwin.Shared.Contracts.Output;
 using System.Diagnostics;
+using System.Linq;
+
 namespace CholletJaworskiZarwin
 {
     public class City
@@ -76,10 +78,11 @@ namespace CholletJaworskiZarwin
 
         public void DefendFromHorde(Horde horde)
         {
+
             int goldAmount = 0;
             foreach (Soldier soldier in this.soldiers)
             {
-                
+                soldier.updateItems(this);
                 goldAmount=soldier.Defend(horde);
                 this.increaseCoin(goldAmount);
             }
@@ -165,24 +168,47 @@ namespace CholletJaworskiZarwin
                     if (coin >= 10)
                     {
                         this.coin -= 10;
-                        this.generatingOrder(o.Type);
+                        this.generatingOrder(o);
                     }
                 }
             }
         }
 
-        private void generatingOrder(OrderType type)
+        private void generatingOrder(Order o)
         {
-            switch (type)
+            switch (o.Type)
             {
                 case OrderType.RecruitSoldier:
                     this.addNewSoldier();
                     break;
                 case OrderType.EquipWithShotgun:
+                    this.EquipShotGunToSoldier(o.TargetSoldier);
                     break;
                 case OrderType.EquipWithMachineGun:
+                    this.EquipMachineGunToSoldier(o.TargetSoldier);
                     break;
             }
+        }
+
+        private void EquipShotGunToSoldier(int? index)
+        {
+            var soldierLinq = (from s in soldiers
+                               where s.Id == index
+                               select s);
+            Soldier[] soldier = soldierLinq.ToArray();
+            soldier[0].SetShotGun();
+            soldier[0].updateItems(this);
+            
+        }
+        private void EquipMachineGunToSoldier(int? index)
+        {
+            var soldierLinq = (from s in soldiers
+                               where s.Id == index
+                               select s);
+            Soldier[] soldier = soldierLinq.ToArray();
+            soldier[0].SetMachineGun();
+            soldier[0].updateItems(this);
+
         }
     }
 }
