@@ -15,41 +15,42 @@ namespace Zarwin.Shared.Contracts.Output
 
         [JsonProperty("wallHealthPoints")]
         public int WallHealthPoints { get; }
-        
+
+        [JsonProperty("money")]
+        public int Money { get; }
+
         public TurnResult(
             SoldierState[] soldiers,
             HordeState horde,
-            int wallHealthPoints)
+            int wallHealthPoints,
+            int money)
         {
             Soldiers = soldiers;
             Horde = horde;
+            Money = money;
             WallHealthPoints = wallHealthPoints;
         }
 
         public override bool Equals(object obj)
         {
-            var other = obj as TurnResult;
-
-            if (other == null)
+            if (!(obj is TurnResult other))
                 return false;
 
-            var soldiersFound = from thisSoldier in this.Soldiers
+            var soldiersFound = from thisSoldier in Soldiers
                                 join otherSoldier in other.Soldiers on thisSoldier.Id equals otherSoldier.Id
                                 select Tuple.Create(thisSoldier, otherSoldier);
 
-            return this.Soldiers.Length == other.Soldiers.Length
-                && soldiersFound.Count() == this.Soldiers.Length
+            return Soldiers.Length == other.Soldiers.Length
+                && soldiersFound.Count() == Soldiers.Length
                 && soldiersFound.All(tuple => tuple.Item1.Equals(tuple.Item2))
-                && this.Horde.Equals(other.Horde)
-                && this.WallHealthPoints == other.WallHealthPoints;
+                && Horde.Equals(other.Horde)
+                && Money == other.Money
+                && WallHealthPoints == other.WallHealthPoints;
         }
 
-        public override int GetHashCode()
-        {
-            // This is not really good in terms of performance, 
-            // but this class should not really be hashed anyway
-            return 0;
-        }
+        // This is not really good in terms of performance, 
+        // but this class should not really be hashed anyway
+        public override int GetHashCode() => 0;
 
         public override string ToString()
         {

@@ -1,6 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using Xunit;
 using Xunit.Abstractions;
 using Zarwin.Shared.Contracts;
@@ -12,16 +15,19 @@ namespace Zarwin.Shared.Tests
 {
     public abstract partial class IntegratedTests
     {
-        public abstract IInstantSimulator CreateSimulator { get; }
+        public abstract IInstantSimulator CreateSimulator();
 
         [ScenarioTheory]
-        [MemberData(nameof(ScenarioData), DisableDiscoveryEnumeration = false)]
+        [MemberData(nameof(GetAllScenariosData), DisableDiscoveryEnumeration = false)]
         public void AllScenario(Scenario scenario)
         {
-            scenario.Run(CreateSimulator);
+            scenario.Run(CreateSimulator());
         }
 
-        public static object[][] ScenarioData => Scenarios.Select(s => new object[] { s }).ToArray();
+        public static object[][] GetAllScenariosData() => new ScenarioLoader()
+            .GetAllScenarios()
+            .Select(s => new object[] { s }).ToArray();
+
 
         public class Scenario : IXunitSerializable
         {
@@ -30,25 +36,28 @@ namespace Zarwin.Shared.Tests
 
             public override string ToString() => Name;
 
-            private Parameters _input;
-            private Result _expectedOuput;
+            private ScenarioContent _content;
 
-            public Scenario(string name, string version, Parameters input, Result expectedOuput)
+            public Scenario(string name, string version, ScenarioContent content)
             {
                 Name = name;
                 Version = version;
-                _input = input;
-                _expectedOuput = expectedOuput;
+                _content = content;
+            }
+
+            public Scenario(string name, string version, Parameters input, Result expectedOuput)
+                : this(name, version, new ScenarioContent(input, expectedOuput))
+            {
             }
 
             public void Run(IInstantSimulator simulator)
             {
-                if (_input == null || _expectedOuput == null)
+                if (_content == null)
                     throw new InvalidOperationException("Cannot execute a scenario without input or expectedOutput");
 
-                var actualOutput = simulator.Run(_input);
+                var actualOutput = simulator.Run(_content.Input);
 
-                Assert.Equal(_expectedOuput, actualOutput);
+                Assert.Equal(_content.ExpectedOutput, actualOutput);
             }
 
             #region IXunitSerializable
@@ -62,8 +71,7 @@ namespace Zarwin.Shared.Tests
             {
                 info.AddValue("name", Name);
                 info.AddValue("version", Version);
-                info.AddValue("input", JsonConvert.SerializeObject(_input));
-                info.AddValue("expectedOutput", JsonConvert.SerializeObject(_expectedOuput));
+                info.AddValue("content", JsonConvert.SerializeObject(_content));
             }
 
             public void Deserialize(IXunitSerializationInfo info)
@@ -71,14 +79,20 @@ namespace Zarwin.Shared.Tests
                 Name = info.GetValue<string>("name");
                 Version = info.GetValue<string>("version");
 
-                var jsonInput = info.GetValue<string>("input");
-                var jsonExpectedOutput = info.GetValue<string>("expectedOutput");
+                var jsonContent = info.GetValue<string>("content");
                 
-                _input = JsonConvert.DeserializeObject<Parameters>(jsonInput);
-                _expectedOuput = JsonConvert.DeserializeObject<Result>(jsonExpectedOutput);
+                _content = JsonConvert.DeserializeObject<ScenarioContent>(jsonContent);
             }
 
             #endregion IXunitSerializable
+        }
+
+        public class ScenarioLoader : BaseScenarioLoader<Scenario, ScenarioContent>
+        {
+            public override Scenario CreateScenario(string scenarioName, string version, ScenarioContent content)
+                => new Scenario(scenarioName, version, content);
+
+            protected override string ScenarioFolderName => "CompleteScenarios";
         }
     }
 }
