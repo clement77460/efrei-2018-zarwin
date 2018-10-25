@@ -23,14 +23,14 @@ namespace ChollerJaworskiZarwin.test
 
         }
         [Fact]
-        public void WallIsAt6HPBecause4WalkersAreLeft()
+        public void WallIsAt1HPBecause9WalkersAreHitting()
         {
             Game game = new Game(10, 5, 9, 1);
             
 
             game.Turn();
             
-            Assert.Equal(6, game.WallHealth);
+            Assert.Equal(1, game.WallHealth);
         }
         [Fact]
         public void FinishingTheGameQuickly()

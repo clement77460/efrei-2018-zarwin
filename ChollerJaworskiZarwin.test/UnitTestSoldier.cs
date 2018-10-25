@@ -43,7 +43,7 @@ namespace ChollerJaworskiZarwin.test
             Soldier s = new Soldier();
             Horde horde = new Horde(2);
 
-            s.Defend(horde);
+            s.Defend(horde, 1);
             Assert.Equal(1, horde.GetNumberWalkersAlive());
         }
 
@@ -54,8 +54,8 @@ namespace ChollerJaworskiZarwin.test
             Soldier s2 = new Soldier();
             Horde horde = new Horde(3);
 
-            s.Defend(horde);
-            s2.Defend(horde);
+            s.Defend(horde, 1);
+            s2.Defend(horde, 1);
             Assert.Equal(1, horde.GetNumberWalkersAlive());
         }
 
@@ -65,7 +65,7 @@ namespace ChollerJaworskiZarwin.test
             Soldier s = new Soldier(0,11);
             Horde horde = new Horde(3);
 
-            s.Defend(horde);
+            s.Defend(horde, 1);
             Assert.Equal(1, horde.GetNumberWalkersAlive());
         }
 
@@ -75,7 +75,7 @@ namespace ChollerJaworskiZarwin.test
             Soldier s = new Soldier(0, 21);
             Horde horde = new Horde(4);
 
-            s.Defend(horde);
+            s.Defend(horde, 1);
             Assert.Equal(1, horde.GetNumberWalkersAlive());
         }
 

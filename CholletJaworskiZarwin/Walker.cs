@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using CholletJaworskiZarwin;
 using Zarwin.Shared.Contracts.Core;
+using Zarwin.Shared.Contracts.Input;
 
 namespace CholletJaworskiZarwin
 {
@@ -13,6 +14,18 @@ namespace CholletJaworskiZarwin
 
         private readonly int idWalker;
 
+        // Type
+        internal ZombieType Type { get; set; }
+
+        // Powers
+        internal ZombieTrait Trait { get; set; }
+
+        // Last turn the walker have been damaged
+        internal int DamageTurn { get; set; }
+
+        // Damage taken during DamageTurn
+        internal int DamageTaken { get; set; }
+
         // Accessors
         public int Id => this.idWalker;
 
@@ -20,8 +33,22 @@ namespace CholletJaworskiZarwin
         {
             this.idWalker = walkerCounterId;
             Walker.walkerCounterId++;
+            this.Trait = ZombieTrait.Normal;
+            this.Type = ZombieType.Stalker;
         }
 
+        public Walker(ZombieParameter parameter)
+        {
+            this.idWalker = walkerCounterId;
+            Walker.walkerCounterId++;
+            this.Type = parameter.Type;
+            this.Trait = parameter.Trait;
+        }
+
+        /**
+         * deprecated
+         * 
+        */
         public void AttackCity(City city, IDamageDispatcher damageDispatcher)
         {
             // If the wall still up, the walker attacks it
@@ -34,6 +61,19 @@ namespace CholletJaworskiZarwin
             {
                 city.HurtSoldiers(1, damageDispatcher);
             }
+        }
+
+        public void Hurt(int turn, int damages)
+        {
+            if(this.DamageTurn != turn)
+            {
+                this.DamageTaken = damages;
+            }
+            else
+            {
+                this.DamageTaken += damages;
+            }
+            this.DamageTurn = turn;
         }
 
         public override String ToString()

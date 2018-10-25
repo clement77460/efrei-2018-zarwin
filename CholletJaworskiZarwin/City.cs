@@ -3,25 +3,33 @@ using System.Collections.Generic;
 using Zarwin.Shared.Contracts.Core;
 using Zarwin.Shared.Contracts.Input;
 using Zarwin.Shared.Contracts.Output;
+using System.Diagnostics;
+using System.Linq;
 
 namespace CholletJaworskiZarwin
 {
     public class City
     {
         private List<Soldier> soldiers;
+        private List<Order> orders = new List<Order>();
         private Wall wall;
+
+        private int coin = 0;
 
         public Wall Wall => this.wall;
 
+        public int Coin { get => coin; }
+
         public City(int numberOfSoldiers, int wallHealth)
         {
+            
             this.wall = new Wall(wallHealth);
 
             // Populate the city with Soldiers
             this.soldiers = new List<Soldier>();
             for (int i = 0; i < numberOfSoldiers; i++)
             {
-                this.soldiers.Add(new Soldier());
+                this.AddNewSoldier();
             }
         }
 
@@ -30,9 +38,13 @@ namespace CholletJaworskiZarwin
         {
             this.wall = new Wall(parameters.CityParameters.WallHealthPoints);
 
+            this.coin = parameters.CityParameters.InitialMoney;
             // Populate the city with Soldiers
             this.soldiers = new List<Soldier>();
             this.CreateSoldiersFromParameters(parameters.SoldierParameters);
+
+            this.orders.AddRange(parameters.Orders);
+            
         }
 
         public void HurtSoldiers(int damages, IDamageDispatcher damageDispatcher)
@@ -40,12 +52,45 @@ namespace CholletJaworskiZarwin
             damageDispatcher.DispatchDamage(damages, soldiers);
         }
 
-        public void DefendFromHorde(Horde horde)
+        public void GetAttacked(int damage, IDamageDispatcher damageDispatcher)
         {
+
+            if (this.Wall.Health > 0)
+            {
+
+                this.Wall.WeakenWall(damage);
+            }
+            // If the wall has collapsed, the walker attack the soldiers
+            else
+            {
+                this.HurtSoldiers(damage, damageDispatcher);
+                
+                //checking if soldier is dead
+                foreach(Soldier s in soldiers.ToArray())
+                {
+                    if (s.HealthPoints <= 0)
+                        soldiers.Remove(s);
+                }
+
+            }
+            
+        }
+
+        public void DefendFromHorde(Horde horde, int turn)
+        {
+
+            int goldAmount = 0;
             foreach (Soldier soldier in this.soldiers)
             {
-                soldier.Defend(horde);
+                soldier.updateItems(this);
+                goldAmount=soldier.Defend(horde, turn);
+                this.IncreaseCoin(goldAmount);
             }
+        }
+
+        public void AddNewSoldier()
+        {
+            this.soldiers.Add(new Soldier());
         }
 
         public int GetNumberSoldiersAlive()
@@ -108,6 +153,62 @@ namespace CholletJaworskiZarwin
                 soldierStates.Add(new SoldierState(soldiers[i].Id, soldiers[i].Level, soldiers[i].HealthPoints));
             }
             return soldierStates;
+        }
+
+
+        public void IncreaseCoin(int value) {
+            this.coin += value;
+        }
+        public void ExecuteOrder(int turn,int wave)
+        {
+            foreach (Order o in orders)
+            {
+                if (o.TurnIndex == turn && o.WaveIndex==wave)
+                {
+                    if (coin >= 10)
+                    {
+                        this.coin -= 10;
+                        this.GeneratingOrder(o);
+                    }
+                }
+            }
+        }
+
+        private void GeneratingOrder(Order o)
+        {
+            switch (o.Type)
+            {
+                case OrderType.RecruitSoldier:
+                    this.AddNewSoldier();
+                    break;
+                case OrderType.EquipWithShotgun:
+                    this.EquipShotGunToSoldier(o.TargetSoldier);
+                    break;
+                case OrderType.EquipWithMachineGun:
+                    this.EquipMachineGunToSoldier(o.TargetSoldier);
+                    break;
+            }
+        }
+
+        private void EquipShotGunToSoldier(int? index)
+        {
+            var soldierLinq = (from s in soldiers
+                               where s.Id == index
+                               select s);
+            Soldier[] soldier = soldierLinq.ToArray();
+            soldier[0].SetShotGun();
+            soldier[0].updateItems(this);
+            
+        }
+        private void EquipMachineGunToSoldier(int? index)
+        {
+            var soldierLinq = (from s in soldiers
+                               where s.Id == index
+                               select s);
+            Soldier[] soldier = soldierLinq.ToArray();
+            soldier[0].SetMachineGun();
+            soldier[0].updateItems(this);
+
         }
     }
 }
