@@ -110,9 +110,8 @@ namespace CholletJaworskiZarwin
             // Check if the game is finished (AFTER the turn) to set a message or not
             if (this.IsFinished())
             {
-                
                 this.Message = "The game is finished.";
-                if (this.city.GetNumberSoldiersAlive() > 0)
+                if (this.city.NumberSoldiersAlive> 0)
                 {
                     this.Message += " Soldiers defeated the walkers.";
                 }
@@ -163,7 +162,7 @@ namespace CholletJaworskiZarwin
 
         public Boolean IsFinished()
         {
-            return (turn >0 && (this.city.GetNumberSoldiersAlive() == 0 || this.currentHorde.GetNumberWalkersAlive() == 0));
+            return (turn >0 && (this.city.NumberSoldiersAlive== 0 || this.currentHorde.GetNumberWalkersAlive() == 0));
         }
 
         public String SoldiersStats()
@@ -173,7 +172,7 @@ namespace CholletJaworskiZarwin
 
         public override String ToString()
         {
-            String soldiers = "Soldiers are " + this.city.GetNumberSoldiersAlive() + " left. ";
+            String soldiers = "Soldiers are " + this.city.NumberSoldiersAlive+ " left. ";
             String walkers = this.currentHorde.GetNumberWalkersAlive() + " walker(s) are attacking. ";
 
             return soldiers + walkers;

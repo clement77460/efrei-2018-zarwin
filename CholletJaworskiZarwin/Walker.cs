@@ -12,10 +12,9 @@ namespace CholletJaworskiZarwin
         // ID counter which increments each new Walker
         public static int walkerCounterId = 0;
 
-        // Type
-        internal ZombieType Type { get; set; }
+        public int Id { get; private set; }
 
-        // Powers
+        internal ZombieType Type { get; set; }
         internal ZombieTrait Trait { get; set; }
 
         // Last turn the walker have been damaged
@@ -23,8 +22,6 @@ namespace CholletJaworskiZarwin
 
         // Damage taken during DamageTurn
         internal int DamageTaken { get; set; }
-
-        public int Id { get; private set; }
 
         public Walker()
         {
@@ -71,7 +68,7 @@ namespace CholletJaworskiZarwin
 
         public override String ToString()
         {
-            return "Je suis le zombie numero : " + Id;
+            return "Je suis le zombie numero : " + this.Id;
         }
 
     }

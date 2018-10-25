@@ -5,7 +5,7 @@ using CholletJaworskiZarwin;
 using Xunit;
 
 
-namespace ChollerJaworskiZarwin.test
+namespace CholletJaworskiZarwin.test
 {
     public class UnitTestWall
     {

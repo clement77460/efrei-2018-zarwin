@@ -11,13 +11,9 @@ namespace CholletJaworskiZarwin
     {
         private List<Soldier> soldiers;
         private List<Order> orders = new List<Order>();
-
-        public Wall Wall { get; set; }
-
-        private int coin = 0;
-        public int Coin { get => coin; }
-
-
+       
+        public Wall Wall { get; private set; }
+        public int Coin { get; private set; } = 0;
 
         public City(int numberOfSoldiers, int wallHealth)
         {
@@ -37,7 +33,7 @@ namespace CholletJaworskiZarwin
         {
             this.Wall = new Wall(parameters.CityParameters.WallHealthPoints);
 
-            this.coin = parameters.CityParameters.InitialMoney;
+            this.Coin  = parameters.CityParameters.InitialMoney;
             // Populate the city with Soldiers
             this.soldiers = new List<Soldier>();
             this.CreateSoldiersFromParameters(parameters.SoldierParameters);
@@ -81,7 +77,7 @@ namespace CholletJaworskiZarwin
             int goldAmount = 0;
             foreach (Soldier soldier in this.soldiers)
             {
-                soldier.updateItems(this);
+                soldier.UpdateItems(this);
                 goldAmount=soldier.Defend(horde, turn);
                 this.IncreaseCoin(goldAmount);
             }
@@ -92,17 +88,12 @@ namespace CholletJaworskiZarwin
             this.soldiers.Add(new Soldier());
         }
 
-        public int GetNumberSoldiersAlive()
+        public int NumberSoldiersAlive
         {
-            int numberSoldiersAlive = 0;
-            foreach (Soldier soldier in this.soldiers)
+            get
             {
-                if (soldier.HealthPoints > 0)
-                {
-                    numberSoldiersAlive++;
-                }
+                return this.soldiers.Where(s => s.HealthPoints > 0).ToList().Count;
             }
-            return numberSoldiersAlive;
         }
 
         // Get a string to display soldiers' ids and HP left
@@ -156,7 +147,7 @@ namespace CholletJaworskiZarwin
 
 
         public void IncreaseCoin(int value) {
-            this.coin += value;
+            this.Coin  += value;
         }
         public void ExecuteOrder(int turn,int wave)
         {
@@ -164,9 +155,9 @@ namespace CholletJaworskiZarwin
             {
                 if (o.TurnIndex == turn && o.WaveIndex==wave)
                 {
-                    if (coin >= 10)
+                    if (Coin  >= 10)
                     {
-                        this.coin -= 10;
+                        this.Coin  -= 10;
                         this.GeneratingOrder(o);
                     }
                 }
@@ -196,7 +187,7 @@ namespace CholletJaworskiZarwin
                                select s);
             Soldier[] soldier = soldierLinq.ToArray();
             soldier[0].SetShotGun();
-            soldier[0].updateItems(this);
+            soldier[0].UpdateItems(this);
             
         }
         private void EquipMachineGunToSoldier(int? index)
@@ -206,7 +197,7 @@ namespace CholletJaworskiZarwin
                                select s);
             Soldier[] soldier = soldierLinq.ToArray();
             soldier[0].SetMachineGun();
-            soldier[0].updateItems(this);
+            soldier[0].UpdateItems(this);
 
         }
     }

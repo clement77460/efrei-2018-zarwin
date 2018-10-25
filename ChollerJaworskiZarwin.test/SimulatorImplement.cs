@@ -9,7 +9,7 @@ using System.Diagnostics;
 using Xunit;
 
 
-namespace ChollerJaworskiZarwin.test
+namespace CholletJaworskiZarwin.test
 {
     public class SimulatorImplement : IInstantSimulator
     {

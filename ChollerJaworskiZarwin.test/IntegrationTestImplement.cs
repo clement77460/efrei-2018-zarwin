@@ -3,7 +3,7 @@ using Xunit;
 using Zarwin.Shared.Contracts;
 using Zarwin.Shared.Tests;
 
-namespace ChollerJaworskiZarwin.test
+namespace CholletJaworskiZarwin.test
 {
     public class IntegrationTestImplement : IntegratedTests
     {

@@ -4,7 +4,7 @@ using System.Text;
 using Xunit;
 using CholletJaworskiZarwin;
 
-namespace ChollerJaworskiZarwin.test
+namespace CholletJaworskiZarwin.test
 {
     public class UnitTestCity
     {
@@ -17,7 +17,7 @@ namespace ChollerJaworskiZarwin.test
             //getting stats useless for unit test .........
             city.SoldiersStats();
             Assert.Equal(4,horde.GetNumberWalkersAlive() );
-            Assert.Equal(1, city.GetNumberSoldiersAlive());
+            Assert.Equal(1, city.NumberSoldiersAlive);
             Assert.False(city.AreAllSoldiersDead());
         }
         [Fact]

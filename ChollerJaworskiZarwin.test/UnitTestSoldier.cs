@@ -4,7 +4,7 @@ using System.Text;
 using CholletJaworskiZarwin;
 using Xunit;
 
-namespace ChollerJaworskiZarwin.test
+namespace CholletJaworskiZarwin.test
 {
     public class UnitTestSoldier
     {

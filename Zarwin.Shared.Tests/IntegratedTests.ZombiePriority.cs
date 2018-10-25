@@ -40,8 +40,7 @@ namespace Zarwin.Shared.Tests
                     new WaveHordeParameters(
                         new ZombieParameter(ZombieType.Stalker, ZombieTrait.Tough, 1),
                         new ZombieParameter(ZombieType.Fatty, ZombieTrait.Normal, 1))
-                }),
-                new CityParameters(0, 0),
+                }),                new CityParameters(0, 0),
                 new Order[0],
                 new SoldierParameters(1, 1));
 
