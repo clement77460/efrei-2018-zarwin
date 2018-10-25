@@ -1,15 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using CholletJaworskiZarwin;
 using Zarwin.Shared.Contracts.Core;
+using Zarwin.Shared.Contracts.Input;
 
 namespace CholletJaworskiZarwin
 {
     public class Horde
     {
-
+        // Walkers list
         private List<Walker> walkers;
+
+        // Walker list accessors by types and powers
+        private List<Walker> GetWalkers(ZombieType type, ZombieTrait trait)
+        {
+            return this.walkers.Where(w => (w.Type == type) && (w.Trait == trait)).ToList();
+        }
+
+        // Damage utilities
+        private Walker lastHitWalker;
+
 
         public Horde(int numberOfWalkers)
         {
@@ -18,6 +30,20 @@ namespace CholletJaworskiZarwin
             {
                 walkers.Add(new Walker());
             }
+            this.lastHitWalker = null;
+        }
+
+        public Horde(WaveHordeParameters parameters)
+        {
+            walkers = new List<Walker>();
+            foreach (ZombieParameter walkerParams in parameters.ZombieTypes)
+            {
+                for (int i = 0; i < walkerParams.Count; ++i)
+                {
+                    this.walkers.Add(new Walker(walkerParams));
+                }
+            }
+            this.lastHitWalker = null;
         }
 
         public void AttackCity(City city, IDamageDispatcher damageDispatcher)
@@ -27,18 +53,44 @@ namespace CholletJaworskiZarwin
             {
                damage++;
             }
-            city.getAttacked(damage,damageDispatcher);
+            city.GetAttacked(damage,damageDispatcher);
         }
 
-        public bool KillWalker()
+        public bool DoWalkerDamage(int turn)
         {
-            // Walkers are little entites, so we remove it from the list, 
-            // not the same as the soldiers.
-            if (this.walkers.Count > 0)
+            // For each type (we saw that it was sorted by priority in the enum contract).
+            foreach (ZombieType type in (ZombieType[])Enum.GetValues(typeof(ZombieType)))
             {
-                this.walkers.RemoveAt(0);
-                return true;
+                // For each trait (same, sorten by priority in the enum declaration).
+                foreach (ZombieTrait trait in (ZombieTrait[])Enum.GetValues(typeof(ZombieTrait)))
+                {
+                    // If a walker exists with the current type and with the current trait
+                    if (this.GetWalkers(type, trait).Any())
+                    {
+                        // We take the first one (lowest id) of them as target
+                        Walker target = this.GetWalkers(type, trait).First();
+
+                        // If it is Tough, he has to be hit twice to be removed
+                        if (trait == ZombieTrait.Tough)
+                        {
+                            target.Hurt(turn, 1);
+                            if(target.DamageTaken >= 2 && target.DamageTurn == turn)
+                            {
+                                this.walkers.Remove(target);
+                                return true;
+                            }
+                            return false;
+                        }
+                        // Else, it is directly removed
+                        else
+                        {
+                            this.walkers.Remove(target);
+                            return true;
+                        }
+                    }
+                }
             }
+
             return false;
         }
 
@@ -47,17 +99,18 @@ namespace CholletJaworskiZarwin
             return this.walkers.Count;
         }
 
-        public int KillWalkers(int amountToKill)
+        public int DoDamages(int damages, int turn)
         {
-            int nbWalkersKilled = 0;
-            for (int i = 0; i < amountToKill; ++i)
+            int killedWalkers = 0;
+            for (int i = 0; i < damages; ++i)
             {
-                if (this.KillWalker())
+                if (this.DoWalkerDamage(turn))
                 {
-                    nbWalkersKilled++;
+                    killedWalkers++;
                 }
             }
-            return nbWalkersKilled;
+            this.lastHitWalker = null;
+            return killedWalkers;
         }
 
     }

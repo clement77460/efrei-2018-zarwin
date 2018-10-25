@@ -16,6 +16,7 @@ namespace CholletJaworskiZarwin
         private Horde currentHorde;
         private int nbHordes;
         private int turn = 0;
+        private int currentWave = 0;
 
         // Parameters given to the engine
         private Parameters parameters;
@@ -43,6 +44,7 @@ namespace CholletJaworskiZarwin
             this.currentHorde = new Horde(nbWalkersPerHorde);
             this.damageDispatcher = new DamageDispatcher();
             this.nbHordes = nbHordes;
+            this.parameters = null;
             this.message = "2078, Villejuif. The city has been fortified because of a Walkers invasion. \n" +
                 nbSoldiers + " soldiers are defending the city. Some Walkers are coming to the West of the Wall...";
 
@@ -60,14 +62,10 @@ namespace CholletJaworskiZarwin
             this.damageDispatcher = parameters.DamageDispatcher;
             this.nbHordes = this.parameters.WavesToRun;
             this.nbWalkersPerHorde = this.parameters.HordeParameters.Waves[0].ZombieTypes[0].Count;
-            this.currentHorde = new Horde(nbWalkersPerHorde);
-            
-
-            
-            
+            this.currentHorde = new Horde(parameters.HordeParameters.Waves[0]);
 
             //
-            this.initTurn();
+            this.InitTurn();
 
             // Approach phase
             this.message = "The horde is coming. Brace yourselves.";
@@ -76,10 +74,10 @@ namespace CholletJaworskiZarwin
         public String Message => this.message;
 
 
-        private void initTurn()
+        private void InitTurn()
         {
             // Create initial results
-            this.city.executeOrder(turn, waveResults.Count);
+            this.city.ExecuteOrder(turn, waveResults.Count);
             this.soldierStates = this.city.GetSoldiersStates();
             this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
             this.turnInit = new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin);
@@ -98,20 +96,16 @@ namespace CholletJaworskiZarwin
                 // Horde attacks the city (and its soldiers)
                 currentHorde.AttackCity(this.city, this.damageDispatcher);
 
-
                 // Soldiers attacks the horde to defend the city
-                city.DefendFromHorde(this.currentHorde);
+                city.DefendFromHorde(this.currentHorde, this.turn);
 
-                
                 this.message = "The fight goes on.";
 
-                this.city.executeOrder(turn, waveResults.Count);
+                this.city.ExecuteOrder(turn, waveResults.Count);
 
                 // Update stats
                 this.soldierStates = this.city.GetSoldiersStates();
                 this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
-
-                
 
                 // Add turn results
                 this.turnResults.Add(new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin));
@@ -152,7 +146,16 @@ namespace CholletJaworskiZarwin
 
                 if (this.nbHordes > 1)
                 {
-                    this.currentHorde = new Horde(this.nbWalkersPerHorde);
+                    this.currentWave++;
+                    //if(this.parameters != null)
+                    //{
+                    //    this.currentHorde = new Horde(this.parameters.HordeParameters.Waves[0]);
+                    //}
+                    //else
+                    //{
+                        this.currentHorde = new Horde(this.nbWalkersPerHorde);
+                    //}
+
                     this.nbHordes--;
                     
                     this.message = "Uh, it seems that another horde is coming...";
@@ -160,7 +163,7 @@ namespace CholletJaworskiZarwin
                     //on vide les turnResults
                     this.turn = 0;
                     this.turnResults.RemoveRange(0,this.turnResults.Count);
-                    this.initTurn();
+                    this.InitTurn();
                 }
             }
             else

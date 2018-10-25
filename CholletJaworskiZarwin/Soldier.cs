@@ -51,14 +51,14 @@ namespace CholletJaworskiZarwin
             this.health += 1;
         }
 
-        public int Defend(Horde horde)
+        public int Defend(Horde horde, int turn)
         {
             // The soldier kill 1 walker, plus 1 every 10 level he reached
             decimal calcul = 1 + (level - 1) / 10;
-            int numberToKill = Convert.ToInt32(Math.Floor(calcul));
-            numberToKill = numberToKill * killMultiplicator;
+            int damages = Convert.ToInt32(Math.Floor(calcul));
+            damages = damages * killMultiplicator;
             // Kill walkers
-            int nbWalkersKilled = horde.KillWalkers(numberToKill);
+            int nbWalkersKilled = horde.DoDamages(damages, turn);
             // Level up for each walker killed
             for (int i = 0; i < nbWalkersKilled; ++i)
             {

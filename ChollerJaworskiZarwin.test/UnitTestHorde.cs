@@ -19,7 +19,7 @@ namespace ChollerJaworskiZarwin.test
         public void Creating8Walkers_KillingOne()
         {
             Horde horde = new Horde(8);
-            horde.KillWalker();
+            horde.DoWalkerDamage(1);
             Assert.Equal(7, horde.GetNumberWalkersAlive());
         }
 
@@ -27,7 +27,7 @@ namespace ChollerJaworskiZarwin.test
         public void Creating8Walkers_KillingTwo()
         {
             Horde horde = new Horde(8);
-            horde.KillWalkers(2);
+            horde.DoDamages(2, 1);
             Assert.Equal(6, horde.GetNumberWalkersAlive());
         }
 

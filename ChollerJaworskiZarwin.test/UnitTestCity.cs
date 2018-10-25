@@ -13,7 +13,7 @@ namespace ChollerJaworskiZarwin.test
         {
             Horde horde = new Horde(5);
             City city = new City(1, 5);
-            city.DefendFromHorde(horde);
+            city.DefendFromHorde(horde, 1);
             //getting stats useless for unit test .........
             city.SoldiersStats();
             Assert.Equal(4,horde.GetNumberWalkersAlive() );
