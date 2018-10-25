@@ -125,13 +125,14 @@ namespace CholletJaworskiZarwin
             {
                 
                 this.message = "The game is finished.";
-                if (this.city.GetNumberSoldiersAlive() > 0 && this.nbHordes == 0)
+                if (this.city.GetNumberSoldiersAlive() > 0)
                 {
                     this.message += " Soldiers defeated the walkers.";
                 }
                 else
                 {
-                    this.message += " The walkers defeated the soldiers.";
+                    if(this.nbHordes != 0)
+                        this.message += " The walkers defeated the soldiers.";
                 }
 
             }
@@ -183,11 +184,11 @@ namespace CholletJaworskiZarwin
 
         public int WallHealth => this.city.Wall.Health;
 
-        public void RefreshSoldierStates()
+        /*public void RefreshSoldierStates()
         {
             this.soldierStates.Clear();
             this.soldierStates = city.GetSoldiersStates();
-        }
+        }*/
 
         public override String ToString()
         {
