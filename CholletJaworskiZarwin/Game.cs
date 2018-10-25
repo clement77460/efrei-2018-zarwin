@@ -17,24 +17,20 @@ namespace CholletJaworskiZarwin
         private int nbHordes;
         private int turn = 0;
         private int currentWave = 0;
-
-        // Parameters given to the engine
+        public int WallHealth => this.city.Wall.Health;
+        
         private Parameters parameters;
-
-        // Stats objects
+        
         private List<SoldierState> soldierStates = new List<SoldierState>();
         private HordeState hordeState;
 
-        // Results
         private TurnResult turnInit;
         private List<TurnResult> turnResults = new List<TurnResult>();
         private List<WaveResult> waveResults = new List<WaveResult>();
 
-        IDamageDispatcher damageDispatcher;
+        private IDamageDispatcher damageDispatcher;
 
-        // Message corresponds to the output of the current turn, if you want to
-        // display it in a console for example.
-        private String message;
+        public String Message { get; private set; }
 
         // Constructor for the console program
         public Game(int wallHealth, int nbSoldiers, int nbWalkersPerHorde, int nbHordes)
@@ -45,11 +41,11 @@ namespace CholletJaworskiZarwin
             this.damageDispatcher = new DamageDispatcher();
             this.nbHordes = nbHordes;
             this.parameters = null;
-            this.message = "2078, Villejuif. The city has been fortified because of a Walkers invasion. \n" +
+            this.Message = "2078, Villejuif. The city has been fortified because of a Walkers invasion. \n" +
                 nbSoldiers + " soldiers are defending the city. Some Walkers are coming to the West of the Wall...";
 
             // Approach phase
-            this.message = "The horde is coming. Brace yourselves.";
+            this.Message = "The horde is coming. Brace yourselves.";
         }
 
         // Constructor for the tests
@@ -68,11 +64,8 @@ namespace CholletJaworskiZarwin
             this.InitTurn();
 
             // Approach phase
-            this.message = "The horde is coming. Brace yourselves.";
+            this.Message = "The horde is coming. Brace yourselves.";
         }
-
-        public String Message => this.message;
-
 
         private void InitTurn()
         {
@@ -99,7 +92,7 @@ namespace CholletJaworskiZarwin
                 // Soldiers attacks the horde to defend the city
                 city.DefendFromHorde(this.currentHorde, this.turn);
 
-                this.message = "The fight goes on.";
+                this.Message = "The fight goes on.";
 
                 this.city.ExecuteOrder(turn, waveResults.Count);
 
@@ -118,15 +111,15 @@ namespace CholletJaworskiZarwin
             if (this.IsFinished())
             {
                 
-                this.message = "The game is finished.";
+                this.Message = "The game is finished.";
                 if (this.city.GetNumberSoldiersAlive() > 0)
                 {
-                    this.message += " Soldiers defeated the walkers.";
+                    this.Message += " Soldiers defeated the walkers.";
                 }
                 else
                 {
                     if(this.nbHordes != 0)
-                        this.message += " The walkers defeated the soldiers.";
+                        this.Message += " The walkers defeated the soldiers.";
                 }
 
             }
@@ -147,18 +140,11 @@ namespace CholletJaworskiZarwin
                 if (this.nbHordes > 1)
                 {
                     this.currentWave++;
-                    //if(this.parameters != null)
-                    //{
-                    //    this.currentHorde = new Horde(this.parameters.HordeParameters.Waves[0]);
-                    //}
-                    //else
-                    //{
-                        this.currentHorde = new Horde(this.nbWalkersPerHorde);
-                    //}
+                    this.currentHorde = new Horde(this.nbWalkersPerHorde);
 
                     this.nbHordes--;
                     
-                    this.message = "Uh, it seems that another horde is coming...";
+                    this.Message = "Uh, it seems that another horde is coming...";
 
                     //on vide les turnResults
                     this.turn = 0;
@@ -184,14 +170,6 @@ namespace CholletJaworskiZarwin
         {
             return this.city.SoldiersStats();
         }
-
-        public int WallHealth => this.city.Wall.Health;
-
-        /*public void RefreshSoldierStates()
-        {
-            this.soldierStates.Clear();
-            this.soldierStates = city.GetSoldiersStates();
-        }*/
 
         public override String ToString()
         {

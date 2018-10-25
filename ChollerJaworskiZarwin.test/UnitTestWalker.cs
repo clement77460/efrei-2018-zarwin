@@ -11,7 +11,7 @@ namespace ChollerJaworskiZarwin.test
 
 
         [Fact]
-        public void walkerAttackingCity_redirectingOnWall()
+        public void WalkerAttackingCity_redirectingOnWall()
         {
             Walker w = new Walker();
             City city = new City(1, 5);
@@ -25,7 +25,7 @@ namespace ChollerJaworskiZarwin.test
         }
 
         [Fact]
-        public void walkerAttackingCity_redirectingOnSoldiers()
+        public void WalkerAttackingCity_redirectingOnSoldiers()
         {
             Walker.walkerCounterId = 0;
             Walker w = new Walker();

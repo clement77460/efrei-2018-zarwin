@@ -10,7 +10,7 @@ namespace ChollerJaworskiZarwin.test
     public class UnitTestGame
     {
         [Fact]
-        public void testStringReturnGameIsNotFinishedAfterOneTurn()
+        public void TestStringReturnGameIsNotFinishedAfterOneTurn()
         {
             Game game = new Game(10, 5, 10, 10);
             game.SoldiersStats();

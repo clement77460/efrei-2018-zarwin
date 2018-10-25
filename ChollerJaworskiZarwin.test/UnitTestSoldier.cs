@@ -48,7 +48,7 @@ namespace ChollerJaworskiZarwin.test
         }
 
         [Fact]
-        public void _2SoldiersLVL1CanKill2Walkers()
+        public void TwoSoldiersLVL1CanKill2Walkers()
         {
             Soldier s = new Soldier();
             Soldier s2 = new Soldier();

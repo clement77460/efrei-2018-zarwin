@@ -12,8 +12,6 @@ namespace CholletJaworskiZarwin
         // ID counter which increments each new Walker
         public static int walkerCounterId = 0;
 
-        private readonly int idWalker;
-
         // Type
         internal ZombieType Type { get; set; }
 
@@ -26,12 +24,11 @@ namespace CholletJaworskiZarwin
         // Damage taken during DamageTurn
         internal int DamageTaken { get; set; }
 
-        // Accessors
-        public int Id => this.idWalker;
+        public int Id { get; private set; }
 
         public Walker()
         {
-            this.idWalker = walkerCounterId;
+            this.Id = walkerCounterId;
             Walker.walkerCounterId++;
             this.Trait = ZombieTrait.Normal;
             this.Type = ZombieType.Stalker;
@@ -39,16 +36,12 @@ namespace CholletJaworskiZarwin
 
         public Walker(ZombieParameter parameter)
         {
-            this.idWalker = walkerCounterId;
+            this.Id = walkerCounterId;
             Walker.walkerCounterId++;
             this.Type = parameter.Type;
             this.Trait = parameter.Trait;
         }
 
-        /**
-         * deprecated
-         * 
-        */
         public void AttackCity(City city, IDamageDispatcher damageDispatcher)
         {
             // If the wall still up, the walker attacks it
@@ -78,7 +71,7 @@ namespace CholletJaworskiZarwin
 
         public override String ToString()
         {
-            return "Je suis le zombie numero : " + idWalker;
+            return "Je suis le zombie numero : " + Id;
         }
 
     }

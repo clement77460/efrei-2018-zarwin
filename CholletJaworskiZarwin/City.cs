@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Zarwin.Shared.Contracts.Core;
 using Zarwin.Shared.Contracts.Input;
 using Zarwin.Shared.Contracts.Output;
-using System.Diagnostics;
 using System.Linq;
 
 namespace CholletJaworskiZarwin
@@ -12,18 +11,18 @@ namespace CholletJaworskiZarwin
     {
         private List<Soldier> soldiers;
         private List<Order> orders = new List<Order>();
-        private Wall wall;
+
+        public Wall Wall { get; set; }
 
         private int coin = 0;
-
-        public Wall Wall => this.wall;
-
         public int Coin { get => coin; }
+
+
 
         public City(int numberOfSoldiers, int wallHealth)
         {
             
-            this.wall = new Wall(wallHealth);
+            this.Wall = new Wall(wallHealth);
 
             // Populate the city with Soldiers
             this.soldiers = new List<Soldier>();
@@ -36,7 +35,7 @@ namespace CholletJaworskiZarwin
         // Constructor with given parameters
         public City(Parameters parameters)
         {
-            this.wall = new Wall(parameters.CityParameters.WallHealthPoints);
+            this.Wall = new Wall(parameters.CityParameters.WallHealthPoints);
 
             this.coin = parameters.CityParameters.InitialMoney;
             // Populate the city with Soldiers
