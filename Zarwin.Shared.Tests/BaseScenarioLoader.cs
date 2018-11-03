@@ -8,20 +8,31 @@ namespace Zarwin.Shared.Tests
 {
     public abstract class BaseScenarioLoader<TScenario, TScenarioContent>
     {
-        public IEnumerable<TScenario> GetAllScenarios()
+        protected abstract string ScenarioFolderName { get; }
+
+        private string GetScenarioFolder()
         {
             var assemblyFolder = Path.GetDirectoryName(typeof(IntegratedTests).Assembly.Location);
-            var scenariosFolder = Path.Combine(assemblyFolder, ScenarioFolderName);
+            return Path.Combine(assemblyFolder, ScenarioFolderName);
+        }
+
+        public IEnumerable<TScenario> GetAllScenarios()
+        {
+            string scenariosFolder = GetScenarioFolder();
             return Directory.EnumerateDirectories(scenariosFolder)
                 .SelectMany(GetVersionScenarios);
         }
-
-        protected abstract string ScenarioFolderName { get; }
 
         public IEnumerable<TScenario> GetVersionScenarios(string versionPath)
         {
             return Directory.EnumerateFiles(versionPath)
                 .Select(GetScenarioFromFile);
+        }
+
+        public TScenario GetScenario(string version, string scenarioName)
+        {
+            var scenarioPath = Path.Combine(GetScenarioFolder(), version, scenarioName + ".json");
+            return GetScenarioFromFile(scenarioPath);
         }
 
         public TScenario GetScenarioFromFile(string scenarioPath)

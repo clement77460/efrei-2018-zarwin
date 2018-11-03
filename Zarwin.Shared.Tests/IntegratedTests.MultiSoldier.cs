@@ -1,5 +1,6 @@
 ﻿using Xunit;
 using Zarwin.Shared.Contracts.Input;
+using Zarwin.Shared.Contracts.Input.Orders;
 
 namespace Zarwin.Shared.Tests
 {
