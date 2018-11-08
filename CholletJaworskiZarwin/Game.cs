@@ -126,7 +126,7 @@ namespace CholletJaworskiZarwin
 
         public Result GetResult()
         {
-            return new Result(this.waveResults.ToArray());
+            return new Result("CholletJawordki", this.waveResults.ToArray());
         }
 
         private void ManageHordes()
