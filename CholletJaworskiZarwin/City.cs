@@ -167,37 +167,49 @@ namespace CholletJaworskiZarwin
 
         private void GeneratingOrder(Order o)
         {
-            switch (o.Type)
+            switch (o)
             {
-                case OrderType.RecruitSoldier:
+                case Equipment equipment:
+                    
+                    Equipment orderEquipment = (Equipment)o;
+                    this.setEquipmentToSoldier(orderEquipment);
+                    break;
+
+                case Medipack mediPack:
+                    break;
+
+                case Zarwin.Shared.Contracts.Input.Orders.Wall wall:
+                    break;
+
+                default:
+                    System.Diagnostics.Debug.WriteLine(""+o.Type);
                     this.AddNewSoldier();
                     break;
-                case OrderType.EquipWithShotgun:
-                    this.EquipShotGunToSoldier(o.TargetSoldier);
-                    break;
-                case OrderType.EquipWithMachineGun:
-                    this.EquipMachineGunToSoldier(o.TargetSoldier);
-                    break;
+                
             }
         }
 
-        private void EquipShotGunToSoldier(int? index)
+        private void setEquipmentToSoldier(Equipment equipment)
         {
             var soldierLinq = (from s in soldiers
-                               where s.Id == index
+                               where s.Id == equipment.TargetSoldier
                                select s);
             Soldier[] soldier = soldierLinq.ToArray();
-            soldier[0].SetShotGun();
-            soldier[0].UpdateItems(this);
+            switch (equipment.Type)
+            {
+                case OrderType.EquipWithShotgun:
+                    soldier[0].SetShotGun();
+                    break;
+
+                case OrderType.EquipWithMachineGun:
+                    soldier[0].SetMachineGun();
+                    break;
+
+                case OrderType.EquipWithSniper:
+                    soldier[0].SetSniper();
+                    break;
+            }
             
-        }
-        private void EquipMachineGunToSoldier(int? index)
-        {
-            var soldierLinq = (from s in soldiers
-                               where s.Id == index
-                               select s);
-            Soldier[] soldier = soldierLinq.ToArray();
-            soldier[0].SetMachineGun();
             soldier[0].UpdateItems(this);
 
         }
