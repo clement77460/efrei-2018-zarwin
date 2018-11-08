@@ -69,6 +69,18 @@ namespace CholletJaworskiZarwin
            
         }
 
+        public int sniping(Horde horde)
+        {
+            if (hasSniper)
+            {
+                //on tue un walker
+                horde.oneShotWalker();
+                this.LevelUp();
+                return 1;
+            }
+            return 0;
+        }
+
         public override String ToString()
         {
             return "Je suis le soldat numero " + this.Id + " pv = " + this.HealthPoints;

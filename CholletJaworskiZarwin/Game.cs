@@ -57,7 +57,7 @@ namespace CholletJaworskiZarwin
             this.city = new City(parameters);
             this.damageDispatcher = parameters.DamageDispatcher;
             this.nbHordes = this.parameters.WavesToRun;
-            this.nbWalkersPerHorde = this.parameters.HordeParameters.Waves[0].ZombieTypes[0].Count;
+            this.nbWalkersPerHorde = this.parameters.HordeParameters.Waves[0].ZombieTypes[0].Count; //faire une methode pr calculer le nbr de zombies
             this.currentHorde = new Horde(parameters.HordeParameters.Waves[0]);
 
             //
@@ -69,8 +69,12 @@ namespace CholletJaworskiZarwin
 
         private void InitTurn()
         {
+            
             // Create initial results
             this.city.ExecuteOrder(turn, waveResults.Count);
+
+            this.city.snipersAreShoting(this.currentHorde);
+
             this.soldierStates = this.city.GetSoldiersStates();
             this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
             this.turnInit = new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin);
@@ -84,6 +88,7 @@ namespace CholletJaworskiZarwin
         {
             
             turn++;  
+
             if (!this.IsFinished())
             {
                 // Horde attacks the city (and its soldiers)
@@ -139,7 +144,21 @@ namespace CholletJaworskiZarwin
                 if (this.nbHordes > 1)
                 {
                     this.currentWave++;
-                    this.currentHorde = new Horde(this.nbWalkersPerHorde);
+
+                    
+                    if (this.parameters.HordeParameters.Waves.Length > 1)
+                    {
+                        int nb = 0;
+                        for (int i = 0; i < this.parameters.HordeParameters.Waves[currentWave].ZombieParameters.Length; i++)
+                        {
+                            nb += this.parameters.HordeParameters.Waves[currentWave].ZombieParameters[i].Count;
+                        }
+                        this.currentHorde = new Horde(nb);
+                    }
+                    else
+                    {
+                        this.currentHorde = new Horde(this.nbWalkersPerHorde);
+                    }
 
                     this.nbHordes--;
                     

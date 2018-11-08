@@ -79,8 +79,20 @@ namespace CholletJaworskiZarwin
             foreach (Soldier soldier in this.soldiers)
             {
                 soldier.UpdateItems(this);
-                goldAmount=soldier.Defend(horde, turn);
+                System.Diagnostics.Debug.WriteLine("Il y a x walkers : " + horde.GetNumberWalkersAlive());
+                goldAmount =soldier.Defend(horde, turn);
+                System.Diagnostics.Debug.WriteLine("[AFTER] Il y a x walkers : " + horde.GetNumberWalkersAlive());
                 this.IncreaseCoin(goldAmount);
+            }
+        }
+
+        public void snipersAreShoting(Horde horde)
+        {
+            int goldAmount = 0;
+            foreach (Soldier soldier in this.soldiers)
+            {
+                goldAmount+=soldier.sniping(horde);
+                
             }
         }
 
@@ -182,7 +194,7 @@ namespace CholletJaworskiZarwin
                     break;
 
                 default:
-                    System.Diagnostics.Debug.WriteLine(""+o.Type);
+                    
                     this.AddNewSoldier();
                     break;
                 
@@ -206,6 +218,7 @@ namespace CholletJaworskiZarwin
                     break;
 
                 case OrderType.EquipWithSniper:
+                    System.Diagnostics.Debug.WriteLine("j'equipe un sniper : " );
                     soldier[0].SetSniper();
                     break;
             }
