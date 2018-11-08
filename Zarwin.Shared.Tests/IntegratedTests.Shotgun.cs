@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Xunit;
 using Zarwin.Shared.Contracts.Input;
+using Zarwin.Shared.Contracts.Input.Orders;
 
 namespace Zarwin.Shared.Tests
 {
@@ -17,7 +18,7 @@ namespace Zarwin.Shared.Tests
                 new CityParameters(6, 15),
                 new Order[]
                 {
-                    new Order(0, 0, OrderType.EquipWithShotgun, 1)
+                    new Equipment(0, 0, OrderType.EquipWithShotgun, 1)
                 },
                 new SoldierParameters(1, 1));
 
@@ -38,14 +39,14 @@ namespace Zarwin.Shared.Tests
                 new CityParameters(6, 15),
                 new Order[]
                 {
-                    new Order(0, 0, OrderType.EquipWithShotgun, 1)
+                    new Equipment(0, 0, OrderType.EquipWithShotgun, 1)
                 },
                 new SoldierParameters(1, 1));
 
             var actualOutput = CreateSimulator().Run(input);
 
             Assert.Equal(4, actualOutput.Waves[0].Turns[1].Horde.Size);
-            // Instead of 15
+            // Instead of 6
         }
 
         [Fact]
@@ -59,7 +60,7 @@ namespace Zarwin.Shared.Tests
                 new CityParameters(6, 15),
                 new Order[]
                 {
-                    new Order(0, 0, OrderType.EquipWithShotgun, 1)
+                    new Equipment(0, 0, OrderType.EquipWithShotgun, 1)
                 },
                 new SoldierParameters(1, 1));
 
@@ -80,7 +81,7 @@ namespace Zarwin.Shared.Tests
                 new CityParameters(1000, 15),
                 new Order[]
                 {
-                    new Order(0, 0, OrderType.EquipWithShotgun, 1)
+                    new Equipment(0, 0, OrderType.EquipWithShotgun, 1)
                 },
                 new SoldierParameters(1, 1));
 
@@ -102,7 +103,7 @@ namespace Zarwin.Shared.Tests
                 new CityParameters(11, 15),
                 new Order[]
                 {
-                    new Order(0, 0, OrderType.EquipWithShotgun, 1)
+                    new Equipment(0, 0, OrderType.EquipWithShotgun, 1)
                 },
                 new SoldierParameters(1, 1));
 
@@ -125,7 +126,7 @@ namespace Zarwin.Shared.Tests
                 new CityParameters(0, 9),
                 new Order[]
                 {
-                    new Order(1, 0, OrderType.EquipWithShotgun, 4)
+                    new Equipment(1, 0, OrderType.EquipWithShotgun, 4)
                 },
                 new SoldierParameters(1, 1),
                 new SoldierParameters(2, 1),

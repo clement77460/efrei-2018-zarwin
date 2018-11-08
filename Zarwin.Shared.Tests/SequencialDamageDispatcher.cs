@@ -6,18 +6,25 @@ namespace Zarwin.Shared.Tests
 {
     public class SequencialDamageDispatcher : IDamageDispatcher
     {
-        public void DispatchDamage(int damage, IEnumerable<ISoldier> soldiers)
+        public IEnumerable<TSoldier> DispatchDamage<TSoldier>(int damage, IEnumerable<TSoldier> soldiers)
+            where TSoldier : ISoldier
         {
             if (!soldiers.Any())
-                return;
+                return Enumerable.Empty<TSoldier>();
 
-            foreach (var pair in SplitDamage(damage, soldiers))
+            var distribution = SplitDamage(damage, soldiers);
+            foreach (var pair in distribution)
             {
                 pair.Key.Hurt(pair.Value);
             }
+
+            return distribution
+                .Where(pair => pair.Value > 0)
+                .Select(pair => pair.Key);
         }
 
-        private IDictionary<ISoldier, int> SplitDamage(int damage, IEnumerable<ISoldier> soldiers)
+        private IDictionary<TSoldier, int> SplitDamage<TSoldier>(int damage, IEnumerable<TSoldier> soldiers)
+            where TSoldier : ISoldier
         {
             var soldiersArray = soldiers.OrderBy(soldier => soldier.Id).ToArray();
             var result = soldiers.ToDictionary(

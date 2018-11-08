@@ -3,6 +3,12 @@
     public enum ZombieType
     {
         Fatty = 1,
-        Stalker = 2,
+
+        /// <summary>
+        /// Executes an additional turn after all soldiers
+        /// </summary>
+        Runner = 2, 
+
+        Stalker = 3,
     }
 }
