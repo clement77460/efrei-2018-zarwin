@@ -56,7 +56,7 @@ namespace CholletJaworskiZarwin
                 decimal calcul = 1 + (this.Level - 1) / 10;// The soldier kill 1 walker, plus 1 every 10 level he reached
                 int damages = Convert.ToInt32(Math.Floor(calcul));
                 damages = damages * killMultiplicator;
-                System.Diagnostics.Debug.WriteLine("j'inflige : " + damages);
+                
                 int nbWalkersKilled = horde.DoDamages(damages, turn);// Kill walkers
 
                 for (int i = 0; i < nbWalkersKilled; ++i)
@@ -120,6 +120,17 @@ namespace CholletJaworskiZarwin
             }
         }
 
+        public void HealMe(int value)
+        {
+            if(this.HealthPoints + value >= this.Level + 3)
+            {
+                this.HealthPoints = this.Level + 3;
+            }    
+            else
+            {
+                this.HealthPoints += value;
+            }
+        }
 
         public static void ResetId()
         {

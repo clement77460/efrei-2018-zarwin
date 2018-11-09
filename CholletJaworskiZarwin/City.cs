@@ -16,6 +16,8 @@ namespace CholletJaworskiZarwin
         public Wall Wall { get; private set; }
         public int Coin { get; private set; } = 0;
 
+        public int nbTower { get; private set; } = 0;
+
         public City(int numberOfSoldiers, int wallHealth)
         {
             
@@ -79,9 +81,7 @@ namespace CholletJaworskiZarwin
             foreach (Soldier soldier in this.soldiers)
             {
                 soldier.UpdateItems(this);
-                System.Diagnostics.Debug.WriteLine("Il y a x walkers : " + horde.GetNumberWalkersAlive());
                 goldAmount =soldier.Defend(horde, turn);
-                System.Diagnostics.Debug.WriteLine("[AFTER] Il y a x walkers : " + horde.GetNumberWalkersAlive());
                 this.IncreaseCoin(goldAmount);
             }
         }
@@ -168,63 +168,117 @@ namespace CholletJaworskiZarwin
             {
                 if (o.TurnIndex == turn && o.WaveIndex==wave)
                 {
-                    if (Coin  >= 10)
-                    {
-                        this.Coin  -= 10;
-                        this.GeneratingOrder(o);
-                    }
+                    this.GeneratingOrder(o);
                 }
             }
         }
 
+        private bool CheckIfEnoughGold(int amount)
+        {
+            if(Coin >= amount)
+            {
+                this.Coin -= amount;
+                return true;
+            }
+
+            return false;
+        }
+
         private void GeneratingOrder(Order o)
         {
+            
             switch (o)
             {
                 case Equipment equipment:
-                    
-                    Equipment orderEquipment = (Equipment)o;
-                    this.setEquipmentToSoldier(orderEquipment);
+                    this.SetEquipmentToSoldier(equipment);
                     break;
 
                 case Medipack mediPack:
+                    this.BuyMediPack(mediPack);
                     break;
 
-                case Zarwin.Shared.Contracts.Input.Orders.Wall wall:
+                case Zarwin.Shared.Contracts.Input.Orders.Wall wallOrder:
+                    this.RepairWall(wallOrder);
                     break;
 
                 default:
-                    
-                    this.AddNewSoldier();
+                    this.AddOrderForCity(o);
                     break;
                 
             }
         }
 
-        private void setEquipmentToSoldier(Equipment equipment)
+        private void SetEquipmentToSoldier(Equipment equipment)
+        {
+            if (this.CheckIfEnoughGold(10))
+            {
+                Soldier[] soldier=this.GetSoldierById(equipment.TargetSoldier);
+
+                switch (equipment.Type)
+                {
+                    case OrderType.EquipWithShotgun:
+                        soldier[0].SetShotGun();
+                        break;
+
+                    case OrderType.EquipWithMachineGun:
+                        soldier[0].SetMachineGun();
+                        break;
+
+                    case OrderType.EquipWithSniper:
+                        soldier[0].SetSniper();
+                        break;
+                }
+
+                soldier[0].UpdateItems(this);
+            }
+
+        }
+
+        private void AddOrderForCity(Order o)
+        {
+            if (this.CheckIfEnoughGold(10))
+            {
+                switch (o.Type)
+                {
+                    case OrderType.RecruitSoldier:
+                        this.AddNewSoldier();
+                        break;
+
+                    case OrderType.ReinforceTower:
+                        this.CreateTower();
+                        break;
+                }
+            }
+        }
+
+        private void CreateTower()
+        {
+            this.nbTower++;
+        }
+
+        private void RepairWall(Zarwin.Shared.Contracts.Input.Orders.Wall wallOrder)
+        {
+            int value = wallOrder.Amount;
+            if (this.CheckIfEnoughGold(value))
+                this.Wall.RepairMe(value);
+        }
+
+        private void BuyMediPack(Medipack mediPack)
+        {
+            int value = mediPack.Amount;
+            if (this.CheckIfEnoughGold(value))
+            {
+                Soldier[] soldier = this.GetSoldierById(mediPack.TargetSoldier);
+                soldier[0].HealMe(value);
+            }
+        }
+
+        private Soldier[] GetSoldierById(int TargetSoldier)
         {
             var soldierLinq = (from s in soldiers
-                               where s.Id == equipment.TargetSoldier
+                               where s.Id == TargetSoldier
                                select s);
-            Soldier[] soldier = soldierLinq.ToArray();
-            switch (equipment.Type)
-            {
-                case OrderType.EquipWithShotgun:
-                    soldier[0].SetShotGun();
-                    break;
-
-                case OrderType.EquipWithMachineGun:
-                    soldier[0].SetMachineGun();
-                    break;
-
-                case OrderType.EquipWithSniper:
-                    System.Diagnostics.Debug.WriteLine("j'equipe un sniper : " );
-                    soldier[0].SetSniper();
-                    break;
-            }
-            
-            soldier[0].UpdateItems(this);
-
+            return soldierLinq.ToArray(); //fonction a faire
         }
     }
 }

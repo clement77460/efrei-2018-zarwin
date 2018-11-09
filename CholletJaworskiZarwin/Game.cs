@@ -69,25 +69,29 @@ namespace CholletJaworskiZarwin
 
         private void InitTurn()
         {
-            
-            // Create initial results
             this.city.ExecuteOrder(turn, waveResults.Count);
-
-            this.city.snipersAreShoting(this.currentHorde);
-
-            this.soldierStates = this.city.GetSoldiersStates();
-            this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
-            this.turnInit = new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin);
-            if (this.city.GetSoldiers().Count>0)
+            // Create initial results
+            for (int i = 0; i < city.nbTower+1; i++)
             {
-                this.turnResults.Add(this.turnInit);
+                
+
+                this.city.snipersAreShoting(this.currentHorde);
+
+                this.soldierStates = this.city.GetSoldiersStates();
+                this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
+                this.turnInit = new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin);
+                if (this.city.GetSoldiers().Count > 0)
+                {
+                    this.turnResults.Add(this.turnInit);
+                }
             }
+            
         }
 
         public void Turn()
         {
-            
-            turn++;  
+
+            turn++;
 
             if (!this.IsFinished())
             {
