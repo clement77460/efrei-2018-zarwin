@@ -73,8 +73,9 @@ namespace CholletJaworskiZarwin
         {
             if (hasSniper)
             {
-                //on tue un walker
+                
                 horde.oneShotWalker();
+                System.Diagnostics.Debug.WriteLine("Sniping someone");
                 this.LevelUp();
                 return 1;
             }
@@ -122,13 +123,16 @@ namespace CholletJaworskiZarwin
 
         public void HealMe(int value)
         {
-            if(this.HealthPoints + value >= this.Level + 3)
+            if (this.HealthPoints >= 0)
             {
-                this.HealthPoints = this.Level + 3;
-            }    
-            else
-            {
-                this.HealthPoints += value;
+                if (this.HealthPoints + value >= this.Level + 3)
+                {
+                    this.HealthPoints = this.Level + 3;
+                }
+                else
+                {
+                    this.HealthPoints += value;
+                }
             }
         }
 

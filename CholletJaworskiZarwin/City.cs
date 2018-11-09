@@ -162,29 +162,29 @@ namespace CholletJaworskiZarwin
         public void IncreaseCoin(int value) {
             this.Coin  += value;
         }
-        public void ExecuteOrder(int turn,int wave)
+        public void ExecuteOrder(int turn,int wave,int coin)
         {
             foreach (Order o in orders)
             {
                 if (o.TurnIndex == turn && o.WaveIndex==wave)
                 {
-                    this.GeneratingOrder(o);
+                    this.GeneratingOrder(o,coin);
                 }
             }
         }
 
-        private bool CheckIfEnoughGold(int amount)
+        private bool CheckIfEnoughGold(int amountAtStartOfTurn,int amountToReduce)
         {
-            if(Coin >= amount)
+            if(amountAtStartOfTurn >= amountToReduce)
             {
-                this.Coin -= amount;
+                this.Coin -= amountToReduce;
                 return true;
             }
 
             return false;
         }
 
-        private void GeneratingOrder(Order o)
+        private void GeneratingOrder(Order o,int amountAtStart)
         {
             
             switch (o)
@@ -194,7 +194,7 @@ namespace CholletJaworskiZarwin
                     break;
 
                 case Medipack mediPack:
-                    this.BuyMediPack(mediPack);
+                    this.BuyMediPack(mediPack,amountAtStart);
                     break;
 
                 case Zarwin.Shared.Contracts.Input.Orders.Wall wallOrder:
@@ -210,7 +210,7 @@ namespace CholletJaworskiZarwin
 
         private void SetEquipmentToSoldier(Equipment equipment)
         {
-            if (this.CheckIfEnoughGold(10))
+            if (this.CheckIfEnoughGold(10,10))//change second
             {
                 Soldier[] soldier=this.GetSoldierById(equipment.TargetSoldier);
 
@@ -236,7 +236,7 @@ namespace CholletJaworskiZarwin
 
         private void AddOrderForCity(Order o)
         {
-            if (this.CheckIfEnoughGold(10))
+            if (this.CheckIfEnoughGold(10,10))//change second
             {
                 switch (o.Type)
                 {
@@ -259,17 +259,19 @@ namespace CholletJaworskiZarwin
         private void RepairWall(Zarwin.Shared.Contracts.Input.Orders.Wall wallOrder)
         {
             int value = wallOrder.Amount;
-            if (this.CheckIfEnoughGold(value))
+            if (this.CheckIfEnoughGold(value,value ))//change second
                 this.Wall.RepairMe(value);
         }
 
-        private void BuyMediPack(Medipack mediPack)
+        private void BuyMediPack(Medipack mediPack,int amountAtStart)
         {
             int value = mediPack.Amount;
-            if (this.CheckIfEnoughGold(value))
+            if (this.CheckIfEnoughGold(amountAtStart,value))
             {
                 Soldier[] soldier = this.GetSoldierById(mediPack.TargetSoldier);
-                soldier[0].HealMe(value);
+                System.Diagnostics.Debug.WriteLine(soldier.Length);
+                if(soldier.Length>0)
+                    soldier[0].HealMe(value);
             }
         }
 

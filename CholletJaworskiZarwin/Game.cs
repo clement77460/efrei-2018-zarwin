@@ -69,32 +69,37 @@ namespace CholletJaworskiZarwin
 
         private void InitTurn()
         {
-            this.city.ExecuteOrder(turn, waveResults.Count);
+            this.soldierStates = this.city.GetSoldiersStates();
+            this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
+            this.turnInit = new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin);
             // Create initial results
             for (int i = 0; i < city.nbTower+1; i++)
             {
-                
-
+                this.city.ExecuteOrder(turn, waveResults.Count, city.Coin);
                 this.city.snipersAreShoting(this.currentHorde);
-
                 this.soldierStates = this.city.GetSoldiersStates();
                 this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
-                this.turnInit = new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin);
                 if (this.city.GetSoldiers().Count > 0)
                 {
-                    this.turnResults.Add(this.turnInit);
+                    this.turnResults.Add(new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin));
                 }
+                
             }
-            
+            turn++;
+
+
+            this.Turn();
+
         }
 
         public void Turn()
         {
 
-            turn++;
-
             if (!this.IsFinished())
             {
+                int goldAtStartOfTurn = this.city.Coin;
+
+
                 // Horde attacks the city (and its soldiers)
                 currentHorde.AttackCity(this.city, this.damageDispatcher);
 
@@ -103,7 +108,7 @@ namespace CholletJaworskiZarwin
 
                 this.Message = "The fight goes on.";
 
-                this.city.ExecuteOrder(turn, waveResults.Count);
+                this.city.ExecuteOrder(turn, waveResults.Count, goldAtStartOfTurn);
 
                 // Update stats
                 this.soldierStates = this.city.GetSoldiersStates();
@@ -111,6 +116,7 @@ namespace CholletJaworskiZarwin
 
                 // Add turn results
                 this.turnResults.Add(new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin));
+                turn++;
             }
 
             // Create a new horde if needed.
@@ -185,7 +191,11 @@ namespace CholletJaworskiZarwin
 
         public Boolean IsFinished()
         {
-            return (turn >0 && (this.city.NumberSoldiersAlive== 0 || this.currentHorde.GetNumberWalkersAlive() == 0));
+            if (city.GetSoldiers().Count <= 0)
+                return true;
+            if (currentHorde.GetNumberWalkersAlive() == 0)
+                return true;
+            return false;
         }
 
         public String SoldiersStats()
