@@ -32,6 +32,14 @@ namespace CholletJaworskiZarwin.test
             Assert.Equal(0, wall.Health);
         }
 
+        [Fact]
+        public void RepairingTheWall()
+        {
+            Wall wall = new Wall(5);
+            wall.RepairMe(3);
+            Assert.Equal(8, wall.Health);
+        }
+
 
     }
 }
