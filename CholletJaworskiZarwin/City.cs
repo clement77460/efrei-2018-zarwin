@@ -190,7 +190,7 @@ namespace CholletJaworskiZarwin
             switch (o)
             {
                 case Equipment equipment:
-                    this.SetEquipmentToSoldier(equipment);
+                    this.SetEquipmentToSoldier(equipment,amountAtStart);
                     break;
 
                 case Medipack mediPack:
@@ -198,19 +198,19 @@ namespace CholletJaworskiZarwin
                     break;
 
                 case Zarwin.Shared.Contracts.Input.Orders.Wall wallOrder:
-                    this.RepairWall(wallOrder);
+                    this.RepairWall(wallOrder, amountAtStart);
                     break;
 
                 default:
-                    this.AddOrderForCity(o);
+                    this.AddOrderForCity(o, amountAtStart);
                     break;
                 
             }
         }
 
-        private void SetEquipmentToSoldier(Equipment equipment)
+        private void SetEquipmentToSoldier(Equipment equipment, int amountAtStart)
         {
-            if (this.CheckIfEnoughGold(10,10))//change second
+            if (this.CheckIfEnoughGold(amountAtStart, 10))
             {
                 Soldier[] soldier=this.GetSoldierById(equipment.TargetSoldier);
 
@@ -234,9 +234,9 @@ namespace CholletJaworskiZarwin
 
         }
 
-        private void AddOrderForCity(Order o)
+        private void AddOrderForCity(Order o, int amountAtStart)
         {
-            if (this.CheckIfEnoughGold(10,10))//change second
+            if (this.CheckIfEnoughGold(amountAtStart, 10))
             {
                 switch (o.Type)
                 {
@@ -256,10 +256,10 @@ namespace CholletJaworskiZarwin
             this.nbTower++;
         }
 
-        private void RepairWall(Zarwin.Shared.Contracts.Input.Orders.Wall wallOrder)
+        private void RepairWall(Zarwin.Shared.Contracts.Input.Orders.Wall wallOrder,int amountAtStart)
         {
             int value = wallOrder.Amount;
-            if (this.CheckIfEnoughGold(value,value ))//change second
+            if (this.CheckIfEnoughGold(amountAtStart, value ))
                 this.Wall.RepairMe(value);
         }
 
