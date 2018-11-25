@@ -4,6 +4,7 @@ using Zarwin.Shared.Contracts.Core;
 using Zarwin.Shared.Contracts.Input;
 using Zarwin.Shared.Contracts.Output;
 using System.Linq;
+using Zarwin.Shared.Contracts.Input.Orders;
 
 namespace CholletJaworskiZarwin
 {
@@ -14,6 +15,8 @@ namespace CholletJaworskiZarwin
        
         public Wall Wall { get; private set; }
         public int Coin { get; private set; } = 0;
+
+        public int nbTower { get; private set; } = 0;
 
         public City(int numberOfSoldiers, int wallHealth)
         {
@@ -78,8 +81,18 @@ namespace CholletJaworskiZarwin
             foreach (Soldier soldier in this.soldiers)
             {
                 soldier.UpdateItems(this);
-                goldAmount=soldier.Defend(horde, turn);
+                goldAmount =soldier.Defend(horde, turn);
                 this.IncreaseCoin(goldAmount);
+            }
+        }
+
+        public void SnipersAreShoting(Horde horde)
+        {
+            int goldAmount = 0;
+            foreach (Soldier soldier in this.soldiers)
+            {
+                goldAmount+=soldier.Sniping(horde);
+                
             }
         }
 
@@ -149,56 +162,125 @@ namespace CholletJaworskiZarwin
         public void IncreaseCoin(int value) {
             this.Coin  += value;
         }
-        public void ExecuteOrder(int turn,int wave)
+        public void ExecuteOrder(int turn,int wave,int coin)
         {
             foreach (Order o in orders)
             {
                 if (o.TurnIndex == turn && o.WaveIndex==wave)
                 {
-                    if (Coin  >= 10)
-                    {
-                        this.Coin  -= 10;
-                        this.GeneratingOrder(o);
-                    }
+                    this.GeneratingOrder(o,coin);
                 }
             }
         }
 
-        private void GeneratingOrder(Order o)
+        private bool CheckIfEnoughGold(int amountAtStartOfTurn,int amountToReduce)
         {
-            switch (o.Type)
+            if(amountAtStartOfTurn >= amountToReduce)
             {
-                case OrderType.RecruitSoldier:
-                    this.AddNewSoldier();
+                this.Coin -= amountToReduce;
+                return true;
+            }
+
+            return false;
+        }
+
+        private void GeneratingOrder(Order o,int amountAtStart)
+        {
+            
+            switch (o)
+            {
+                case Equipment equipment:
+                    this.SetEquipmentToSoldier(equipment);
                     break;
-                case OrderType.EquipWithShotgun:
-                    this.EquipShotGunToSoldier(o.TargetSoldier);
+
+                case Medipack mediPack:
+                    this.BuyMediPack(mediPack,amountAtStart);
                     break;
-                case OrderType.EquipWithMachineGun:
-                    this.EquipMachineGunToSoldier(o.TargetSoldier);
+
+                case Zarwin.Shared.Contracts.Input.Orders.Wall wallOrder:
+                    this.RepairWall(wallOrder);
                     break;
+
+                default:
+                    this.AddOrderForCity(o);
+                    break;
+                
             }
         }
 
-        private void EquipShotGunToSoldier(int? index)
+        private void SetEquipmentToSoldier(Equipment equipment)
         {
-            var soldierLinq = (from s in soldiers
-                               where s.Id == index
-                               select s);
-            Soldier[] soldier = soldierLinq.ToArray();
-            soldier[0].SetShotGun();
-            soldier[0].UpdateItems(this);
-            
-        }
-        private void EquipMachineGunToSoldier(int? index)
-        {
-            var soldierLinq = (from s in soldiers
-                               where s.Id == index
-                               select s);
-            Soldier[] soldier = soldierLinq.ToArray();
-            soldier[0].SetMachineGun();
-            soldier[0].UpdateItems(this);
+            if (this.CheckIfEnoughGold(10,10))//change second
+            {
+                Soldier[] soldier=this.GetSoldierById(equipment.TargetSoldier);
 
+                switch (equipment.Type)
+                {
+                    case OrderType.EquipWithShotgun:
+                        soldier[0].SetShotGun();
+                        break;
+
+                    case OrderType.EquipWithMachineGun:
+                        soldier[0].SetMachineGun();
+                        break;
+
+                    case OrderType.EquipWithSniper:
+                        soldier[0].SetSniper();
+                        break;
+                }
+
+                soldier[0].UpdateItems(this);
+            }
+
+        }
+
+        private void AddOrderForCity(Order o)
+        {
+            if (this.CheckIfEnoughGold(10,10))//change second
+            {
+                switch (o.Type)
+                {
+                    case OrderType.RecruitSoldier:
+                        this.AddNewSoldier();
+                        break;
+
+                    case OrderType.ReinforceTower:
+                        this.CreateTower();
+                        break;
+                }
+            }
+        }
+
+        private void CreateTower()
+        {
+            this.nbTower++;
+        }
+
+        private void RepairWall(Zarwin.Shared.Contracts.Input.Orders.Wall wallOrder)
+        {
+            int value = wallOrder.Amount;
+            if (this.CheckIfEnoughGold(value,value ))//change second
+                this.Wall.RepairMe(value);
+        }
+
+        private void BuyMediPack(Medipack mediPack,int amountAtStart)
+        {
+            int value = mediPack.Amount;
+            if (this.CheckIfEnoughGold(amountAtStart,value))
+            {
+                Soldier[] soldier = this.GetSoldierById(mediPack.TargetSoldier);
+                System.Diagnostics.Debug.WriteLine(soldier.Length);
+                if(soldier.Length>0)
+                    soldier[0].HealMe(value);
+            }
+        }
+
+        private Soldier[] GetSoldierById(int TargetSoldier)
+        {
+            var soldierLinq = (from s in soldiers
+                               where s.Id == TargetSoldier
+                               select s);
+            return soldierLinq.ToArray(); //fonction a faire
         }
     }
 }

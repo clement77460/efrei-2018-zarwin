@@ -22,5 +22,10 @@ namespace CholletJaworskiZarwin
             }
         }
 
+        public void RepairMe(int value)
+        {
+            this.Health += value;
+        }
+
     }
 }

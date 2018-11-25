@@ -7,8 +7,11 @@ namespace Zarwin.Shared.Tests
 {
     public class FirstSoldierDamageDispatcher : IDamageDispatcher
     {
-        public void DispatchDamage(int damage, IEnumerable<ISoldier> soldiers)
+        public IEnumerable<TSoldier> DispatchDamage<TSoldier>(int damage, IEnumerable<TSoldier> soldiers)
+            where TSoldier : ISoldier
         {
+            var damagedSoldiers = new HashSet<TSoldier>();
+
             while (damage > 0 && soldiers.Sum(soldier => soldier.HealthPoints) > 0)
             {
                 var chosenSoldier = soldiers
@@ -17,8 +20,11 @@ namespace Zarwin.Shared.Tests
                 int damageDealt = Math.Min(damage, chosenSoldier.HealthPoints);
 
                 chosenSoldier.Hurt(damageDealt);
+                damagedSoldiers.Add(chosenSoldier);
                 damage -= damageDealt;
             }
+
+            return damagedSoldiers;
         }
     }
 }

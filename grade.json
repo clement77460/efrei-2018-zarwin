@@ -7,13 +7,13 @@
     "Pas de duplications de code": 1.0,
     "Séparation de responsabilités": 1.0,
     "Encapsulation": 1.0,
-    "Tests unitaires": 0.938
+    "Tests unitaires": 0.0
   },
-  "Coefficient de qualité": 0.939875,
+  "Coefficient de qualité": 0.88125,
   "Résultats des tests": {
     "Complétude": {
-      "Total": 9,
-      "Succès": 9,
+      "Total": 32,
+      "Succès": 32,
       "Taux": 1.0
     },
     "Livraison V2": {
@@ -24,5 +24,5 @@
   },
   "Note de livraison": 10.0,
   "Note de complétude": 10.0,
-  "Note totale": 18.7975
+  "Note totale": 17.625
 }

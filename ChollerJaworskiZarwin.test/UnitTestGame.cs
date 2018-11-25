@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using CholletJaworskiZarwin;
-
+using Zarwin.Shared.Contracts.Input;
+using Zarwin.Shared.Tests;
+using Zarwin.Shared.Contracts.Input.Orders;
 
 namespace CholletJaworskiZarwin.test
 {
@@ -45,7 +47,15 @@ namespace CholletJaworskiZarwin.test
         [Fact]
         public void SendingTwoHordes()
         {
-            Game game = new Game(10, 5, 1, 2);
+            var input = new Parameters(
+               1,
+               new FirstSoldierDamageDispatcher(),
+               new HordeParameters(2),
+               new CityParameters(0),
+               new Order[0],
+               new SoldierParameters(1, 1));
+
+            Game game = new Game(input);
 
 
             game.Turn();

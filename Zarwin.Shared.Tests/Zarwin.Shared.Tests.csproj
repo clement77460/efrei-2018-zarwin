@@ -18,13 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="CompleteScenarios\v2\1 soldier, 1 zombie, no wall.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="CompleteScenarios\v2\1 soldier, 2 zombies, no wall.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="CompleteScenarios\v2\no soldier.json">
+    <None Update="CompleteScenarios\*\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

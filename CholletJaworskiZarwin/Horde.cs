@@ -36,7 +36,7 @@ namespace CholletJaworskiZarwin
         public Horde(WaveHordeParameters parameters)
         {
             walkers = new List<Walker>();
-            foreach (ZombieParameter walkerParams in parameters.ZombieTypes)
+            foreach (ZombieParameter walkerParams in parameters.ZombieParameters)
             {
                 for (int i = 0; i < walkerParams.Count; ++i)
                 {
@@ -111,6 +111,11 @@ namespace CholletJaworskiZarwin
             }
             this.lastHitWalker = null;
             return killedWalkers;
+        }
+
+        public void OneShotWalker()
+        {
+            walkers.RemoveAt(0);
         }
 
     }
