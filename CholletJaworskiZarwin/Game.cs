@@ -57,7 +57,7 @@ namespace CholletJaworskiZarwin
             this.city = new City(parameters);
             this.damageDispatcher = parameters.DamageDispatcher;
             this.nbHordes = this.parameters.WavesToRun;
-            this.nbWalkersPerHorde = this.parameters.HordeParameters.Waves[0].ZombieTypes[0].Count; //faire une methode pr calculer le nbr de zombies
+            this.nbWalkersPerHorde = this.CountNumberOfWalkers(); //faire une methode pr calculer le nbr de zombies
             this.currentHorde = new Horde(parameters.HordeParameters.Waves[0]);
 
             //
@@ -76,7 +76,7 @@ namespace CholletJaworskiZarwin
             for (int i = 0; i < city.nbTower+1; i++)
             {
                 this.city.ExecuteOrder(turn, waveResults.Count, city.Coin);
-                this.city.snipersAreShoting(this.currentHorde);
+                this.city.SnipersAreShoting(this.currentHorde);
                 this.soldierStates = this.city.GetSoldiersStates();
                 this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
                 if (this.city.GetSoldiers().Count > 0)
@@ -158,12 +158,8 @@ namespace CholletJaworskiZarwin
                     
                     if (this.parameters.HordeParameters.Waves.Length > 1)
                     {
-                        int nb = 0;
-                        for (int i = 0; i < this.parameters.HordeParameters.Waves[currentWave].ZombieParameters.Length; i++)
-                        {
-                            nb += this.parameters.HordeParameters.Waves[currentWave].ZombieParameters[i].Count;
-                        }
-                        this.currentHorde = new Horde(nb);
+                        
+                        this.currentHorde = new Horde(this.CountNumberOfWalkers());
                     }
                     else
                     {
@@ -187,6 +183,17 @@ namespace CholletJaworskiZarwin
                     this.waveResults.Add(new WaveResult(turnInit, turnResults.ToArray()));
                 }
             }
+        }
+
+        private int CountNumberOfWalkers()
+        {
+            int nb = 0;
+            for (int i = 0; i < this.parameters.HordeParameters.Waves[currentWave].ZombieParameters.Length; i++)
+            {
+                nb += this.parameters.HordeParameters.Waves[currentWave].ZombieParameters[i].Count;
+            }
+
+            return nb;
         }
 
         public Boolean IsFinished()

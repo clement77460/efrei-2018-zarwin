@@ -86,12 +86,12 @@ namespace CholletJaworskiZarwin
             }
         }
 
-        public void snipersAreShoting(Horde horde)
+        public void SnipersAreShoting(Horde horde)
         {
             int goldAmount = 0;
             foreach (Soldier soldier in this.soldiers)
             {
-                goldAmount+=soldier.sniping(horde);
+                goldAmount+=soldier.Sniping(horde);
                 
             }
         }

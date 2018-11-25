@@ -45,25 +45,6 @@ namespace CholletJaworskiZarwin
             } while (c.Key != ConsoleKey.Enter);
         }
     }
-
-    //    [ExcludeFromCodeCoverage]
-    //    private static void Main(string[] args)
-    //    {
-    //        //Creating 2 soldiers
-    //        List<SoldierParameters> sp = new List<SoldierParameters>();
-    //        sp.Add(new SoldierParameters(0, 1));
-    //        sp.Add(new SoldierParameters(1, 1));
-
-    //        GameEngine gameEngine = new GameEngine(new Parameters(
-    //            1,
-    //            new FirstSoldierDamageDispatcher(),
-    //            new HordeParameters(10),
-    //            new CityParameters(5),
-    //            sp.ToArray()), false);
-
-    //        gameEngine.GameLoop();
-
-    //    }
 }
 
 

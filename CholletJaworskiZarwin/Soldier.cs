@@ -69,12 +69,12 @@ namespace CholletJaworskiZarwin
            
         }
 
-        public int sniping(Horde horde)
+        public int Sniping(Horde horde)
         {
             if (hasSniper)
             {
                 
-                horde.oneShotWalker();
+                horde.OneShotWalker();
                 System.Diagnostics.Debug.WriteLine("Sniping someone");
                 this.LevelUp();
                 return 1;
