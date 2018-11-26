@@ -11,6 +11,7 @@ namespace CholletJaworskiZarwin
     {
         public ObjectId Id { get; set; }
         public Parameters parameter { get; set; }
+        public TurnResult turnInit { get; set; }
         public List<TurnResult> turnResults { get; set; }
         public List<WaveResult> waveResults { get; set; }
 
@@ -32,6 +33,22 @@ namespace CholletJaworskiZarwin
         {
             this.turnResults.Add(new TurnResult(soldiers, horde, wallHealthPoints, money));
 
+        }
+
+        public void addWaveResult()
+        {
+            this.waveResults.Add(new WaveResult(turnInit, turnResults.ToArray()));
+        }
+
+        public void removeTurnResults()
+        {
+            this.turnResults.RemoveRange(0, this.turnResults.Count);
+        }
+
+        public void createInitTurn(SoldierState[] soldiers, HordeState horde,
+            int wallHealthPoints, int money)
+        {
+            this.turnInit = new TurnResult(soldiers, horde, wallHealthPoints, money);
         }
     }
 }

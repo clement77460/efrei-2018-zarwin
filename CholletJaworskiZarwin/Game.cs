@@ -9,30 +9,16 @@ namespace CholletJaworskiZarwin
 {
     public class Game
     {
+        private Simulation simulation;
         private ActionTrigger actionTrigger;
 
         private City city;
-
         private Horde currentHorde;
+
         private int nbWalkersPerHorde;
         private int nbHordes;
-
         private int turn = 0;
-        private int currentWave = 0;
 
-        private Simulation simulation;
-        
-        private List<SoldierState> soldierStates = new List<SoldierState>();
-        private HordeState hordeState;
-
-        private TurnResult turnInit;
-        private List<TurnResult> turnResults = new List<TurnResult>();
-        private List<WaveResult> waveResults = new List<WaveResult>();
-
-        private IDamageDispatcher damageDispatcher;
-
-
-        
         public Game(Parameters parameters,bool isTesting=true)
         {
 
@@ -43,7 +29,7 @@ namespace CholletJaworskiZarwin
 
 
             this.city = new City(this.simulation.parameter.CityParameters, this.simulation.parameter.SoldierParameters, this.simulation.parameter.Orders);
-            this.damageDispatcher = this.simulation.parameter.DamageDispatcher;
+
             this.nbHordes = this.simulation.parameter.WavesToRun;
             this.nbWalkersPerHorde = this.CountNumberOfWalkers(); 
             this.currentHorde = new Horde(this.simulation.parameter.HordeParameters.Waves[0]);
@@ -64,19 +50,21 @@ namespace CholletJaworskiZarwin
 
         private void InitTurn()
         {
-            this.soldierStates = this.city.GetSoldiersStates();
-            this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
-            this.turnInit = new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin);
+            List<SoldierState> soldierStates = this.city.GetSoldiersStates();
+            HordeState hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
+
+            this.simulation.createInitTurn(soldierStates.ToArray(), hordeState, this.city.Wall.Health, city.Coin);
+            
             // Create initial results
             for (int i = 0; i < city.nbTower+1; i++)
             {
-                this.city.ExecuteOrder(turn, waveResults.Count, city.Coin);
+                this.city.ExecuteOrder(turn, this.simulation.waveResults.Count, city.Coin);
                 this.city.SnipersAreShoting(this.currentHorde);
-                this.soldierStates = this.city.GetSoldiersStates();
-                this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
+                soldierStates = this.city.GetSoldiersStates();
+                hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
                 if (this.city.GetSoldiers().Count > 0)
                 {
-                    this.turnResults.Add(new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin));
+                    this.simulation.addTurnResult(soldierStates.ToArray(), hordeState, this.city.Wall.Health, city.Coin);
                 }
                 
             }
@@ -94,16 +82,16 @@ namespace CholletJaworskiZarwin
             {
                 int goldAtStartOfTurn = this.city.Coin;
 
-                currentHorde.AttackCity(this.city, this.damageDispatcher);
+                currentHorde.AttackCity(this.city, this.simulation.parameter.DamageDispatcher);
                 city.DefendFromHorde(this.currentHorde, this.turn);
 
-                this.city.ExecuteOrder(turn, waveResults.Count, goldAtStartOfTurn);
+                this.city.ExecuteOrder(turn, this.simulation.waveResults.Count, goldAtStartOfTurn);
 
-                this.soldierStates = this.city.GetSoldiersStates();
-                this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
+                List<SoldierState> soldierStates = this.city.GetSoldiersStates();
+                HordeState hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
 
-                
-                this.turnResults.Add(new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin));
+
+                this.simulation.addTurnResult(soldierStates.ToArray(), hordeState, this.city.Wall.Health, city.Coin);
                 turn++;
             }
             
@@ -133,7 +121,7 @@ namespace CholletJaworskiZarwin
 
         public Result GetResult()
         {
-            return new Result("CholletJawordki", this.waveResults.ToArray());
+            return new Result("CholletJawordki", this.simulation.waveResults.ToArray());
         }
 
         private void ManageHordes()
@@ -143,11 +131,10 @@ namespace CholletJaworskiZarwin
             if (this.currentHorde.GetNumberWalkersAlive() == 0)
             {
                 // Add turnResults to waveResults
-                this.waveResults.Add(new WaveResult(turnInit, turnResults.ToArray()));
+                this.simulation.addWaveResult();
 
                 if (this.nbHordes > 1)
                 {
-                    this.currentWave++;
 
                     
                     if (this.simulation.parameter.HordeParameters.Waves.Length > 1)
@@ -164,7 +151,7 @@ namespace CholletJaworskiZarwin
 
                     //on vide les turnResults
                     this.turn = 0;
-                    this.turnResults.RemoveRange(0,this.turnResults.Count);
+                    this.simulation.removeTurnResults();
                     this.InitTurn();
                 }
             }
@@ -172,14 +159,16 @@ namespace CholletJaworskiZarwin
             {
                 if (this.city.GetSoldiers().Count <= 0)
                 {
-                    this.waveResults.Add(new WaveResult(turnInit, turnResults.ToArray()));
+                    this.simulation.addWaveResult();
                 }
             }
         }
 
         private int CountNumberOfWalkers()
         {
+            int currentWave = this.simulation.waveResults.Count;
             int nb = 0;
+
             for (int i = 0; i < this.simulation.parameter.HordeParameters.Waves[currentWave].ZombieParameters.Length; i++)
             {
                 nb += this.simulation.parameter.HordeParameters.Waves[currentWave].ZombieParameters[i].Count;
