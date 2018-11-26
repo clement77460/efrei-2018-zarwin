@@ -9,15 +9,16 @@ namespace CholletJaworskiZarwin
 {
     public class Game
     {
+        private ActionTrigger actionTrigger;
 
         private City city;
 
-        private int nbWalkersPerHorde;
         private Horde currentHorde;
+        private int nbWalkersPerHorde;
         private int nbHordes;
+
         private int turn = 0;
         private int currentWave = 0;
-        public int WallHealth => this.city.Wall.Health;
         
         private Parameters parameters;
         
@@ -30,41 +31,34 @@ namespace CholletJaworskiZarwin
 
         private IDamageDispatcher damageDispatcher;
 
-        public String Message { get; private set; }
 
-        // Constructor for the console program
-        public Game(int wallHealth, int nbSoldiers, int nbWalkersPerHorde, int nbHordes)
+        
+        public Game(Parameters parameters,bool isTesting=true)
         {
-            this.city = new City(nbSoldiers, wallHealth);
-            this.nbWalkersPerHorde = nbWalkersPerHorde;
-            this.currentHorde = new Horde(nbWalkersPerHorde);
-            this.damageDispatcher = new DamageDispatcher();
-            this.nbHordes = nbHordes;
-            this.parameters = null;
-            this.Message = "2078, Villejuif. The city has been fortified because of a Walkers invasion. \n" +
-                nbSoldiers + " soldiers are defending the city. Some Walkers are coming to the West of the Wall...";
 
-            // Approach phase
-            this.Message = "The horde is coming. Brace yourselves.";
-        }
-
-        // Constructor for the tests
-        public Game(Parameters parameters)
-        {
             Soldier.ResetId();//resetting ID before each simulations
 
             this.parameters = parameters;
-            this.city = new City(parameters);
+            this.city = new City(parameters.CityParameters,parameters.SoldierParameters,parameters.Orders);
             this.damageDispatcher = parameters.DamageDispatcher;
             this.nbHordes = this.parameters.WavesToRun;
-            this.nbWalkersPerHorde = this.CountNumberOfWalkers(); //faire une methode pr calculer le nbr de zombies
+            this.nbWalkersPerHorde = this.CountNumberOfWalkers(); 
             this.currentHorde = new Horde(parameters.HordeParameters.Waves[0]);
 
-            //
+            this.InitEvent(isTesting);
             this.InitTurn();
 
-            // Approach phase
-            this.Message = "The horde is coming. Brace yourselves.";
+        }
+
+        private void InitEvent(bool isTesting)
+        {
+            this.actionTrigger = new ActionTrigger();
+
+            if (!isTesting)
+            {
+                ActionListener actionListener = new ActionListener();
+                actionListener.SaveActionTrigger(this.actionTrigger);
+            }
         }
 
         private void InitTurn()
@@ -99,41 +93,38 @@ namespace CholletJaworskiZarwin
             {
                 int goldAtStartOfTurn = this.city.Coin;
 
-
-                // Horde attacks the city (and its soldiers)
                 currentHorde.AttackCity(this.city, this.damageDispatcher);
-
-                // Soldiers attacks the horde to defend the city
                 city.DefendFromHorde(this.currentHorde, this.turn);
-
-                this.Message = "The fight goes on.";
 
                 this.city.ExecuteOrder(turn, waveResults.Count, goldAtStartOfTurn);
 
-                // Update stats
                 this.soldierStates = this.city.GetSoldiersStates();
                 this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
 
-                // Add turn results
+                
                 this.turnResults.Add(new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin));
                 turn++;
             }
+            
+            this.actionTrigger.EndTurnTime();
 
-            // Create a new horde if needed.
             this.ManageHordes();
 
             // Check if the game is finished (AFTER the turn) to set a message or not
             if (this.IsFinished())
             {
-                this.Message = "The game is finished.";
+                
                 if (this.city.NumberSoldiersAlive> 0)
                 {
-                    this.Message += " Soldiers defeated the walkers.";
+                    //Soldiers defeated the walkers
                 }
                 else
                 {
                     if(this.nbHordes != 0)
-                        this.Message += " The walkers defeated the soldiers.";
+                    {
+                        // The walkers defeated the soldiers
+                    }
+
                 }
 
             }
@@ -166,9 +157,7 @@ namespace CholletJaworskiZarwin
                         this.currentHorde = new Horde(this.nbWalkersPerHorde);
                     }
 
-                    this.nbHordes--;
-                    
-                    this.Message = "Uh, it seems that another horde is coming...";
+                    this.nbHordes--;                   
 
                     //on vide les turnResults
                     this.turn = 0;

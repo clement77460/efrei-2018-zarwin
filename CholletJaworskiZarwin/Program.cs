@@ -2,25 +2,31 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Zarwin.Shared.Contracts.Input;
+using Zarwin.Shared.Contracts.Input.Orders;
 using Zarwin.Shared.Tests;
 
 namespace CholletJaworskiZarwin
 {
     class Program
     {
-        private const int WALL_HEALTH = 3;
-        private const int NB_SOLDIERS = 3;
-        private const int NB_WALKERS_PER_HORDE = 10;
-        private const int NB_HORDES = 1;
 
         [ExcludeFromCodeCoverage]
         private static void Main(string[] args)
         {
-            Game game = new Game(WALL_HEALTH, NB_SOLDIERS, NB_WALKERS_PER_HORDE, NB_HORDES);
+            var param = new Parameters(
+                1,
+                new FirstSoldierDamageDispatcher(),
+                new HordeParameters(5),
+                new CityParameters(5),
+                new Order[0],
+                new SoldierParameters(1, 1));
 
-            while (!game.IsFinished())
+            Game game = new Game(param,false);
+            
+            /*while (!game.IsFinished())
             {
                 Console.WriteLine(game.Message);
+                
                 game.Turn();
 
                 PressEnter();
@@ -30,8 +36,11 @@ namespace CholletJaworskiZarwin
                 Console.WriteLine(game.SoldiersStats());
 
             }
-            PressEnter();
+            PressEnter();*/
+            Console.WriteLine(game);
+            Console.WriteLine(game.SoldiersStats());
 
+            PressEnter();
         }
         [ExcludeFromCodeCoverage]
         private static void PressEnter()

@@ -18,30 +18,16 @@ namespace CholletJaworskiZarwin
 
         public int nbTower { get; private set; } = 0;
 
-        public City(int numberOfSoldiers, int wallHealth)
+        public City(CityParameters cityParameter,SoldierParameters[] soldierParameter,Order[] orders)
         {
-            
-            this.Wall = new Wall(wallHealth);
+            this.Wall = new Wall(cityParameter.WallHealthPoints);
 
+            this.Coin  = cityParameter.InitialMoney;
             // Populate the city with Soldiers
             this.soldiers = new List<Soldier>();
-            for (int i = 0; i < numberOfSoldiers; i++)
-            {
-                this.AddNewSoldier();
-            }
-        }
+            this.CreateSoldiersFromParameters(soldierParameter);
 
-        // Constructor with given parameters
-        public City(Parameters parameters)
-        {
-            this.Wall = new Wall(parameters.CityParameters.WallHealthPoints);
-
-            this.Coin  = parameters.CityParameters.InitialMoney;
-            // Populate the city with Soldiers
-            this.soldiers = new List<Soldier>();
-            this.CreateSoldiersFromParameters(parameters.SoldierParameters);
-
-            this.orders.AddRange(parameters.Orders);
+            this.orders.AddRange(orders);
             
         }
 
