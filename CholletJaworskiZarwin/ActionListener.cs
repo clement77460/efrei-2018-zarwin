@@ -13,7 +13,7 @@ namespace CholletJaworskiZarwin
 
         private void sleepMe(ActionTrigger actionTrigger, ParameterEventArgs e)
         {
-            System.Console.WriteLine("Fin d'un tour ou d'une wave, ajustement du temps de sleep");
+            System.Console.WriteLine("Fin d'un tour ou d'une wave, ajustement du temps de sleep "+e.SleepTime/1000 +" s");
             System.Threading.Thread.Sleep(e.SleepTime);
         }
     }

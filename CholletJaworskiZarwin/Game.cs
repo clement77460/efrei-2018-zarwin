@@ -137,6 +137,8 @@ namespace CholletJaworskiZarwin
 
         private void ManageHordes()
         {
+            this.actionTrigger.EndWaveTime();
+
             if (this.currentHorde.GetNumberWalkersAlive() == 0)
             {
                 // Add turnResults to waveResults

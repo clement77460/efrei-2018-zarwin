@@ -20,7 +20,7 @@ namespace CholletJaworskiZarwin
             this.SendSignalToListener();
         }
 
-        public void EndTurnWaveTime()
+        public void EndWaveTime()
         {
             e.SleepTime = 3000;
             this.SendSignalToListener();
