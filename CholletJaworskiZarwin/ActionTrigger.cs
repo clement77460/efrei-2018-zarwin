@@ -12,10 +12,17 @@ namespace CholletJaworskiZarwin
         public event BreakHandler onEndTurnOrWave;
         public delegate void BreakHandler(ActionTrigger m, ParameterEventArgs e);
         public ParameterEventArgs e = new ParameterEventArgs(); //peut etre remplacé par une classe : EventArgs
-        
+
+        private bool isTesting;
+
+        public ActionTrigger(bool isTesting)
+        {
+            this.isTesting = isTesting;
+        }
 
         public void EndTurnTime()
         {
+
             e.SleepTime = 1000;
             this.SendSignalToListener();
         }
@@ -28,7 +35,8 @@ namespace CholletJaworskiZarwin
 
         private void SendSignalToListener()
         {
-            onEndTurnOrWave?.Invoke(this, e);
+            if (!isTesting) 
+                onEndTurnOrWave?.Invoke(this, e);
         }
 
     }

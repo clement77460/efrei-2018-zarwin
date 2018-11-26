@@ -32,7 +32,7 @@ namespace CholletJaworskiZarwin.test
 
         }
         [Fact]
-        public void FinishingTheGameQuickly_TestingBreakTurn()
+        public void FinishingTheGameQuickly()
         {
             var param = new Parameters(
               1,
@@ -42,7 +42,7 @@ namespace CholletJaworskiZarwin.test
               new Order[0],
               new SoldierParameters(1, 1));
 
-            Game game = new Game(param, false);
+            Game game = new Game(param);
 
             Assert.True(game.IsFinished());
         }

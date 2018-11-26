@@ -19,8 +19,8 @@ namespace CholletJaworskiZarwin
 
         private int turn = 0;
         private int currentWave = 0;
-        
-        private Parameters parameters;
+
+        private Simulation simulation;
         
         private List<SoldierState> soldierStates = new List<SoldierState>();
         private HordeState hordeState;
@@ -38,12 +38,15 @@ namespace CholletJaworskiZarwin
 
             Soldier.ResetId();//resetting ID before each simulations
 
-            this.parameters = parameters;
-            this.city = new City(parameters.CityParameters,parameters.SoldierParameters,parameters.Orders);
-            this.damageDispatcher = parameters.DamageDispatcher;
-            this.nbHordes = this.parameters.WavesToRun;
+            this.simulation = new Simulation();
+            this.simulation.parameter = parameters;
+
+
+            this.city = new City(this.simulation.parameter.CityParameters, this.simulation.parameter.SoldierParameters, this.simulation.parameter.Orders);
+            this.damageDispatcher = this.simulation.parameter.DamageDispatcher;
+            this.nbHordes = this.simulation.parameter.WavesToRun;
             this.nbWalkersPerHorde = this.CountNumberOfWalkers(); 
-            this.currentHorde = new Horde(parameters.HordeParameters.Waves[0]);
+            this.currentHorde = new Horde(this.simulation.parameter.HordeParameters.Waves[0]);
 
             this.InitEvent(isTesting);
             this.InitTurn();
@@ -52,13 +55,11 @@ namespace CholletJaworskiZarwin
 
         private void InitEvent(bool isTesting)
         {
-            this.actionTrigger = new ActionTrigger();
+            this.actionTrigger = new ActionTrigger(isTesting);
 
-            if (!isTesting)
-            {
-                ActionListener actionListener = new ActionListener();
-                actionListener.SaveActionTrigger(this.actionTrigger);
-            }
+            ActionListener actionListener = new ActionListener();
+            actionListener.SaveActionTrigger(this.actionTrigger);
+            
         }
 
         private void InitTurn()
@@ -149,7 +150,7 @@ namespace CholletJaworskiZarwin
                     this.currentWave++;
 
                     
-                    if (this.parameters.HordeParameters.Waves.Length > 1)
+                    if (this.simulation.parameter.HordeParameters.Waves.Length > 1)
                     {
                         
                         this.currentHorde = new Horde(this.CountNumberOfWalkers());
@@ -179,9 +180,9 @@ namespace CholletJaworskiZarwin
         private int CountNumberOfWalkers()
         {
             int nb = 0;
-            for (int i = 0; i < this.parameters.HordeParameters.Waves[currentWave].ZombieParameters.Length; i++)
+            for (int i = 0; i < this.simulation.parameter.HordeParameters.Waves[currentWave].ZombieParameters.Length; i++)
             {
-                nb += this.parameters.HordeParameters.Waves[currentWave].ZombieParameters[i].Count;
+                nb += this.simulation.parameter.HordeParameters.Waves[currentWave].ZombieParameters[i].Count;
             }
 
             return nb;
