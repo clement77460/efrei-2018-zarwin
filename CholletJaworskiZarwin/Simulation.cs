@@ -22,11 +22,11 @@ namespace CholletJaworskiZarwin
         [BsonElement("waveResults")]
         public List<WaveResult> waveResults { get; set; }
         public List<ZombieParameter[]> zombieParameter { get; set; }
-        public List<Order> orders { get; set; }
+        public List<OrderWrapperMongoDB> orders { get; set; }
         public int wavesToRun { get; set; }
 
         public Simulation(TurnResult turnInit, List<TurnResult> turnResults, List<WaveResult> waveResults, 
-            List<ZombieParameter[]> zombieParameter, List<Order> orders, int wavesToRun)
+            List<ZombieParameter[]> zombieParameter, List<OrderWrapperMongoDB> orders, int wavesToRun)
         {
             this.turnInit = turnInit;
             this.turnResults = turnResults;
@@ -38,7 +38,12 @@ namespace CholletJaworskiZarwin
 
         public Simulation(Parameters param)
         {
-            
+            orders = new List<OrderWrapperMongoDB>();
+            for(int i = 0; i < param.Orders.Length; i++)
+            {
+                orders.Add(new OrderWrapperMongoDB(param.Orders[i]));
+            }
+
             this.zombieParameter = new List<ZombieParameter[]>();
             for (int i=0;i< param.HordeParameters.Waves.Length; i++)
             {
@@ -79,16 +84,13 @@ namespace CholletJaworskiZarwin
 
         public Parameters CreateParametersFromOldSimulation()
         {
-            
+
             return new Parameters(
-                  this.wavesToRun-waveResults.Count,
+                  this.wavesToRun - waveResults.Count,
                   new FirstSoldierDamageDispatcher(),
                   this.BuildHordeParameter(),
                   this.BuildCityParameter(),
-                  new Order[]
-                  {
-                            //on verra plus tard xD
-                  },
+                  this.BuildOrdersParameters(),
                   this.BuildSoldierParameters());
 
         }
@@ -145,6 +147,18 @@ namespace CholletJaworskiZarwin
                     waveResults[indexWave].Turns[indexTurn].Soldiers[i].Level));
             }
             return soldierParameters.ToArray();
+        }
+
+        private Order[] BuildOrdersParameters()
+        {
+            List<Order> orderParameter = new List<Order>();
+
+            for(int i = 0; i < orders.Count; i++)
+            {
+                orderParameter.Add(orders[i].ToOrder());
+            }
+
+            return orderParameter.ToArray();
         }
     }
 }

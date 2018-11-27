@@ -41,8 +41,8 @@ namespace CholletJaworskiZarwin
                        new CityParameters(1, 20),
                        new Order[] //ne pas les ajouter sinon ca casse mongoDB ....zzzz...
                        {
-                                //new Order(0, 1, OrderType.ReinforceTower),
-                                //new Equipment(0, 1, OrderType.EquipWithSniper, 1),
+                                new Order(1, 1, OrderType.ReinforceTower),
+                                new Equipment(1, 1, OrderType.EquipWithSniper, 1),
                        },
                        new SoldierParameters(1, 1));
 
