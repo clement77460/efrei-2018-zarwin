@@ -13,30 +13,35 @@ namespace CholletJaworskiZarwin
         public delegate void BreakHandler(ActionTrigger m, ParameterEventArgs e);
         public ParameterEventArgs e = new ParameterEventArgs(); //peut etre remplacé par une classe : EventArgs
 
+        private DataSource ds;
         private bool isTesting;
 
         public ActionTrigger(bool isTesting)
         {
             this.isTesting = isTesting;
+            this.ds = new DataSource();
         }
 
-        public void EndTurnTime()
+        public void EndTurnTime(Simulation simulation)
         {
 
             e.SleepTime = 1000;
-            this.SendSignalToListener();
+            this.SendSignalToListenerAndSaveResults(simulation);
         }
 
-        public void EndWaveTime()
+        public void EndWaveTime(Simulation simulation)
         {
             e.SleepTime = 3000;
-            this.SendSignalToListener();
+            this.SendSignalToListenerAndSaveResults(simulation);
         }
 
-        private void SendSignalToListener()
+        private void SendSignalToListenerAndSaveResults(Simulation simulation)
         {
-            if (!isTesting) 
+            if (!isTesting)
+            {
+                ds.SaveSimulation(simulation);
                 onEndTurnOrWave?.Invoke(this, e);
+            }
         }
 
     }

@@ -13,46 +13,44 @@ namespace CholletJaworskiZarwin
         [ExcludeFromCodeCoverage]
         private static void Main(string[] args)
         {
-            var param = new Parameters(
-                1,
+            /*var input = new Parameters(
+                11,
                 new FirstSoldierDamageDispatcher(),
-                new HordeParameters(5),
-                new CityParameters(5),
+                new HordeParameters(1),
+                new CityParameters(0),
                 new Order[0],
-                new SoldierParameters(1, 1));
+                new SoldierParameters(1, 1));*/
 
-            Game game = new Game(param,false);
-            
-            /*while (!game.IsFinished())
+
+            int typeGame = 1; // 1: on reprend une simulation existante (la premiere de la liste donc la derniere executé il me semble)
+                              //    il faudrait ajouter un systeme de choix a voir pour plus tard
+                              //2: on commence une partie ce qui permet d'ajouter une simulation 
+            if (typeGame == 1)
             {
-                Console.WriteLine(game.Message);
-                
-                game.Turn();
-
-                PressEnter();
-
-                Console.WriteLine(game);
-                Console.WriteLine("The Wall has " + game.WallHealth + "HP left.");
-                Console.WriteLine(game.SoldiersStats());
-
+                Game game = new Game(false);
             }
-            PressEnter();*/
-            Console.WriteLine(game);
-            Console.WriteLine(game.SoldiersStats());
-
-            PressEnter();
-        }
-        [ExcludeFromCodeCoverage]
-        private static void PressEnter()
-        {
-            Console.WriteLine("\nPress Enter to continue...");
-            ConsoleKeyInfo c;
-            do
+            else
             {
-                c = Console.ReadKey();
 
-            } while (c.Key != ConsoleKey.Enter);
+                var input = new Parameters(
+                       2,
+                       new FirstSoldierDamageDispatcher(),
+                       new HordeParameters(
+                           new WaveHordeParameters(new ZombieParameter(ZombieType.Stalker, ZombieTrait.Normal, 1)),
+                           new WaveHordeParameters(new ZombieParameter(ZombieType.Stalker, ZombieTrait.Normal, 4))),
+                       new CityParameters(1, 20),
+                       new Order[] //ne pas les ajouter sinon ca casse mongoDB ....zzzz...
+                       {
+                                //new Order(0, 1, OrderType.ReinforceTower),
+                                //new Equipment(0, 1, OrderType.EquipWithSniper, 1),
+                       },
+                       new SoldierParameters(1, 1));
+
+                Game game = new Game(input, false);
+            }
+
         }
+        
     }
 }
 
