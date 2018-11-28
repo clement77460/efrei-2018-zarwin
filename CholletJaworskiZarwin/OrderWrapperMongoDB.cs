@@ -48,9 +48,24 @@ namespace CholletJaworskiZarwin
         {
             switch (Type)
             {
+                case OrderType.DistributeMedipack:
+                    return new Medipack(this.WaveIndex, this.TurnIndex, this.TargetSoldier, this.Amount);
+
+                case OrderType.EquipWithMachineGun:
+                    return new Equipment(this.WaveIndex, this.TurnIndex, OrderType.EquipWithMachineGun, this.TargetSoldier);
+
+                case OrderType.EquipWithShotgun:
+                    return new Equipment(this.WaveIndex, this.TurnIndex, OrderType.EquipWithShotgun, this.TargetSoldier);
+
                 case OrderType.EquipWithSniper:
                     return new Equipment(this.WaveIndex, this.TurnIndex, OrderType.EquipWithSniper,this.TargetSoldier);
 
+                case OrderType.RecruitSoldier:
+                    return new Order(this.WaveIndex, this.TurnIndex, OrderType.RecruitSoldier);
+
+                case OrderType.ReinforceWall:
+                    return new Zarwin.Shared.Contracts.Input.Orders.Wall(this.WaveIndex, this.TurnIndex, this.Amount);
+  
                 case OrderType.ReinforceTower:
                     return new Order(this.WaveIndex, this.TurnIndex, OrderType.ReinforceTower);
             }
