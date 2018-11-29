@@ -2,48 +2,54 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Zarwin.Shared.Contracts.Input;
+using Zarwin.Shared.Contracts.Input.Orders;
 using Zarwin.Shared.Tests;
 
 namespace CholletJaworskiZarwin
 {
     class Program
     {
-        private const int WALL_HEALTH = 3;
-        private const int NB_SOLDIERS = 3;
-        private const int NB_WALKERS_PER_HORDE = 10;
-        private const int NB_HORDES = 1;
 
         [ExcludeFromCodeCoverage]
         private static void Main(string[] args)
         {
-            Game game = new Game(WALL_HEALTH, NB_SOLDIERS, NB_WALKERS_PER_HORDE, NB_HORDES);
+            /*var input = new Parameters(
+                11,
+                new FirstSoldierDamageDispatcher(),
+                new HordeParameters(1),
+                new CityParameters(0),
+                new Order[0],
+                new SoldierParameters(1, 1));*/
 
-            while (!game.IsFinished())
+
+            int typeGame = 2; // 1: on reprend une simulation existante (la premiere de la liste donc la derniere executé il me semble)
+                              //    il faudrait ajouter un systeme de choix a voir pour plus tard
+                              //2: on commence une partie ce qui permet d'ajouter une simulation 
+            if (typeGame == 1)
             {
-                Console.WriteLine(game.Message);
-                game.Turn();
-
-                PressEnter();
-
-                Console.WriteLine(game);
-                Console.WriteLine("The Wall has " + game.WallHealth + "HP left.");
-                Console.WriteLine(game.SoldiersStats());
-
+                Game game = new Game(false);
             }
-            PressEnter();
-
-        }
-        [ExcludeFromCodeCoverage]
-        private static void PressEnter()
-        {
-            Console.WriteLine("\nPress Enter to continue...");
-            ConsoleKeyInfo c;
-            do
+            else
             {
-                c = Console.ReadKey();
 
-            } while (c.Key != ConsoleKey.Enter);
+                var input = new Parameters(
+                       2,
+                       new FirstSoldierDamageDispatcher(),
+                       new HordeParameters(
+                           new WaveHordeParameters(new ZombieParameter(ZombieType.Stalker, ZombieTrait.Normal, 1)),
+                           new WaveHordeParameters(new ZombieParameter(ZombieType.Stalker, ZombieTrait.Normal, 4))),
+                       new CityParameters(1, 20),
+                       new Order[] //ne pas les ajouter sinon ca casse mongoDB ....zzzz...
+                       {
+                                new Order(0, 1, OrderType.ReinforceTower),
+                                new Equipment(0, 1, OrderType.EquipWithSniper, 1),
+                       },
+                       new SoldierParameters(1, 1));
+                Game game = new Game(input, false);
+            }
+
         }
+        
     }
 }
 

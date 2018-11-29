@@ -9,79 +9,95 @@ namespace CholletJaworskiZarwin
 {
     public class Game
     {
+        private Simulation simulation;
+        private ActionTrigger actionTrigger;
+        private DataSource ds;
 
         private City city;
-
-        private int nbWalkersPerHorde;
         private Horde currentHorde;
-        private int nbHordes;
-        private int turn = 0;
-        private int currentWave = 0;
-        public int WallHealth => this.city.Wall.Health;
-        
-        private Parameters parameters;
-        
-        private List<SoldierState> soldierStates = new List<SoldierState>();
-        private HordeState hordeState;
-
-        private TurnResult turnInit;
-        private List<TurnResult> turnResults = new List<TurnResult>();
-        private List<WaveResult> waveResults = new List<WaveResult>();
-
         private IDamageDispatcher damageDispatcher;
 
-        public String Message { get; private set; }
+        private int nbWalkersPerHorde;
+        private int nbHordes;
+        private int turn;
 
-        // Constructor for the console program
-        public Game(int wallHealth, int nbSoldiers, int nbWalkersPerHorde, int nbHordes)
+        //charger une simulation existante
+        public Game(bool isTesting = true)
         {
-            this.city = new City(nbSoldiers, wallHealth);
-            this.nbWalkersPerHorde = nbWalkersPerHorde;
-            this.currentHorde = new Horde(nbWalkersPerHorde);
-            this.damageDispatcher = new DamageDispatcher();
-            this.nbHordes = nbHordes;
-            this.parameters = null;
-            this.Message = "2078, Villejuif. The city has been fortified because of a Walkers invasion. \n" +
-                nbSoldiers + " soldiers are defending the city. Some Walkers are coming to the West of the Wall...";
+            this.ds = new DataSource();
+            this.simulation=ds.ReadAllSimulations();
+            
 
-            // Approach phase
-            this.Message = "The horde is coming. Brace yourselves.";
+            this.turn = this.simulation.turnResults.Count;
+
+            this.BuildEntitiesWithParameter(this.simulation.CreateParametersFromOldSimulation());
+
+            this.InitEvent(isTesting);
+
+            if (simulation.turnInit == null)
+            {
+                this.InitTurn();
+            }
+            else
+            {
+                this.Turn();
+            }
         }
 
-        // Constructor for the tests
-        public Game(Parameters parameters)
+        //nouvelle partie avec des paramètres
+        public Game(Parameters parameters,bool isTesting=true)
         {
+
             Soldier.ResetId();//resetting ID before each simulations
 
-            this.parameters = parameters;
-            this.city = new City(parameters);
-            this.damageDispatcher = parameters.DamageDispatcher;
-            this.nbHordes = this.parameters.WavesToRun;
-            this.nbWalkersPerHorde = this.CountNumberOfWalkers(); //faire une methode pr calculer le nbr de zombies
-            this.currentHorde = new Horde(parameters.HordeParameters.Waves[0]);
+            this.simulation = new Simulation(parameters);
+            this.ds = new DataSource();
 
-            //
+            turn = 0;
+
+            this.InitEvent(isTesting);
+            this.BuildEntitiesWithParameter(parameters);
+
+            
             this.InitTurn();
 
-            // Approach phase
-            this.Message = "The horde is coming. Brace yourselves.";
+        }
+
+        private void BuildEntitiesWithParameter(Parameters parameters)
+        {
+            this.city = new City(parameters.CityParameters, parameters.SoldierParameters, parameters.Orders,actionTrigger);
+            this.damageDispatcher = parameters.DamageDispatcher;
+            this.nbHordes = parameters.WavesToRun;
+            this.nbWalkersPerHorde = this.CountNumberOfWalkers();
+            this.currentHorde = new Horde(this.simulation.zombieParameter[0]);
+        }
+
+        private void InitEvent(bool isTesting)
+        {
+            this.actionTrigger = new ActionTrigger(isTesting);
+
+            ActionListener actionListener = new ActionListener();
+            actionListener.SaveActionTrigger(this.actionTrigger);
+            
         }
 
         private void InitTurn()
         {
-            this.soldierStates = this.city.GetSoldiersStates();
-            this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
-            this.turnInit = new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin);
+            List<SoldierState> soldierStates = this.city.GetSoldiersStates();
+            HordeState hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
+
+            this.simulation.createInitTurn(soldierStates.ToArray(), hordeState, this.city.Wall.Health, city.Coin);
+            
             // Create initial results
             for (int i = 0; i < city.nbTower+1; i++)
             {
-                this.city.ExecuteOrder(turn, waveResults.Count, city.Coin);
+                this.city.ExecuteOrder(turn, this.simulation.waveResults.Count, city.Coin);
                 this.city.SnipersAreShoting(this.currentHorde);
-                this.soldierStates = this.city.GetSoldiersStates();
-                this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
+                soldierStates = this.city.GetSoldiersStates();
+                hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
                 if (this.city.GetSoldiers().Count > 0)
                 {
-                    this.turnResults.Add(new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin));
+                    this.simulation.addTurnResult(soldierStates.ToArray(), hordeState, this.city.Wall.Health, city.Coin);
                 }
                 
             }
@@ -94,46 +110,44 @@ namespace CholletJaworskiZarwin
 
         public void Turn()
         {
-
+            Console.WriteLine("\n\n STARTING TURN");
             if (!this.IsFinished())
             {
                 int goldAtStartOfTurn = this.city.Coin;
 
-
-                // Horde attacks the city (and its soldiers)
                 currentHorde.AttackCity(this.city, this.damageDispatcher);
-
-                // Soldiers attacks the horde to defend the city
                 city.DefendFromHorde(this.currentHorde, this.turn);
 
-                this.Message = "The fight goes on.";
+                this.city.ExecuteOrder(turn, this.simulation.waveResults.Count, goldAtStartOfTurn);
 
-                this.city.ExecuteOrder(turn, waveResults.Count, goldAtStartOfTurn);
+                List<SoldierState> soldierStates = this.city.GetSoldiersStates();
+                HordeState hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
 
-                // Update stats
-                this.soldierStates = this.city.GetSoldiersStates();
-                this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
 
-                // Add turn results
-                this.turnResults.Add(new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin));
+                this.simulation.addTurnResult(soldierStates.ToArray(), hordeState, this.city.Wall.Health, city.Coin);
                 turn++;
+                this.actionTrigger.EndTurnTime(simulation, this.currentHorde.GetNumberWalkersAlive());
             }
+            
+            
 
-            // Create a new horde if needed.
             this.ManageHordes();
 
             // Check if the game is finished (AFTER the turn) to set a message or not
             if (this.IsFinished())
             {
-                this.Message = "The game is finished.";
+                
                 if (this.city.NumberSoldiersAlive> 0)
                 {
-                    this.Message += " Soldiers defeated the walkers.";
+                    //Soldiers defeated the walkers
                 }
                 else
                 {
                     if(this.nbHordes != 0)
-                        this.Message += " The walkers defeated the soldiers.";
+                    {
+                        // The walkers defeated the soldiers
+                    }
+
                 }
 
             }
@@ -141,22 +155,20 @@ namespace CholletJaworskiZarwin
 
         public Result GetResult()
         {
-            return new Result("CholletJawordki", this.waveResults.ToArray());
+            return new Result("CholletJawordki", this.simulation.waveResults.ToArray());
         }
 
         private void ManageHordes()
         {
+
+
             if (this.currentHorde.GetNumberWalkersAlive() == 0)
             {
-                // Add turnResults to waveResults
-                this.waveResults.Add(new WaveResult(turnInit, turnResults.ToArray()));
+                this.EndWaveActions();
 
                 if (this.nbHordes > 1)
                 {
-                    this.currentWave++;
-
-                    
-                    if (this.parameters.HordeParameters.Waves.Length > 1)
+                    if (this.simulation.zombieParameter.Count > 1)
                     {
                         
                         this.currentHorde = new Horde(this.CountNumberOfWalkers());
@@ -167,12 +179,6 @@ namespace CholletJaworskiZarwin
                     }
 
                     this.nbHordes--;
-                    
-                    this.Message = "Uh, it seems that another horde is coming...";
-
-                    //on vide les turnResults
-                    this.turn = 0;
-                    this.turnResults.RemoveRange(0,this.turnResults.Count);
                     this.InitTurn();
                 }
             }
@@ -180,18 +186,35 @@ namespace CholletJaworskiZarwin
             {
                 if (this.city.GetSoldiers().Count <= 0)
                 {
-                    this.waveResults.Add(new WaveResult(turnInit, turnResults.ToArray()));
+                    this.EndWaveActions();
+
+                }
+                else
+                {
+                    this.Turn();
                 }
             }
         }
 
+        private void EndWaveActions()
+        {
+            //on vide les turnResults
+            this.turn = 0;
+            this.simulation.addWaveResult();
+            this.simulation.removeTurnResults();
+            this.actionTrigger.EndWaveTime(simulation);
+        }
+
         private int CountNumberOfWalkers()
         {
+            int currentWave = this.simulation.waveResults.Count;
             int nb = 0;
-            for (int i = 0; i < this.parameters.HordeParameters.Waves[currentWave].ZombieParameters.Length; i++)
+
+            for (int i = 0; i < this.simulation.zombieParameter[currentWave].Length; i++)
             {
-                nb += this.parameters.HordeParameters.Waves[currentWave].ZombieParameters[i].Count;
+                nb += this.simulation.zombieParameter[currentWave][i].Count;
             }
+
 
             return nb;
         }

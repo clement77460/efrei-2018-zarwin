@@ -75,7 +75,6 @@ namespace CholletJaworskiZarwin
             {
                 
                 horde.OneShotWalker();
-                System.Diagnostics.Debug.WriteLine("Sniping someone");
                 this.LevelUp();
                 return 1;
             }
