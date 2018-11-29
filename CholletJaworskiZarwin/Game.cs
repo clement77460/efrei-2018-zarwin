@@ -110,7 +110,7 @@ namespace CholletJaworskiZarwin
 
         public void Turn()
         {
-            Console.WriteLine("\n\n STARTING TURN");
+            
             if (!this.IsFinished())
             {
                 int goldAtStartOfTurn = this.city.Coin;

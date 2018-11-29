@@ -255,7 +255,6 @@ namespace CholletJaworskiZarwin
                         break;
 
                     case OrderType.ReinforceTower:
-                        System.Console.WriteLine("reinforcing tower");
                         this.CreateTower();
                         break;
                 }
