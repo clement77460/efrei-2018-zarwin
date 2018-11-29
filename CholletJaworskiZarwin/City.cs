@@ -10,6 +10,8 @@ namespace CholletJaworskiZarwin
 {
     public class City
     {
+        private ActionTrigger actionTrigger;
+
         private List<Soldier> soldiers;
         private List<Order> orders = new List<Order>();
        
@@ -18,12 +20,14 @@ namespace CholletJaworskiZarwin
 
         public int nbTower { get; private set; } = 0;
 
-        public City(CityParameters cityParameter,SoldierParameters[] soldierParameter,Order[] orders)
+        public City(CityParameters cityParameter,SoldierParameters[] soldierParameter,Order[] orders,
+            ActionTrigger actionTrigger)
         {
-            this.Wall = new Wall(cityParameter.WallHealthPoints);
+            this.actionTrigger = actionTrigger;
 
+            this.Wall = new Wall(cityParameter.WallHealthPoints);
             this.Coin  = cityParameter.InitialMoney;
-            // Populate the city with Soldiers
+            
             this.soldiers = new List<Soldier>();
             this.CreateSoldiersFromParameters(soldierParameter);
 
@@ -31,10 +35,6 @@ namespace CholletJaworskiZarwin
             
         }
 
-        public void HurtSoldiers(int damages, IDamageDispatcher damageDispatcher)
-        {
-            damageDispatcher.DispatchDamage(damages, soldiers);
-        }
 
         public void GetAttacked(int damage, IDamageDispatcher damageDispatcher)
         {
@@ -47,38 +47,62 @@ namespace CholletJaworskiZarwin
             // If the wall has collapsed, the walker attack the soldiers
             else
             {
-                this.HurtSoldiers(damage, damageDispatcher);
+                Soldier[] soldierHitten =this.HurtSoldiers(damage, damageDispatcher);
+
+                foreach(Soldier s in soldierHitten)
+                    actionTrigger.SoldierLosingHp(s.Id, damage);
                 
-                //checking if soldier is dead
                 foreach(Soldier s in soldiers.ToArray())
                 {
                     if (s.HealthPoints <= 0)
+                    {
                         soldiers.Remove(s);
+                        actionTrigger.SoldierDieing(s.Id);
+                    }
                 }
 
             }
             
         }
 
+        public Soldier[] HurtSoldiers(int damages, IDamageDispatcher damageDispatcher)
+        {
+            return damageDispatcher.DispatchDamage(damages, soldiers).ToArray();
+        }
+
         public void DefendFromHorde(Horde horde, int turn)
         {
 
-            int goldAmount = 0;
+            int nbWalkersKilled = 0;
             foreach (Soldier soldier in this.soldiers)
             {
                 soldier.UpdateItems(this);
-                goldAmount =soldier.Defend(horde, turn);
-                this.IncreaseCoin(goldAmount);
+                nbWalkersKilled = soldier.Defend(horde, turn);
+
+                this.WalkerHasBeenKilled(soldier, nbWalkersKilled);
+                
             }
         }
 
+
         public void SnipersAreShoting(Horde horde)
         {
-            int goldAmount = 0;
+            int nbWalkersKilled = 0;
             foreach (Soldier soldier in this.soldiers)
             {
-                goldAmount+=soldier.Sniping(horde);
-                
+                nbWalkersKilled = soldier.Sniping(horde);
+
+                this.WalkerHasBeenKilled(soldier, nbWalkersKilled);
+            }
+        }
+
+        private void WalkerHasBeenKilled(Soldier killer, int nbWalkersKilled)
+        {
+            if (nbWalkersKilled > 0)
+            {
+                this.IncreaseCoin(nbWalkersKilled);
+                actionTrigger.SoldierStriking(killer, nbWalkersKilled);
+
             }
         }
 

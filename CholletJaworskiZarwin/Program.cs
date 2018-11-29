@@ -22,7 +22,7 @@ namespace CholletJaworskiZarwin
                 new SoldierParameters(1, 1));*/
 
 
-            int typeGame = 1; // 1: on reprend une simulation existante (la premiere de la liste donc la derniere executé il me semble)
+            int typeGame = 2; // 1: on reprend une simulation existante (la premiere de la liste donc la derniere executé il me semble)
                               //    il faudrait ajouter un systeme de choix a voir pour plus tard
                               //2: on commence une partie ce qui permet d'ajouter une simulation 
             if (typeGame == 1)
@@ -41,11 +41,10 @@ namespace CholletJaworskiZarwin
                        new CityParameters(1, 20),
                        new Order[] //ne pas les ajouter sinon ca casse mongoDB ....zzzz...
                        {
-                                new Order(1, 1, OrderType.ReinforceTower),
-                                new Equipment(1, 1, OrderType.EquipWithSniper, 1),
+                                new Order(0, 1, OrderType.ReinforceTower),
+                                new Equipment(0, 1, OrderType.EquipWithSniper, 1),
                        },
                        new SoldierParameters(1, 1));
-
                 Game game = new Game(input, false);
             }
 

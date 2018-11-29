@@ -16,7 +16,8 @@ namespace CholletJaworskiZarwin.test
         public void WalkerAttackingCity_redirectingOnWall()
         {
             Walker w = new Walker();
-            City city = new City(new CityParameters(5, 0), new SoldierParameters[] { new SoldierParameters(1, 1) }, new Order[0]);
+            City city = new City(new CityParameters(5, 0), new SoldierParameters[] { new SoldierParameters(1, 1) }, new Order[0],
+                new ActionTrigger(true));
             w.AttackCity(city, new DamageDispatcher());
             w.ToString();
 
@@ -31,7 +32,8 @@ namespace CholletJaworskiZarwin.test
         {
             Walker.walkerCounterId = 0;
             Walker w = new Walker();
-            City city = new City(new CityParameters(0, 0), new SoldierParameters[] { new SoldierParameters(1, 1) }, new Order[0]);
+            City city = new City(new CityParameters(0, 0), new SoldierParameters[] 
+            { new SoldierParameters(1, 1) }, new Order[0],new ActionTrigger(true));
             w.AttackCity(city, new DamageDispatcher());
             Assert.Equal(0, city.Wall.Health);
             Assert.Equal(3, city.GetSoldiers()[0].HealthPoints);

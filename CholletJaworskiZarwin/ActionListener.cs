@@ -8,15 +8,22 @@ namespace CholletJaworskiZarwin
     {
         public void SaveActionTrigger(ActionTrigger actionTrigger)
         {
-            actionTrigger.onEndTurnOrWave += new ActionTrigger.BreakHandler(sleepMe);
+            actionTrigger.onEndTurnOrWave += new ActionTrigger.BreakHandler(SleepMe);
+            actionTrigger.onSoldierEvent += new ActionTrigger.MessageHandler(DisplayMessage);
         }
 
-        private void sleepMe(ActionTrigger actionTrigger, ParameterEventArgs e)
+        private void SleepMe(ActionTrigger actionTrigger, ParameterEventArgs e)
         {
-            
-            System.Console.WriteLine("[Fin tour / Wave] sleep: "+e.SleepTime/1000 +" s");
+
+            System.Console.WriteLine(e.message);
+            System.Console.WriteLine("Sleeping :"+e.SleepTime/1000+"s");
             System.Threading.Thread.Sleep(e.SleepTime);
             this.PressEnter();
+        }
+
+        private void DisplayMessage(ActionTrigger actionTrigger, ParameterEventArgs e)
+        {
+            System.Console.WriteLine(e.message);
         }
 
         [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]

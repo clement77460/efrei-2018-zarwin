@@ -14,7 +14,8 @@ namespace CholletJaworskiZarwin.test
         public void DefendFromHorde_KillingOneWalker_NoSoldiersDying()
         {
             Horde horde = new Horde(5);
-            City city = new City(new CityParameters(5, 0), new SoldierParameters[] { new SoldierParameters(1, 1) }, new Order[0]);
+            City city = new City(new CityParameters(5, 0), new SoldierParameters[] 
+            { new SoldierParameters(1, 1) }, new Order[0],new ActionTrigger(true));
             city.DefendFromHorde(horde, 1);
             //getting stats useless for unit test .........
             city.SoldiersStats();
@@ -27,7 +28,8 @@ namespace CholletJaworskiZarwin.test
         {
             //nbSoldats - wallhealt
             Horde horde = new Horde(8);
-            City city = new City(new CityParameters(5, 0), new SoldierParameters[] { new SoldierParameters(1, 1) },new Order[0]);
+            City city = new City(new CityParameters(5, 0), new SoldierParameters[] 
+            { new SoldierParameters(1, 1) },new Order[0], new ActionTrigger(true));
             city.HurtSoldiers(8, new DamageDispatcher());
             Assert.True(city.AreAllSoldiersDead());
         }
@@ -46,7 +48,8 @@ namespace CholletJaworskiZarwin.test
                 },
                 new SoldierParameters(1, 1));
 
-            City city = new City(param.CityParameters, param.SoldierParameters, param.Orders);
+            City city = new City(param.CityParameters, param.SoldierParameters, param.Orders,
+                 new ActionTrigger(true));
             Horde h = new Horde(11);
 
             city.ExecuteOrder(0, 0, city.Coin);
@@ -79,7 +82,8 @@ namespace CholletJaworskiZarwin.test
                 },
                 new SoldierParameters(1, 1));
 
-            City city = new City(param.CityParameters, param.SoldierParameters, param.Orders);
+            City city = new City(param.CityParameters, param.SoldierParameters, param.Orders,
+                 new ActionTrigger(true));
 
             city.GetSoldiers()[0].Hurt(1);
             Assert.Equal(3, city.GetSoldiers()[0].HealthPoints);
@@ -102,7 +106,8 @@ namespace CholletJaworskiZarwin.test
                 },
                 new SoldierParameters(1, 1));
 
-            City city = new City(param.CityParameters, param.SoldierParameters, param.Orders);
+            City city = new City(param.CityParameters, param.SoldierParameters, param.Orders
+                , new ActionTrigger(true));
 
             city.ExecuteOrder(1, 0, city.Coin);
             Assert.Equal(0, city.Coin);
@@ -123,7 +128,8 @@ namespace CholletJaworskiZarwin.test
                 new SoldierParameters(1, 1));
 
             Horde horde = new Horde(2);
-            City city = new City(param.CityParameters, param.SoldierParameters, param.Orders);
+            City city = new City(param.CityParameters, param.SoldierParameters, 
+                param.Orders, new ActionTrigger(true));
             city.ExecuteOrder(1, 0,city.Coin);
 
             city.SnipersAreShoting(horde);
@@ -151,7 +157,8 @@ namespace CholletJaworskiZarwin.test
                 },
                 new SoldierParameters(1, 1));
 
-            City city = new City(param.CityParameters, param.SoldierParameters, param.Orders);
+            City city = new City(param.CityParameters, param.SoldierParameters, param.Orders, 
+                new ActionTrigger(true));
             city.ExecuteOrder(1, 0, city.Coin);
             Assert.Equal(1, city.Coin);
         }
@@ -168,7 +175,8 @@ namespace CholletJaworskiZarwin.test
                 },
                 new SoldierParameters(1, 1));
 
-            City city = new City(param.CityParameters, param.SoldierParameters, param.Orders);
+            City city = new City(param.CityParameters, param.SoldierParameters, param.Orders
+                , new ActionTrigger(true));
             city.ExecuteOrder(1, 0, city.Coin);
 
             Assert.Equal(0, city.Coin);

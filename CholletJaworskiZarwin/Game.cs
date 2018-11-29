@@ -55,16 +55,17 @@ namespace CholletJaworskiZarwin
 
             turn = 0;
 
+            this.InitEvent(isTesting);
             this.BuildEntitiesWithParameter(parameters);
 
-            this.InitEvent(isTesting);
+            
             this.InitTurn();
 
         }
 
         private void BuildEntitiesWithParameter(Parameters parameters)
         {
-            this.city = new City(parameters.CityParameters, parameters.SoldierParameters, parameters.Orders);
+            this.city = new City(parameters.CityParameters, parameters.SoldierParameters, parameters.Orders,actionTrigger);
             this.damageDispatcher = parameters.DamageDispatcher;
             this.nbHordes = parameters.WavesToRun;
             this.nbWalkersPerHorde = this.CountNumberOfWalkers();
@@ -109,7 +110,7 @@ namespace CholletJaworskiZarwin
 
         public void Turn()
         {
-
+            Console.WriteLine("\n\n STARTING TURN");
             if (!this.IsFinished())
             {
                 int goldAtStartOfTurn = this.city.Coin;
@@ -125,7 +126,7 @@ namespace CholletJaworskiZarwin
 
                 this.simulation.addTurnResult(soldierStates.ToArray(), hordeState, this.city.Wall.Health, city.Coin);
                 turn++;
-                this.actionTrigger.EndTurnTime(simulation);
+                this.actionTrigger.EndTurnTime(simulation, this.currentHorde.GetNumberWalkersAlive());
             }
             
             
@@ -159,6 +160,8 @@ namespace CholletJaworskiZarwin
 
         private void ManageHordes()
         {
+
+
             if (this.currentHorde.GetNumberWalkersAlive() == 0)
             {
                 this.EndWaveActions();
@@ -185,6 +188,10 @@ namespace CholletJaworskiZarwin
                 {
                     this.EndWaveActions();
 
+                }
+                else
+                {
+                    this.Turn();
                 }
             }
         }
