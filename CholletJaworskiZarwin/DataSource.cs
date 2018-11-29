@@ -8,7 +8,7 @@ using Zarwin.Shared.Contracts.Input;
 
 namespace CholletJaworskiZarwin
 {
-    class DataSource
+    public class DataSource
     {
         private MongoClient client;
         private IMongoDatabase db;
@@ -40,12 +40,37 @@ namespace CholletJaworskiZarwin
             
         }
 
+
+        public Simulation IsSimulationExisting(String id)
+        {
+            var filter = Builders<Simulation>.Filter.Eq("idString", id);
+
+            
+            if (collection.Find(filter).CountDocuments() == 0)
+            {
+                Console.WriteLine("pas trouvé");
+                return null;
+
+            }
+            Console.WriteLine(" trouvé");
+            return collection.Find(filter).First();
+
+        }
+
         public Simulation ReadAllSimulations()
         {
             
             List<Simulation> simulations = collection.AsQueryable().ToList<Simulation>();
 
             return simulations[0];
+        }
+
+        public List<Simulation> ReadAllSimulationsAPI()
+        {
+
+            List<Simulation> simulations = collection.AsQueryable().ToList<Simulation>();
+
+            return simulations;
         }
 
         public void UpdateSimulation(Simulation simulation,FilterDefinition<Simulation> filtre)

@@ -14,7 +14,8 @@ namespace CholletJaworskiZarwin
     {
         [BsonId]
         public ObjectId Id { get; set; }
-
+        [BsonElement("idString")]
+        public String IdString { get; set; }
         [BsonElement("turnInit")]
         public TurnResult turnInit { get; set; }
         [BsonElement("turnResults")]
@@ -28,6 +29,7 @@ namespace CholletJaworskiZarwin
         public Simulation(TurnResult turnInit, List<TurnResult> turnResults, List<WaveResult> waveResults, 
             List<ZombieParameter[]> zombieParameter, List<OrderWrapperMongoDB> orders, int wavesToRun)
         {
+            
             this.turnInit = turnInit;
             this.turnResults = turnResults;
             this.waveResults = waveResults;
@@ -38,6 +40,9 @@ namespace CholletJaworskiZarwin
 
         public Simulation(Parameters param)
         {
+            Random random = new Random();
+            this.IdString = random.Next(1, 999999999).ToString();
+
             orders = new List<OrderWrapperMongoDB>();
             for(int i = 0; i < param.Orders.Length; i++)
             {
