@@ -9,7 +9,7 @@ namespace CholletJaworskiZarwin
 {
     public class Game
     {
-        private Simulation simulation;
+        public Simulation simulation { get; private set; }
         private ActionTrigger actionTrigger;
         private DataSource ds;
 
@@ -30,9 +30,10 @@ namespace CholletJaworskiZarwin
 
             this.turn = this.simulation.turnResults.Count;
 
+            this.InitEvent(isTesting);
             this.BuildEntitiesWithParameter(this.simulation.CreateParametersFromOldSimulation());
 
-            this.InitEvent(isTesting);
+            
 
             if (simulation.turnInit == null)
             {
@@ -40,7 +41,7 @@ namespace CholletJaworskiZarwin
             }
             else
             {
-                this.Turn();
+                this.ApproachTurn(simulation.turnResults.Count);
             }
         }
 
@@ -66,10 +67,12 @@ namespace CholletJaworskiZarwin
         private void BuildEntitiesWithParameter(Parameters parameters)
         {
             this.city = new City(parameters.CityParameters, parameters.SoldierParameters, parameters.Orders,actionTrigger);
+            city.CheckPastOrders(this.simulation.waveResults.Count,this.simulation.turnResults.Count);
+
             this.damageDispatcher = parameters.DamageDispatcher;
             this.nbHordes = parameters.WavesToRun;
             this.nbWalkersPerHorde = this.CountNumberOfWalkers();
-            this.currentHorde = new Horde(this.simulation.zombieParameter[0]);
+            this.currentHorde = new Horde(this.simulation.zombieParameter[this.simulation.waveResults.Count]);
         }
 
         private void InitEvent(bool isTesting)
@@ -87,22 +90,33 @@ namespace CholletJaworskiZarwin
             HordeState hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
 
             this.simulation.createInitTurn(soldierStates.ToArray(), hordeState, this.city.Wall.Health, city.Coin);
+
+
+            this.ApproachTurn(0);
+
             
-            // Create initial results
-            for (int i = 0; i < city.nbTower+1; i++)
+
+        }
+
+
+        public void ApproachTurn(int numberOfTurnDone)
+        {
+            for (int i = numberOfTurnDone; i < city.nbTower + 1; i++)
             {
+                System.Console.WriteLine("tour d'approche\n\n");
                 this.city.ExecuteOrder(turn, this.simulation.waveResults.Count, city.Coin);
                 this.city.SnipersAreShoting(this.currentHorde);
-                soldierStates = this.city.GetSoldiersStates();
-                hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
+                List<SoldierState> soldierStates = this.city.GetSoldiersStates();
+                HordeState hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
+
                 if (this.city.GetSoldiers().Count > 0)
                 {
                     this.simulation.addTurnResult(soldierStates.ToArray(), hordeState, this.city.Wall.Health, city.Coin);
                 }
                 
+                turn++;
+                this.actionTrigger.EndTurnTime(simulation, this.currentHorde.GetNumberWalkersAlive());
             }
-            turn++;
-
 
             this.Turn();
 

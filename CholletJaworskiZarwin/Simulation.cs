@@ -25,6 +25,7 @@ namespace CholletJaworskiZarwin
         public List<ZombieParameter[]> zombieParameter { get; set; }
         public List<OrderWrapperMongoDB> orders { get; set; }
         public int wavesToRun { get; set; }
+        public int isRunning { get; set; }
 
         public Simulation(TurnResult turnInit, List<TurnResult> turnResults, List<WaveResult> waveResults, 
             List<ZombieParameter[]> zombieParameter, List<OrderWrapperMongoDB> orders, int wavesToRun)
@@ -36,6 +37,8 @@ namespace CholletJaworskiZarwin
             this.zombieParameter = zombieParameter;
             this.orders = orders;
             this.wavesToRun = wavesToRun;
+
+            this.isRunning = 1;
         }
 
         public Simulation(Parameters param)
@@ -58,9 +61,8 @@ namespace CholletJaworskiZarwin
             this.wavesToRun = param.WavesToRun;
             this.turnResults = new List<TurnResult>();
             this.waveResults = new List<WaveResult>();
-            
 
-            //Obligé de créer un wrapper d'ordre ???
+            this.isRunning = 1;
         }
 
         public void addTurnResult(SoldierState[] soldiers, HordeState horde,

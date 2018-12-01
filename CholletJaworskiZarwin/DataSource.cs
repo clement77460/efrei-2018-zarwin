@@ -41,21 +41,36 @@ namespace CholletJaworskiZarwin
         }
 
 
-        public Simulation IsSimulationExisting(String id)
+        public bool IsSimulationRunning(String id)
+        {
+
+            if (GetSpecificSimulation(id) == null)
+            {
+                return false;
+            }
+
+            if(GetSpecificSimulation(id).isRunning==1)
+                return true;
+
+            return false;
+        }
+
+
+        public Simulation GetSpecificSimulation(String id)
         {
             var filter = Builders<Simulation>.Filter.Eq("idString", id);
 
-            
+
             if (collection.Find(filter).CountDocuments() == 0)
             {
-                Console.WriteLine("pas trouvé");
+                //n'existe pas
                 return null;
 
             }
-            Console.WriteLine(" trouvé");
-            return collection.Find(filter).First();
 
+            return collection.Find(filter).First();
         }
+
 
         public Simulation ReadAllSimulations()
         {
@@ -73,12 +88,18 @@ namespace CholletJaworskiZarwin
             return simulations;
         }
 
-        public void UpdateSimulation(Simulation simulation,FilterDefinition<Simulation> filtre)
+        private void UpdateSimulation(Simulation simulation,FilterDefinition<Simulation> filtre)
         {
 
             collection.ReplaceOne(filtre, simulation);
 
 
+        }
+
+        public void UpdateRunningStatus(Simulation simulation,int status)
+        {
+            var updateDef = Builders<Simulation>.Update.Set(s => s.isRunning, status);
+            collection.UpdateOne<Simulation>(s => s.Id == simulation.Id, updateDef);
         }
 
         public void InsertSimulation(Simulation simulation)

@@ -35,6 +35,47 @@ namespace CholletJaworskiZarwin
             
         }
 
+        public void CheckPastOrders(int waveIndex,int turnIndex)
+        {
+            foreach(Order o in orders)
+            {
+
+                
+                if (o.WaveIndex < waveIndex)
+                {
+                    this.ExecutePastOrders(o);
+                }
+                else
+                {
+                    if (o.WaveIndex <= waveIndex && o.TurnIndex < turnIndex)
+                    {
+                        this.ExecutePastOrders(o);
+                    }
+                }
+            }
+        }
+
+        private void ExecutePastOrders(Order o)
+        {
+            switch (o.Type)
+            {
+                case OrderType.ReinforceTower:
+                    this.nbTower++;
+                    break;
+
+                case OrderType.EquipWithSniper:
+                    (this.GetSoldierById(((Equipment)o).TargetSoldier))[0].SetSniper();
+                    break;
+
+                case OrderType.EquipWithShotgun:
+                    (this.GetSoldierById(((Equipment)o).TargetSoldier))[0].SetShotGun();
+                    break;
+
+                case OrderType.EquipWithMachineGun:
+                    (this.GetSoldierById(((Equipment)o).TargetSoldier))[0].SetMachineGun();
+                    break;
+            }
+        }
 
         public void GetAttacked(int damage, IDamageDispatcher damageDispatcher)
         {
@@ -263,6 +304,7 @@ namespace CholletJaworskiZarwin
 
         private void CreateTower()
         {
+            Console.WriteLine("creatin d'une tour");
             this.nbTower++;
         }
 

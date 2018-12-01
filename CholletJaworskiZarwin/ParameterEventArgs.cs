@@ -8,6 +8,10 @@ namespace CholletJaworskiZarwin
     {
         public int SleepTime { get;  set; }
         public String message { get; set; }
+        
+        public Simulation simulationToSave { get; set; }
+
+        public DataSource ds { get; set; }
 
     }
 }

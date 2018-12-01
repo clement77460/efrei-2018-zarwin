@@ -22,6 +22,7 @@ namespace CholletJaworskiZarwin
         {
             this.isTesting = isTesting;
             this.ds = new DataSource();
+            e.ds = this.ds;
         }
 
         public void EndTurnTime(Simulation simulation,int numberOfWalkers)
@@ -65,7 +66,7 @@ namespace CholletJaworskiZarwin
         {
             if (!isTesting)
             {
-                ds.SaveSimulation(simulation);
+                e.simulationToSave = simulation;
                 onEndTurnOrWave?.Invoke(this, e);
             }
         }
