@@ -20,10 +20,16 @@ namespace CholletJaworskiZarwin
             System.Console.WriteLine("Sleeping :"+e.SleepTime/1000+"s");
             System.Threading.Thread.Sleep(e.SleepTime);
 
-            if (!this.PressEnter()) {//on quitte la partie et change le status de la game
+
+            // Fonction pressEnter de la vestion 01, blocante pour l'API
+            //
+            //on quitte la partie et change le status de la game
+            //
+
+            /*if (!this.PressEnter()) {
                 e.ds.UpdateRunningStatus(e.simulationToSave, 0);
                 Environment.Exit(0);
-            }
+            }*/
         }
 
         private void DisplayMessage(ActionTrigger actionTrigger, ParameterEventArgs e)

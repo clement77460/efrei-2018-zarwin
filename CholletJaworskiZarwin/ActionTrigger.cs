@@ -29,7 +29,7 @@ namespace CholletJaworskiZarwin
         {
            
             e.message="Fin du tour, il reste "+ numberOfWalkers  + " zombies";
-            e.SleepTime = 1000;
+            e.SleepTime = 5000;//1
             this.SendSignalToListenerAndSaveResults(simulation);
         }
 
@@ -37,7 +37,7 @@ namespace CholletJaworskiZarwin
         {
             
             e.message = "Fin de vague";
-            e.SleepTime = 3000;
+            e.SleepTime = 5000;//3
             this.SendSignalToListenerAndSaveResults(simulation);
         }
 

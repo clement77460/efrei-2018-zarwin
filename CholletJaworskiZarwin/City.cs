@@ -304,7 +304,6 @@ namespace CholletJaworskiZarwin
 
         private void CreateTower()
         {
-            Console.WriteLine("creatin d'une tour");
             this.nbTower++;
         }
 
@@ -334,5 +333,12 @@ namespace CholletJaworskiZarwin
                                select s);
             return soldierLinq.ToArray(); //fonction a faire
         }
+
+        public void ReplacingOrdersList(Order[] NewOrderList)
+        {
+            orders = new List<Order>();
+            orders.AddRange(NewOrderList);
+        }
+
     }
 }

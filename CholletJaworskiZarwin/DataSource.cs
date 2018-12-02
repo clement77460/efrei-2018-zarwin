@@ -106,6 +106,15 @@ namespace CholletJaworskiZarwin
         {
             collection.InsertOne(simulation);
         }
+
+        public void DeleteSimulation(String id)
+        {
+            if (GetSpecificSimulation(id) != null)
+            {
+                collection.DeleteOne(s => s.IdString == id);
+            }
+
+        }
         
     }
 }

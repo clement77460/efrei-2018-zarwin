@@ -7,6 +7,10 @@ using CholletJaworskiZarwin;
 using MongoDB.Bson;
 using Zarwin.Shared.Contracts.Output;
 using Zarwin.Shared.Contracts.Input.Orders;
+using Zarwin.Shared.Contracts.Input;
+using System.Threading;
+using Zarwin.Shared.Tests;
+using ApiZarwin.Model;
 
 namespace ApiZarwin.Controllers
 {
@@ -14,8 +18,14 @@ namespace ApiZarwin.Controllers
     [ApiController]
     public class GamesController : ControllerBase
     {
-        DataSource ds = new DataSource();
+        private DataSource ds = new DataSource();
+        private readonly Games games;
 
+
+        public GamesController(Games games)
+        {
+            this.games = games;
+        }
 
         // GET zarwin/games/
         [HttpGet]
@@ -72,15 +82,8 @@ namespace ApiZarwin.Controllers
         [HttpGet("{id}/orders")]
         public ActionResult<IEnumerable<Order>> GetAllOrders(String id)
         {
-            Simulation simulation = ds.GetSpecificSimulation(id);
-            List<Order> orders = new List<Order>();
-
-            foreach(OrderWrapperMongoDB o in simulation.orders)
-            {
-                orders.Add(o.ToOrder());
-            }
-
-            return orders;
+            
+            return this.games.GetAllOrders(id);
         }
 
         // GET zarwin/games/id/orders/{waveIndex}/{turnIndex}
@@ -119,29 +122,159 @@ namespace ApiZarwin.Controllers
             return orders;
         }
 
-
-
-
-
-
-
-
         // POST zarwin/games
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void PostLaunchGame([FromBody] Parameters value)
         {
+
+            games.StartGame(value);
+
         }
 
-        // PUT zarwin/games/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE zarwin/games/5
+        // DELETE zarwin/games/{id}
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void DeleteSimulation(String id)
         {
+            ds.DeleteSimulation(id);
         }
+
+
+        // PUT zarwin/games/{id}/running
+        [HttpPut("{id}/running")]
+        public String PutStartOldSimulation(String id, [FromBody] bool value)
+        {
+            if (value)
+            {
+
+                games.LaunchGame(id);
+                return "game " + id + " was launched";
+                
+            }
+            else
+            {
+                games.DestroyGame(id);
+                return "game " + id + " was destroyed";
+            }
+        }
+
+        // PUT zarwin/games/{id}/orders
+        [HttpPut("{id}/orders")]
+        public ActionResult<IEnumerable<Order>> PutChangeFuturOrders(String id, [FromBody] List<Order> value)
+        {
+            Simulation simulation = ds.GetSpecificSimulation(id);
+            int waveIndex = simulation.waveResults.Count;
+            int turnIndex = simulation.turnResults.Count;
+
+            List<Order> orders = this.games.GetAllOrders(id);
+
+            foreach (Order o in value)
+            {
+                if (o.WaveIndex > waveIndex)
+                {
+                    orders.Add(o);
+                }
+                else
+                {
+                    if (o.WaveIndex >= waveIndex && o.TurnIndex > turnIndex)
+                    {
+                        orders.Add(o);
+                    }
+                }
+            }
+
+            //on sauvegarde en BD
+            simulation.BuildOrderWrapperMongoDb(orders.ToArray());
+            ds.SaveSimulation(simulation);
+
+            //on regarde si la game est en train de tourner pour modifier en temps réel
+            games.UpdateOrdersForAGame(id, orders.ToArray());
+
+            return orders;
+
+        }
+
+
+        [HttpPut("{id}/orders/{waveIndex}/{turnIndex}")]
+        public ActionResult<IEnumerable<Order>> PutChangeFuturOrdersForATurn(String id, int waveIndex,int turnIndex,[FromBody] List<Order> value)
+        {
+            Simulation simulation = ds.GetSpecificSimulation(id);
+            int actualWaveIndex = simulation.waveResults.Count;
+            int actualTurnIndex = simulation.turnResults.Count;
+
+
+
+            List<Order> everyOrders = games.GetAllOrders(id);
+            List<Order> ordersForGivenTurn = new List<Order>();
+
+            foreach (Order o in everyOrders)
+            {
+                if (o.WaveIndex == waveIndex && o.TurnIndex == turnIndex)
+                {
+                    ordersForGivenTurn.Add(o);
+                }
+            }
+
+            if (HasToSwap(waveIndex, actualWaveIndex, turnIndex, actualTurnIndex))
+            {
+                //action du changement
+                foreach (Order o in ordersForGivenTurn)
+                {
+                    everyOrders.Remove(o);
+                }
+                ordersForGivenTurn = new List<Order>();
+                ordersForGivenTurn.AddRange(value.ToArray());
+                everyOrders.AddRange(ordersForGivenTurn.ToArray());
+
+                //on sauvegarde en BD
+                simulation.BuildOrderWrapperMongoDb(everyOrders.ToArray());
+                ds.SaveSimulation(simulation);
+
+                //on regarde si la game est en train de tourner pour modifier en temps réel
+                games.UpdateOrdersForAGame(id, everyOrders.ToArray());
+            }
+
+            return ordersForGivenTurn;
+        }
+
+
+        private bool HasToSwap(int waveIndex, int actualWaveIndex, int turnIndex, int actualTurnIndex)
+        {
+            if (waveIndex > actualWaveIndex)
+            {
+                return true;
+            }
+            else
+            {
+                if (waveIndex == actualWaveIndex)
+                {
+                    if (turnIndex > actualTurnIndex)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        // PUT zarwin/games/{id}/orders/current
+        [HttpPut("{id}/orders/current")]
+        public ActionResult<IEnumerable<Order>> GetAllOrdersAtCurrentTurnIndexPut(String id)
+        {
+            Simulation simulation = ds.GetSpecificSimulation(id);
+            List<Order> orders = new List<Order>();
+
+
+            int indexTurn = simulation.turnResults.Count;
+            int indexWave = simulation.waveResults.Count;
+
+            foreach (OrderWrapperMongoDB o in simulation.orders)
+            {
+                if (o.TurnIndex == indexTurn && o.WaveIndex == indexWave)
+                    orders.Add(o.ToOrder());
+            }
+
+            return orders;
+        }
+
     }
 }

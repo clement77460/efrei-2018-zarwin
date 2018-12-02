@@ -46,11 +46,7 @@ namespace CholletJaworskiZarwin
             Random random = new Random();
             this.IdString = random.Next(1, 999999999).ToString();
 
-            orders = new List<OrderWrapperMongoDB>();
-            for(int i = 0; i < param.Orders.Length; i++)
-            {
-                orders.Add(new OrderWrapperMongoDB(param.Orders[i]));
-            }
+            this.BuildOrderWrapperMongoDb(param.Orders);
 
             this.zombieParameter = new List<ZombieParameter[]>();
             for (int i=0;i< param.HordeParameters.Waves.Length; i++)
@@ -166,6 +162,15 @@ namespace CholletJaworskiZarwin
             }
 
             return orderParameter.ToArray();
+        }
+
+        public void BuildOrderWrapperMongoDb(Order[] newOrders)
+        {
+            orders = new List<OrderWrapperMongoDB>();
+            for (int i = 0; i < newOrders.Length; i++)
+            {
+                orders.Add(new OrderWrapperMongoDB(newOrders[i]));
+            }
         }
     }
 }
