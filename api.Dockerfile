@@ -1,8 +1,11 @@
-FROM microsoft/dotnet:sdk AS build-env
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
 WORKDIR /app
+EXPOSE 59518
+EXPOSE 44364
 
-# Copy csproj and restore as distinct layers
-COPY ../*.sln ./
+FROM microsoft/dotnet:2.1-sdk AS build
+WORKDIR /src
+COPY *.sln ./
 COPY ApiZarwin/*.csproj ./ApiZarwin/
 COPY ChollerJaworskiZarwin.test/*.csproj ./ChollerJaworskiZarwin.test/
 COPY CholletJaworskiZarwin/*.csproj ./CholletJaworskiZarwin/
@@ -10,14 +13,14 @@ COPY Zarwin.Shared.Contracts/*.csproj ./Zarwin.Shared.Contracts/
 COPY Zarwin.Shared.Grader/*.csproj ./Zarwin.Shared.Grader/
 COPY Zarwin.Shared.Tests/*.csproj ./Zarwin.Shared.Tests/
 RUN dotnet restore
+COPY . .
+WORKDIR /src/ApiZarwin
+RUN dotnet build -c Release -o /app
 
-# Copy everything else and build
-COPY . ./
-WORKDIR /app/CholletJaworskiZarwin
-RUN dotnet publish -c Release -o out
+FROM build AS publish
+RUN dotnet publish ApiZarwin.csproj -c Release -o /app
 
-# Build runtime image
-FROM microsoft/dotnet:runtime
+FROM base AS final
 WORKDIR /app
-COPY --from=build-env /app/CholletJaworskiZarwin/out .
-ENTRYPOINT ["dotnet", "CholletJaworskiZarwin.dll"]
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "ApiZarwin.dll"]
