@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  zarwin.app:
+    image: ${DOCKER_REGISTRY}zarwin
+    build:
+      context: .
+      dockerfile: DockerfileAPP
+    links:
+    - mongo
+
+  zarwin.webapp:
+    image: ${DOCKER_REGISTRY}zarwin
+    build:
+      context: .
+      dockerfile: DockerfileAPI
+    links:
+    - mongo
+      
+  database:
+    image: ${DOCKER_REGISTRY}mongo
