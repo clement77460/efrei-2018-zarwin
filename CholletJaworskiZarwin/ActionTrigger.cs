@@ -21,8 +21,11 @@ namespace CholletJaworskiZarwin
         public ActionTrigger(bool isTesting)
         {
             this.isTesting = isTesting;
-            this.ds = new DataSource();
-            e.ds = this.ds;
+            if (!isTesting)
+            {
+                this.ds = new DataSource();
+                e.ds = this.ds;
+            }
         }
 
         public void EndTurnTime(Simulation simulation,int numberOfWalkers)

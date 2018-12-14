@@ -23,9 +23,14 @@ namespace CholletJaworskiZarwin
         private int nbHordes;
         private int turn;
 
+        private bool isTesting;
+        
+
         //charger une simulation existante
         public Game(Simulation simulation,bool isTesting = true)
         {
+
+            this.isTesting = isTesting;
 
             this.simulation = simulation;
             this.ds = new DataSource();
@@ -49,10 +54,13 @@ namespace CholletJaworskiZarwin
             Soldier.ResetId();//resetting ID before each simulations
 
             this.simulation = new Simulation(parameters);
-            this.ds = new DataSource();
-
+            
             turn = 0;
 
+            this.isTesting = isTesting;
+
+            if(!isTesting)
+                this.ds = new DataSource();
             this.InitEvent(isTesting);
             this.BuildEntitiesWithParameter(parameters);
 
@@ -157,14 +165,16 @@ namespace CholletJaworskiZarwin
                 {
                     //on fini la game donc on supprime en base : info non validee
                     //Si terminée, plus en base, donc plus dans la liste
-                    ds.DeleteSimulation(this.simulation.IdString);
+                    if(!isTesting)
+                        ds.DeleteSimulation(this.simulation.IdString);
 
                 }
             }
             else
             {
                 //on update le running status à 0
-                ds.UpdateRunningStatus(this.simulation, 0);
+                if(!isTesting)
+                    ds.UpdateRunningStatus(this.simulation, 0);
             }
         }
 
