@@ -33,8 +33,12 @@ namespace CholletJaworskiZarwin
             this.isTesting = isTesting;
 
             this.simulation = simulation;
-            this.ds = new DataSource();
-            this.ds.UpdateRunningStatus(this.simulation, 1);
+            if (!isTesting)
+            {
+                this.ds = new DataSource();
+                this.ds.UpdateRunningStatus(this.simulation, 1);
+            }
+            
 
             this.turn = this.simulation.turnResults.Count;
 

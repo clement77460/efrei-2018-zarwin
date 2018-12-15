@@ -32,6 +32,7 @@ namespace CholletJaworskiZarwin.test
         {
             Walker.walkerCounterId = 0;
             Walker w = new Walker();
+            
             City city = new City(new CityParameters(0, 0), new SoldierParameters[] 
             { new SoldierParameters(1, 1) }, new Order[0],new ActionTrigger(true));
             w.AttackCity(city, new DamageDispatcher());
@@ -39,5 +40,47 @@ namespace CholletJaworskiZarwin.test
             Assert.Equal(3, city.GetSoldiers()[0].HealthPoints);
 
         }
+
+        [Fact]
+        public void WalkerIsHurtedTwoTimesOnTheSameTurn()
+        {
+            Walker.walkerCounterId = 0;
+            Walker w = new Walker();
+
+            Assert.Equal(0, w.DamageTaken);
+            Assert.Equal(0, w.DamageTurn);
+
+            w.Hurt(1, 1);
+
+            Assert.Equal(1, w.DamageTaken);
+            Assert.Equal(1, w.DamageTurn);
+
+            w.Hurt(1, 1);
+
+            Assert.Equal(2, w.DamageTaken);
+            Assert.Equal(1, w.DamageTurn);
+
+        }
+        [Fact]
+        public void WalkerIsHurtedOneTimeOnEachTurn()
+        {
+            Walker.walkerCounterId = 0;
+            Walker w = new Walker();
+
+            Assert.Equal(0, w.DamageTaken);
+            Assert.Equal(0, w.DamageTurn);
+
+            w.Hurt(1, 1);
+
+            Assert.Equal(1, w.DamageTaken);
+            Assert.Equal(1, w.DamageTurn);
+
+            w.Hurt(2, 1);
+
+            Assert.Equal(1, w.DamageTaken);
+            Assert.Equal(2, w.DamageTurn);
+
+        }
+
     }
 }

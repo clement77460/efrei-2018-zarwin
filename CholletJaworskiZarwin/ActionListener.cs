@@ -1,9 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace CholletJaworskiZarwin
 {
+    //Classe difficilement testable
+    //Raisons:
+    //  + MongoDB
+    //  + Sleep
+    
     class ActionListener
     {
         public void SaveActionTrigger(ActionTrigger actionTrigger)

@@ -74,6 +74,17 @@ namespace CholletJaworskiZarwin
                 case OrderType.EquipWithMachineGun:
                     (this.GetSoldierById(((Equipment)o).TargetSoldier))[0].SetMachineGun();
                     break;
+
+                case OrderType.RecruitSoldier:
+                    this.AddNewSoldier();
+                    break;
+
+                case OrderType.DistributeMedipack:
+                    Soldier[] soldier = this.GetSoldierById(((Medipack)o).TargetSoldier);
+
+                    if (soldier.Length > 0)
+                        soldier[0].HealMe(((Medipack)o).Amount);
+                    break;
             }
         }
 
@@ -320,7 +331,7 @@ namespace CholletJaworskiZarwin
             if (this.CheckIfEnoughGold(amountAtStart,value))
             {
                 Soldier[] soldier = this.GetSoldierById(mediPack.TargetSoldier);
-                System.Diagnostics.Debug.WriteLine(soldier.Length);
+                
                 if(soldier.Length>0)
                     soldier[0].HealMe(value);
             }

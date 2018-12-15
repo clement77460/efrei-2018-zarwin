@@ -6,6 +6,8 @@ namespace CholletJaworskiZarwin
 {
 
     
+    //Classe permettant de déclencher les évènements
+    //Pas de règle métier, partiellement testable à cause du isTesting 
 
     public class ActionTrigger
     {
@@ -13,7 +15,7 @@ namespace CholletJaworskiZarwin
         public delegate void BreakHandler(ActionTrigger m, ParameterEventArgs e);
         public event MessageHandler onSoldierEvent;
         public delegate void MessageHandler(ActionTrigger m, ParameterEventArgs e);
-        public ParameterEventArgs e = new ParameterEventArgs(); //peut etre remplacé par une classe : EventArgs
+        public ParameterEventArgs e = new ParameterEventArgs(); 
 
         private DataSource ds;
         private bool isTesting;

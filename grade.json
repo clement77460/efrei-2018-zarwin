@@ -12,17 +12,32 @@
   "Coefficient de qualité": 0.88125,
   "Résultats des tests": {
     "Complétude": {
-      "Total": 32,
-      "Succès": 32,
+      "Total": 51,
+      "Succès": 51,
       "Taux": 1.0
     },
     "Livraison V2": {
       "Total": 8,
       "Succès": 8,
       "Taux": 1.0
+    },
+    "Livraison V3": {
+      "Total": 19,
+      "Succès": 19,
+      "Taux": 1.0
+    },
+    "Livraison V4": {
+      "Total": 16,
+      "Succès": 16,
+      "Taux": 1.0
+    },
+    "Livraison V5": {
+      "Total": 0,
+      "Succès": 0,
+      "Taux": 0.0
     }
   },
-  "Note de livraison": 10.0,
+  "Note de livraison": 7.5,
   "Note de complétude": 10.0,
-  "Note totale": 17.625
+  "Note totale": 15.421875
 }
