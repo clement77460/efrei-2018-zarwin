@@ -40,12 +40,13 @@ namespace ApiZarwin.Model
         }
 
 
-        public void StartGame(Parameters parameters)
+        public Game StartGame(Parameters parameters)
         {
             Game game = new Game(parameters, false);
             games.Add(game);
 
             game.InitTurn();
+            return game;
         }
 
         public void DestroyGame(String id)

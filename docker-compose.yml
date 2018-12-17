@@ -1,21 +1,26 @@
 version: '3.4'
 
 services:
-  zarwin.app:
-    image: ${DOCKER_REGISTRY}zarwin
+  apizarwin:
+    image: ${DOCKER_REGISTRY-}apizarwin
     build:
       context: .
-      dockerfile: app.Dockerfile
+      dockerfile: ApiZarwin/Dockerfile
+    ports:
+    - "80:80"
     links:
     - mongo
 
-  zarwin.webapp:
-    image: ${DOCKER_REGISTRY}zarwin
+  cholletjaworskizarwin:
+    image: ${DOCKER_REGISTRY-}cholletjaworskizarwin
     build:
       context: .
-      dockerfile: api.DockerfileAPI
+      dockerfile: CholletJaworskiZarwin/Dockerfile
     links:
     - mongo
-      
-  database:
+    
+  mongo:
     image: ${DOCKER_REGISTRY}mongo
+    ports:
+    - "27017:27017"
+    

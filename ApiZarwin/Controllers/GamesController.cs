@@ -31,14 +31,19 @@ namespace ApiZarwin.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Simulation>> Get()
         {
-            return ds.ReadAllSimulationsAPI();
+            return Ok(ds.ReadAllSimulationsAPI());
         }
 
         // GET zarwin/games/id
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetTurnState")]
         public ActionResult<TurnResult> GetTurnState(String id)
         {
             Simulation simulation = ds.GetSpecificSimulation(id);
+
+            if(simulation == null)
+            {
+                return NotFound("Simulation " + id + " non trouvée.");
+            }
 
             int indexTurn = simulation.turnResults.Count - 1;
             if (indexTurn >= 0)
@@ -58,6 +63,12 @@ namespace ApiZarwin.Controllers
         public ActionResult<IEnumerable<TurnResult>> GetAllTurns(String id)
         {
             Simulation simulation = ds.GetSpecificSimulation(id);
+
+            if (simulation == null)
+            {
+                return NotFound("Simulation " + id + " non trouvée.");
+            }
+
             List<TurnResult> turns = new List<TurnResult>();
 
             foreach(WaveResult wr in simulation.waveResults)
@@ -75,15 +86,28 @@ namespace ApiZarwin.Controllers
         [HttpGet("{id}/running")]
         public ActionResult<bool> GetIsRunning(String id)
         {
-            return ds.IsSimulationRunning(id);
+            Simulation simulation = ds.GetSpecificSimulation(id);
+
+            if (simulation == null)
+            {
+                return NotFound("Simulation " + id + " non trouvée.");
+            }
+
+            return Ok(ds.IsSimulationRunning(id));
         }
 
         // GET zarwin/games/id/orders
         [HttpGet("{id}/orders")]
         public ActionResult<IEnumerable<Order>> GetAllOrders(String id)
         {
-            
-            return this.games.GetAllOrders(id);
+            Simulation simulation = ds.GetSpecificSimulation(id);
+
+            if (simulation == null)
+            {
+                return NotFound("Simulation " + id + " non trouvée.");
+            }
+
+            return Ok(this.games.GetAllOrders(id));
         }
 
         // GET zarwin/games/id/orders/{waveIndex}/{turnIndex}
@@ -91,6 +115,10 @@ namespace ApiZarwin.Controllers
         public ActionResult<IEnumerable<Order>> GetAllOrdersAtTurnIndex(String id,int waveIndex,int turnIndex)
         {
             Simulation simulation = ds.GetSpecificSimulation(id);
+            if (simulation == null)
+            {
+                return NotFound("Simulation " + id + " non trouvée.");
+            }
             List<Order> orders = new List<Order>();
 
             foreach (OrderWrapperMongoDB o in simulation.orders)
@@ -99,7 +127,7 @@ namespace ApiZarwin.Controllers
                     orders.Add(o.ToOrder());
             }
 
-            return orders;
+            return Ok(orders);
         }
 
         // GET zarwin/games/id/orders/current
@@ -107,6 +135,10 @@ namespace ApiZarwin.Controllers
         public ActionResult<IEnumerable<Order>> GetAllOrdersAtCurrentTurnIndex(String id)
         {
             Simulation simulation = ds.GetSpecificSimulation(id);
+            if (simulation == null)
+            {
+                return NotFound("Simulation " + id + " non trouvée.");
+            }
             List<Order> orders = new List<Order>();
 
 
@@ -119,41 +151,53 @@ namespace ApiZarwin.Controllers
                     orders.Add(o.ToOrder());
             }
 
-            return orders;
+            return Ok(orders);
         }
 
         // POST zarwin/games
         [HttpPost]
-        public void PostLaunchGame([FromBody] Parameters value)
+        public ActionResult<TurnResult> PostLaunchGame([FromBody] Parameters value)
         {
+            Simulation simulation = games.StartGame(value).simulation;
 
-            games.StartGame(value);
-
+            return CreatedAtRoute(
+                    "GetTurnState",
+                    new
+                    {
+                        id = simulation.IdString
+                    },
+                    simulation);
         }
 
         // DELETE zarwin/games/{id}
         [HttpDelete("{id}")]
-        public void DeleteSimulation(String id)
+        public ActionResult<String> DeleteSimulation(String id)
         {
+            if (ds.GetSpecificSimulation(id) == null)
+            {
+                return NotFound("Simulation " + id + " non trouvée.");
+            }
+
             ds.DeleteSimulation(id);
+            return Accepted();
         }
 
 
         // PUT zarwin/games/{id}/running
         [HttpPut("{id}/running")]
-        public String PutStartOldSimulation(String id, [FromBody] bool value)
+        public ActionResult<String> PutStartOldSimulation(String id, [FromBody] bool value)
         {
             if (value)
             {
 
                 games.LaunchGame(id);
-                return "game " + id + " was launched";
+                return Ok("game " + id + " was launched");
                 
             }
             else
             {
                 games.DestroyGame(id);
-                return "game " + id + " was destroyed";
+                return Ok("game " + id + " was destroyed");
             }
         }
 
@@ -162,6 +206,10 @@ namespace ApiZarwin.Controllers
         public ActionResult<IEnumerable<Order>> PutChangeFuturOrders(String id, [FromBody] List<Order> value)
         {
             Simulation simulation = ds.GetSpecificSimulation(id);
+            if (simulation == null)
+            {
+                return NotFound("Simulation " + id + " non trouvée.");
+            }
             int waveIndex = simulation.waveResults.Count;
             int turnIndex = simulation.turnResults.Count;
 
@@ -198,10 +246,12 @@ namespace ApiZarwin.Controllers
         public ActionResult<IEnumerable<Order>> PutChangeFuturOrdersForATurn(String id, int waveIndex,int turnIndex,[FromBody] List<Order> value)
         {
             Simulation simulation = ds.GetSpecificSimulation(id);
+            if(simulation == null)
+            {
+                return NotFound("Simulation " + id + " non trouvée.");
+            }
             int actualWaveIndex = simulation.waveResults.Count;
             int actualTurnIndex = simulation.turnResults.Count;
-
-
 
             List<Order> everyOrders = games.GetAllOrders(id);
             List<Order> ordersForGivenTurn = new List<Order>();

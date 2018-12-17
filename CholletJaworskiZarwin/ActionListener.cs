@@ -26,7 +26,6 @@ namespace CholletJaworskiZarwin
             System.Console.WriteLine("Sleeping :"+e.SleepTime/1000+"s");
             System.Threading.Thread.Sleep(e.SleepTime);
 
-
             // Fonction pressEnter de la vestion 01, blocante pour l'API
             //
             //on quitte la partie et change le status de la game

@@ -18,7 +18,12 @@ namespace CholletJaworskiZarwin
 
         public DataSource()
         {
+            // Appli lancée avec Visual
+            //this.client = new MongoClient();
+
+            // Appli lancée avec Docker
             this.client = new MongoClient("mongodb://mongo");
+
             this.db = client.GetDatabase("zarwinDB");//créer et/ou utilise la base myFirstDb 
             this.collection = db.GetCollection<Simulation>("simulations");
         }
