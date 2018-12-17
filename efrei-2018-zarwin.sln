@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiZarwin", "ApiZarwin\ApiZ
 		{FD72B4B5-3B56-4AD2-89D6-EEF218D0696D} = {FD72B4B5-3B56-4AD2-89D6-EEF218D0696D}
 	EndProjectSection
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{73F171BD-EDA8-4E27-A224-99E21CB462E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{4C378B77-8694-4D36-997B-FF2EC4323B30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C378B77-8694-4D36-997B-FF2EC4323B30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C378B77-8694-4D36-997B-FF2EC4323B30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73F171BD-EDA8-4E27-A224-99E21CB462E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73F171BD-EDA8-4E27-A224-99E21CB462E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73F171BD-EDA8-4E27-A224-99E21CB462E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73F171BD-EDA8-4E27-A224-99E21CB462E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
