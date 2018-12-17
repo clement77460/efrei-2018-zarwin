@@ -3,6 +3,7 @@ WORKDIR /app
 
 FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /src
+COPY *.sln ./
 COPY CholletJaworskiZarwin/CholletJaworskiZarwin.csproj CholletJaworskiZarwin/
 COPY Zarwin.Shared.Contracts/Zarwin.Shared.Contracts.csproj Zarwin.Shared.Contracts/
 COPY Zarwin.Shared.Grader/Zarwin.Shared.Grader.csproj Zarwin.Shared.Grader/

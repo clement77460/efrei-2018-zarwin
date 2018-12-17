@@ -4,6 +4,7 @@ EXPOSE 80
 
 FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /src
+COPY *.sln ./
 COPY ApiZarwin/ApiZarwin.csproj ApiZarwin/
 COPY CholletJaworskiZarwin/CholletJaworskiZarwin.csproj CholletJaworskiZarwin/
 COPY Zarwin.Shared.Contracts/Zarwin.Shared.Contracts.csproj Zarwin.Shared.Contracts/
