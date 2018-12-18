@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   apizarwin:
-    image: ${DOCKER_REGISTRY-}apizarwin
+    image: ${DOCKER_REGISTRY}apizarwin
     build:
       context: .
       dockerfile: ApiZarwin/Dockerfile
@@ -12,7 +12,7 @@ services:
     - mongo
 
   cholletjaworskizarwin:
-    image: ${DOCKER_REGISTRY-}cholletjaworskizarwin
+    image: ${DOCKER_REGISTRY}cholletjaworskizarwin
     build:
       context: .
       dockerfile: CholletJaworskiZarwin/Dockerfile
