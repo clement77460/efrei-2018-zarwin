@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  apizarwin:
+    image: ${DOCKER_REGISTRY}apizarwin
+    build:
+      context: .
+      dockerfile: ApiZarwin/Dockerfile
+    ports:
+    - "80:80"
+    links:
+    - mongo
+
+  cholletjaworskizarwin:
+    image: ${DOCKER_REGISTRY}cholletjaworskizarwin
+    build:
+      context: .
+      dockerfile: CholletJaworskiZarwin/Dockerfile
+    links:
+    - mongo
+    
+  mongo:
+    image: ${DOCKER_REGISTRY}mongo
+    ports:
+    - "27017:27017"
+    

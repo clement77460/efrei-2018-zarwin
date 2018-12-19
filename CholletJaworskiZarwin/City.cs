@@ -10,6 +10,8 @@ namespace CholletJaworskiZarwin
 {
     public class City
     {
+        private ActionTrigger actionTrigger;
+
         private List<Soldier> soldiers;
         private List<Order> orders = new List<Order>();
        
@@ -18,36 +20,72 @@ namespace CholletJaworskiZarwin
 
         public int nbTower { get; private set; } = 0;
 
-        public City(int numberOfSoldiers, int wallHealth)
+        public City(CityParameters cityParameter,SoldierParameters[] soldierParameter,Order[] orders,
+            ActionTrigger actionTrigger)
         {
-            
-            this.Wall = new Wall(wallHealth);
+            this.actionTrigger = actionTrigger;
 
-            // Populate the city with Soldiers
+            this.Wall = new Wall(cityParameter.WallHealthPoints);
+            this.Coin  = cityParameter.InitialMoney;
+            
             this.soldiers = new List<Soldier>();
-            for (int i = 0; i < numberOfSoldiers; i++)
+            this.CreateSoldiersFromParameters(soldierParameter);
+
+            this.orders.AddRange(orders);
+            
+        }
+
+        public void CheckPastOrders(int waveIndex,int turnIndex)
+        {
+            foreach(Order o in orders)
             {
-                this.AddNewSoldier();
+
+                
+                if (o.WaveIndex < waveIndex)
+                {
+                    this.ExecutePastOrders(o);
+                }
+                else
+                {
+                    if (o.WaveIndex <= waveIndex && o.TurnIndex < turnIndex)
+                    {
+                        this.ExecutePastOrders(o);
+                    }
+                }
             }
         }
 
-        // Constructor with given parameters
-        public City(Parameters parameters)
+        private void ExecutePastOrders(Order o)
         {
-            this.Wall = new Wall(parameters.CityParameters.WallHealthPoints);
+            switch (o.Type)
+            {
+                case OrderType.ReinforceTower:
+                    this.nbTower++;
+                    break;
 
-            this.Coin  = parameters.CityParameters.InitialMoney;
-            // Populate the city with Soldiers
-            this.soldiers = new List<Soldier>();
-            this.CreateSoldiersFromParameters(parameters.SoldierParameters);
+                case OrderType.EquipWithSniper:
+                    (this.GetSoldierById(((Equipment)o).TargetSoldier))[0].SetSniper();
+                    break;
 
-            this.orders.AddRange(parameters.Orders);
-            
-        }
+                case OrderType.EquipWithShotgun:
+                    (this.GetSoldierById(((Equipment)o).TargetSoldier))[0].SetShotGun();
+                    break;
 
-        public void HurtSoldiers(int damages, IDamageDispatcher damageDispatcher)
-        {
-            damageDispatcher.DispatchDamage(damages, soldiers);
+                case OrderType.EquipWithMachineGun:
+                    (this.GetSoldierById(((Equipment)o).TargetSoldier))[0].SetMachineGun();
+                    break;
+
+                case OrderType.RecruitSoldier:
+                    this.AddNewSoldier();
+                    break;
+
+                case OrderType.DistributeMedipack:
+                    Soldier[] soldier = this.GetSoldierById(((Medipack)o).TargetSoldier);
+
+                    if (soldier.Length > 0)
+                        soldier[0].HealMe(((Medipack)o).Amount);
+                    break;
+            }
         }
 
         public void GetAttacked(int damage, IDamageDispatcher damageDispatcher)
@@ -61,38 +99,62 @@ namespace CholletJaworskiZarwin
             // If the wall has collapsed, the walker attack the soldiers
             else
             {
-                this.HurtSoldiers(damage, damageDispatcher);
+                Soldier[] soldierHitten =this.HurtSoldiers(damage, damageDispatcher);
+
+                foreach(Soldier s in soldierHitten)
+                    actionTrigger.SoldierLosingHp(s.Id, damage);
                 
-                //checking if soldier is dead
                 foreach(Soldier s in soldiers.ToArray())
                 {
                     if (s.HealthPoints <= 0)
+                    {
                         soldiers.Remove(s);
+                        actionTrigger.SoldierDieing(s.Id);
+                    }
                 }
 
             }
             
         }
 
+        public Soldier[] HurtSoldiers(int damages, IDamageDispatcher damageDispatcher)
+        {
+            return damageDispatcher.DispatchDamage(damages, soldiers).ToArray();
+        }
+
         public void DefendFromHorde(Horde horde, int turn)
         {
 
-            int goldAmount = 0;
+            int nbWalkersKilled = 0;
             foreach (Soldier soldier in this.soldiers)
             {
                 soldier.UpdateItems(this);
-                goldAmount =soldier.Defend(horde, turn);
-                this.IncreaseCoin(goldAmount);
+                nbWalkersKilled = soldier.Defend(horde, turn);
+
+                this.WalkerHasBeenKilled(soldier, nbWalkersKilled);
+                
             }
         }
 
+
         public void SnipersAreShoting(Horde horde)
         {
-            int goldAmount = 0;
+            int nbWalkersKilled = 0;
             foreach (Soldier soldier in this.soldiers)
             {
-                goldAmount+=soldier.Sniping(horde);
-                
+                nbWalkersKilled = soldier.Sniping(horde);
+
+                this.WalkerHasBeenKilled(soldier, nbWalkersKilled);
+            }
+        }
+
+        private void WalkerHasBeenKilled(Soldier killer, int nbWalkersKilled)
+        {
+            if (nbWalkersKilled > 0)
+            {
+                this.IncreaseCoin(nbWalkersKilled);
+                actionTrigger.SoldierStriking(killer, nbWalkersKilled);
+
             }
         }
 
@@ -269,7 +331,7 @@ namespace CholletJaworskiZarwin
             if (this.CheckIfEnoughGold(amountAtStart,value))
             {
                 Soldier[] soldier = this.GetSoldierById(mediPack.TargetSoldier);
-                System.Diagnostics.Debug.WriteLine(soldier.Length);
+                
                 if(soldier.Length>0)
                     soldier[0].HealMe(value);
             }
@@ -282,5 +344,12 @@ namespace CholletJaworskiZarwin
                                select s);
             return soldierLinq.ToArray(); //fonction a faire
         }
+
+        public void ReplacingOrdersList(Order[] NewOrderList)
+        {
+            orders = new List<Order>();
+            orders.AddRange(NewOrderList);
+        }
+
     }
 }

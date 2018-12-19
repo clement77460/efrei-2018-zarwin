@@ -18,10 +18,10 @@ namespace CholletJaworskiZarwin
         internal ZombieTrait Trait { get; set; }
 
         // Last turn the walker have been damaged
-        internal int DamageTurn { get; set; }
+        public int DamageTurn { get; set; }
 
         // Damage taken during DamageTurn
-        internal int DamageTaken { get; set; }
+        public int DamageTaken { get; set; }
 
         public Walker()
         {

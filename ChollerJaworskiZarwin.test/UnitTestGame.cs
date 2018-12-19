@@ -12,40 +12,42 @@ namespace CholletJaworskiZarwin.test
     public class UnitTestGame
     {
         [Fact]
-        public void TestStringReturnGameIsNotFinishedAfterOneTurn()
+        public void TestStringReturnGamen_When1Soldiervs2Walkers()
         {
-            Game game = new Game(10, 5, 10, 10);
+            var param = new Parameters(
+               1,
+               new FirstSoldierDamageDispatcher(),
+               new HordeParameters(2),
+               new CityParameters(10),
+               new Order[0],
+               new SoldierParameters(1, 1));
+
+            Game game = new Game(param);
             game.SoldiersStats();
            
             game.Turn();
-            Assert.False(game.IsFinished());
-            game.ToString();
-            Assert.NotEmpty(game.Message);
+            Assert.True(game.IsFinished());
+            Assert.Equal("Soldiers are 1 left. "+ "0 walker(s) are attacking. ", game.ToString());
             
 
-        }
-        [Fact]
-        public void WallIsAt1HPBecause9WalkersAreHitting()
-        {
-            Game game = new Game(10, 5, 9, 1);
-            
-
-            game.Turn();
-            
-            Assert.Equal(1, game.WallHealth);
         }
         [Fact]
         public void FinishingTheGameQuickly()
         {
-            Game game = new Game(10, 5, 1, 1);
+            var param = new Parameters(
+              1,
+              new FirstSoldierDamageDispatcher(),
+              new HordeParameters(1),
+              new CityParameters(10),
+              new Order[0],
+              new SoldierParameters(1, 1));
 
-
-            game.Turn();
+            Game game = new Game(param);
 
             Assert.True(game.IsFinished());
         }
         [Fact]
-        public void SendingTwoHordes()
+        public void SendingTwoHordes_WhenTestMode()
         {
             var input = new Parameters(
                1,

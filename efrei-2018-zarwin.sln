@@ -2,15 +2,24 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zarwin.Shared.Contracts", "Zarwin.Shared.Contracts\Zarwin.Shared.Contracts.csproj", "{F21B1295-1D6C-4359-A4AF-78CDC1DA2566}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zarwin.Shared.Contracts", "Zarwin.Shared.Contracts\Zarwin.Shared.Contracts.csproj", "{F21B1295-1D6C-4359-A4AF-78CDC1DA2566}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zarwin.Shared.Tests", "Zarwin.Shared.Tests\Zarwin.Shared.Tests.csproj", "{F9426D4C-60FE-4834-9AB4-CF24968463B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zarwin.Shared.Tests", "Zarwin.Shared.Tests\Zarwin.Shared.Tests.csproj", "{F9426D4C-60FE-4834-9AB4-CF24968463B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CholletJaworskiZarwin", "CholletJaworskiZarwin\CholletJaworskiZarwin.csproj", "{DB6C3E47-A33F-4687-A44A-DECF22A22EDD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CholletJaworskiZarwin", "CholletJaworskiZarwin\CholletJaworskiZarwin.csproj", "{DB6C3E47-A33F-4687-A44A-DECF22A22EDD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zarwin.Shared.Grader", "Zarwin.Shared.Grader\Zarwin.Shared.Grader.csproj", "{FD72B4B5-3B56-4AD2-89D6-EEF218D0696D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zarwin.Shared.Grader", "Zarwin.Shared.Grader\Zarwin.Shared.Grader.csproj", "{FD72B4B5-3B56-4AD2-89D6-EEF218D0696D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CholletJaworskiZarwin.test", "ChollerJaworskiZarwin.test\CholletJaworskiZarwin.test.csproj", "{29D52A4A-F283-4A38-A120-B617C1F3EA06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CholletJaworskiZarwin.test", "ChollerJaworskiZarwin.test\CholletJaworskiZarwin.test.csproj", "{29D52A4A-F283-4A38-A120-B617C1F3EA06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiZarwin", "ApiZarwin\ApiZarwin.csproj", "{4C378B77-8694-4D36-997B-FF2EC4323B30}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DB6C3E47-A33F-4687-A44A-DECF22A22EDD} = {DB6C3E47-A33F-4687-A44A-DECF22A22EDD}
+		{29D52A4A-F283-4A38-A120-B617C1F3EA06} = {29D52A4A-F283-4A38-A120-B617C1F3EA06}
+		{F9426D4C-60FE-4834-9AB4-CF24968463B3} = {F9426D4C-60FE-4834-9AB4-CF24968463B3}
+		{F21B1295-1D6C-4359-A4AF-78CDC1DA2566} = {F21B1295-1D6C-4359-A4AF-78CDC1DA2566}
+		{FD72B4B5-3B56-4AD2-89D6-EEF218D0696D} = {FD72B4B5-3B56-4AD2-89D6-EEF218D0696D}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +47,14 @@ Global
 		{29D52A4A-F283-4A38-A120-B617C1F3EA06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29D52A4A-F283-4A38-A120-B617C1F3EA06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29D52A4A-F283-4A38-A120-B617C1F3EA06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C378B77-8694-4D36-997B-FF2EC4323B30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C378B77-8694-4D36-997B-FF2EC4323B30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C378B77-8694-4D36-997B-FF2EC4323B30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C378B77-8694-4D36-997B-FF2EC4323B30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73F171BD-EDA8-4E27-A224-99E21CB462E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73F171BD-EDA8-4E27-A224-99E21CB462E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73F171BD-EDA8-4E27-A224-99E21CB462E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73F171BD-EDA8-4E27-A224-99E21CB462E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
