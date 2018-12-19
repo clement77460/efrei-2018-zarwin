@@ -19,5 +19,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="EmptyInterface.cs" />
+    <Compile Remove="Walker\EmptyEnumeration.cs" />
+    <Compile Remove="Nouveau dossier\FattyWalker.cs" />
+    <Compile Remove="Nouveau dossier\RunnerWalker.cs" />
+    <Compile Remove="GameEngine.cs" />
   </ItemGroup>
 </Project>

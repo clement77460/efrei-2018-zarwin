@@ -6,11 +6,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zarwin.Shared.Contracts", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zarwin.Shared.Tests", "Zarwin.Shared.Tests\Zarwin.Shared.Tests.csproj", "{F9426D4C-60FE-4834-9AB4-CF24968463B3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CholletJaworskiZarwin", "CholletJaworskiZarwin\CholletJaworskiZarwin.csproj", "{DB6C3E47-A33F-4687-A44A-DECF22A22EDD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CholletJaworskiZarwin", "CholletJaworskiZarwin\CholletJaworskiZarwin.csproj", "{DB6C3E47-A33F-4687-A44A-DECF22A22EDD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zarwin.Shared.Grader", "Zarwin.Shared.Grader\Zarwin.Shared.Grader.csproj", "{FD72B4B5-3B56-4AD2-89D6-EEF218D0696D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zarwin.Shared.Grader", "Zarwin.Shared.Grader\Zarwin.Shared.Grader.csproj", "{FD72B4B5-3B56-4AD2-89D6-EEF218D0696D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChollerJaworskiZarwin.test", "ChollerJaworskiZarwin.test\ChollerJaworskiZarwin.test.csproj", "{29D52A4A-F283-4A38-A120-B617C1F3EA06}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CholletJaworskiZarwin.test", "ChollerJaworskiZarwin.test\CholletJaworskiZarwin.test.csproj", "{29D52A4A-F283-4A38-A120-B617C1F3EA06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -38,11 +38,15 @@ namespace Zarwin.Shared.Contracts.Input
         [JsonProperty("city")]
         public CityParameters CityParameters { get; }
 
+        [JsonProperty("orders")]
+        public Order[] Orders { get; }
+
         public Parameters(
             int wavesToRun, 
             IDamageDispatcher damageDispatcher,
             HordeParameters hordeParameters,
             CityParameters cityParameters,
+            Order[] orders,
             params SoldierParameters[] soldierParameters)
         {
             WavesToRun = wavesToRun;
@@ -50,6 +54,7 @@ namespace Zarwin.Shared.Contracts.Input
             HordeParameters = hordeParameters;
             SoldierParameters = soldierParameters;
             CityParameters = cityParameters;
+            Orders = orders;
         }
 
         // This constructor must not be used. It must be used solely by the deserialization process.
@@ -59,8 +64,9 @@ namespace Zarwin.Shared.Contracts.Input
             string damageDispatcher,
             HordeParameters hordeParameters,
             CityParameters cityParameters,
+            Order[] orders,
             params SoldierParameters[] soldierParameters)
-            : this(wavesToRun, CreateDispatcher(damageDispatcher), hordeParameters, cityParameters, soldierParameters)
+            : this(wavesToRun, CreateDispatcher(damageDispatcher), hordeParameters, cityParameters, orders, soldierParameters)
         { }
     }
 }

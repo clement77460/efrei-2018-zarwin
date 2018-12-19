@@ -6,20 +6,19 @@ namespace CholletJaworskiZarwin
 {
     public class Wall
     {
-        private int health;
 
-        public int Health => health;
+        public int Health { get; private set; }
 
         public Wall(int health) {
-            this.health = health;
+            this.Health = health;
         }
 
         public void WeakenWall(int value)
         {
-            this.health -= value;
-            if(this.health < 0)
+            this.Health -= value;
+            if(this.Health < 0)
             {
-                this.health = 0;
+                this.Health = 0;
             }
         }
 

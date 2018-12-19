@@ -5,19 +5,19 @@ using CholletJaworskiZarwin;
 using Xunit;
 
 
-namespace ChollerJaworskiZarwin.test
+namespace CholletJaworskiZarwin.test
 {
     public class UnitTestWall
     {
         [Fact]
-        public void initWallWith5HP()
+        public void InitWallWith5HP()
         {
             Wall wall = new Wall(5);
             Assert.Equal(5, wall.Health);
         }
 
         [Fact]
-        public void reducingWallHealthWith2()
+        public void ReducingWallHealthWith2()
         {
             Wall wall = new Wall(5);
             wall.WeakenWall(2);

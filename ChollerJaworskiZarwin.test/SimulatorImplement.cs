@@ -9,15 +9,21 @@ using System.Diagnostics;
 using Xunit;
 
 
-namespace ChollerJaworskiZarwin.test
+namespace CholletJaworskiZarwin.test
 {
     public class SimulatorImplement : IInstantSimulator
     {
-        
+
         public Result Run(Parameters parameters)
         {
-            GameEngine ge = new GameEngine(parameters);
-            return ge.GameLoop();
+            Game game = new Game(parameters);
+
+            while (!game.IsFinished())
+            {
+                game.Turn();
+            }
+
+            return game.GetResult();
         }
     }
 }
