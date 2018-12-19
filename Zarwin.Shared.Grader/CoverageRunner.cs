@@ -42,7 +42,7 @@ namespace Zarwin.Shared.Grader
                 "/p:CoverletOutput=../",
                 "/p:MergeWith=\"../coverage.json\"",
                 "/p:CoverletOutputFormat=\\\"json,cobertura\\\"",
-                "/p:Exclude=\"[Zarwin.Shared.*]*\"");
+                "/p:Exclude=\"[Zarwin.Shared.*]*%2c[ChollerJaworskiZarwin.test]*%2c[NUnit3.TestAdapter]*\"");
 
             process.ForwardDataAndError = true;
             process.Run();
