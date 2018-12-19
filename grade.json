@@ -7,13 +7,13 @@
     "Pas de duplications de code": 1.0,
     "Séparation de responsabilités": 1.0,
     "Encapsulation": 1.0,
-    "Tests unitaires": 0.0
+    "Tests unitaires": 0.55
   },
-  "Coefficient de qualité": 0.88125,
+  "Coefficient de qualité": 0.91562499999999991,
   "Résultats des tests": {
     "Complétude": {
-      "Total": 51,
-      "Succès": 51,
+      "Total": 67,
+      "Succès": 67,
       "Taux": 1.0
     },
     "Livraison V2": {
@@ -30,14 +30,9 @@
       "Total": 16,
       "Succès": 16,
       "Taux": 1.0
-    },
-    "Livraison V5": {
-      "Total": 0,
-      "Succès": 0,
-      "Taux": 0.0
     }
   },
   "Note de livraison": 7.5,
   "Note de complétude": 10.0,
-  "Note totale": 15.421875
+  "Note totale": 18.3125
 }
