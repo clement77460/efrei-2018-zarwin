@@ -1,28 +1,33 @@
 {
   "Evaluation de qualité": {
     "Nommages variables": 1.0,
-    "Nommages et types de membres": 0.7,
+    "Nommages et types de membres": 0.8,
     "Structure fonctions": 0.6,
     "Structure classes": 0.8,
     "Pas de duplications de code": 1.0,
     "Séparation de responsabilités": 1.0,
     "Encapsulation": 1.0,
-    "Tests unitaires": 0.938
+    "Tests unitaires": 0.608
   },
-  "Coefficient de qualité": 0.939875,
+  "Coefficient de qualité": 0.9255,
   "Résultats des tests": {
     "Complétude": {
-      "Total": 9,
-      "Succès": 9,
+      "Total": 49,
+      "Succès": 49,
       "Taux": 1.0
     },
     "Livraison V2": {
       "Total": 8,
       "Succès": 8,
       "Taux": 1.0
+    },
+    "Livraison V3": {
+      "Total": 19,
+      "Succès": 19,
+      "Taux": 1.0
     }
   },
   "Note de livraison": 10.0,
   "Note de complétude": 10.0,
-  "Note totale": 18.7975
+  "Note totale": 18.509999999999998
 }
