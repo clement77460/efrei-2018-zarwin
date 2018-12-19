@@ -8,10 +8,14 @@ namespace Zarwin.Shared.Contracts.Output
     {
         [JsonProperty("waves")]
         public WaveResult[] Waves { get; }
-        
-        public Result(params WaveResult[] waves)
+
+        [JsonIgnore]
+        public string SimulationId { get; }
+
+        public Result(string simulationId, params WaveResult[] waves)
         {
             Waves = waves;
+            SimulationId = simulationId;
         }
 
         public override bool Equals(object obj)

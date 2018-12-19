@@ -15,6 +15,8 @@ namespace Zarwin.Shared.Contracts.Core
         /// </summary>
         /// <param name="damage">The total amount of damage.</param>
         /// <param name="soldiers">A list of soldiers to deal damage to</param>
-        void DispatchDamage(int damage, IEnumerable<ISoldier> soldiers);
+        /// <returns>Every damaged soldiers</returns>
+        IEnumerable<TSoldier> DispatchDamage<TSoldier>(int damage, IEnumerable<TSoldier> soldiers)
+            where TSoldier: ISoldier;
     }
 }

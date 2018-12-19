@@ -1,6 +1,7 @@
 ﻿using System;
 using Zarwin.Shared.Contracts.Core;
 using System.Diagnostics;
+using Zarwin.Shared.Contracts.Input.Orders;
 
 namespace CholletJaworskiZarwin
 {
@@ -18,6 +19,7 @@ namespace CholletJaworskiZarwin
 
         private bool hasShotGun = false;
         private bool hasMachineGun = false;
+        private bool hasSniper = false;
 
         public Soldier()
         {
@@ -49,19 +51,35 @@ namespace CholletJaworskiZarwin
 
         public int Defend(Horde horde, int turn)
         {
-            // The soldier kill 1 walker, plus 1 every 10 level he reached
-            decimal calcul = 1 + (this.Level - 1) / 10;
-            int damages = Convert.ToInt32(Math.Floor(calcul));
-            damages = damages * killMultiplicator;
-            // Kill walkers
-            int nbWalkersKilled = horde.DoDamages(damages, turn);
-            // Level up for each walker killed
-            for (int i = 0; i < nbWalkersKilled; ++i)
+            if (!hasSniper)
             {
-                this.LevelUp();
-            }
+                decimal calcul = 1 + (this.Level - 1) / 10;// The soldier kill 1 walker, plus 1 every 10 level he reached
+                int damages = Convert.ToInt32(Math.Floor(calcul));
+                damages = damages * killMultiplicator;
+                
+                int nbWalkersKilled = horde.DoDamages(damages, turn);// Kill walkers
 
-            return nbWalkersKilled;
+                for (int i = 0; i < nbWalkersKilled; ++i)
+                {
+                    this.LevelUp();// Level up for each walker killed
+                }
+                return nbWalkersKilled;
+            }
+            return 0;
+           
+        }
+
+        public int sniping(Horde horde)
+        {
+            if (hasSniper)
+            {
+                
+                horde.oneShotWalker();
+                System.Diagnostics.Debug.WriteLine("Sniping someone");
+                this.LevelUp();
+                return 1;
+            }
+            return 0;
         }
 
         public override String ToString()
@@ -77,6 +95,11 @@ namespace CholletJaworskiZarwin
         public void SetMachineGun()
         {
             this.hasMachineGun = true;
+        }
+
+        public void SetSniper()
+        {
+            this.hasSniper = true;
         }
 
         public void UpdateItems(City city)
@@ -98,6 +121,20 @@ namespace CholletJaworskiZarwin
             }
         }
 
+        public void HealMe(int value)
+        {
+            if (this.HealthPoints >= 0)
+            {
+                if (this.HealthPoints + value >= this.Level + 3)
+                {
+                    this.HealthPoints = this.Level + 3;
+                }
+                else
+                {
+                    this.HealthPoints += value;
+                }
+            }
+        }
 
         public static void ResetId()
         {

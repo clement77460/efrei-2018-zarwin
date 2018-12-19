@@ -7,8 +7,9 @@ namespace CholletJaworskiZarwin
 {
     public class DamageDispatcher : IDamageDispatcher
     {
-        public void DispatchDamage(int damage, IEnumerable<ISoldier> soldiers)
+        public IEnumerable<TSoldier> DispatchDamage<TSoldier>(int damage, IEnumerable<TSoldier> soldiers) where TSoldier : ISoldier
         {
+            List<TSoldier> hurtSoldiers = new List<TSoldier>();
             while (damage > 0 && soldiers.Sum(soldier => soldier.HealthPoints) > 0)
             {
                 // Get a random number
@@ -20,7 +21,9 @@ namespace CholletJaworskiZarwin
 
                 chosenSoldier.Hurt(damageDealt);
                 damage -= damageDealt;
+                hurtSoldiers.Add(chosenSoldier);
             }
+            return hurtSoldiers;
         }
     }
 }

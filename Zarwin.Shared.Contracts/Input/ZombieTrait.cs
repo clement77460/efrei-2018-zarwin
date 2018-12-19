@@ -2,7 +2,16 @@
 {
     public enum ZombieTrait
     {
+        /// <summary>
+        /// Dies after only receiving 2 damage in a single turn
+        /// </summary>
         Tough = 1,
-        Normal = 2,
+
+        /// <summary>
+        /// Each soldier damaged pass cannot attack that turn
+        /// </summary>
+        Incapacitating = 2,
+
+        Normal = 3,
     }
 }

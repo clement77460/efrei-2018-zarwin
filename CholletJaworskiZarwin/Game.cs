@@ -57,7 +57,7 @@ namespace CholletJaworskiZarwin
             this.city = new City(parameters);
             this.damageDispatcher = parameters.DamageDispatcher;
             this.nbHordes = this.parameters.WavesToRun;
-            this.nbWalkersPerHorde = this.parameters.HordeParameters.Waves[0].ZombieTypes[0].Count;
+            this.nbWalkersPerHorde = this.parameters.HordeParameters.Waves[0].ZombieTypes[0].Count; //faire une methode pr calculer le nbr de zombies
             this.currentHorde = new Horde(parameters.HordeParameters.Waves[0]);
 
             //
@@ -69,23 +69,37 @@ namespace CholletJaworskiZarwin
 
         private void InitTurn()
         {
-            // Create initial results
-            this.city.ExecuteOrder(turn, waveResults.Count);
             this.soldierStates = this.city.GetSoldiersStates();
             this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
             this.turnInit = new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin);
-            if (this.city.GetSoldiers().Count>0)
+            // Create initial results
+            for (int i = 0; i < city.nbTower+1; i++)
             {
-                this.turnResults.Add(this.turnInit);
+                this.city.ExecuteOrder(turn, waveResults.Count, city.Coin);
+                this.city.snipersAreShoting(this.currentHorde);
+                this.soldierStates = this.city.GetSoldiersStates();
+                this.hordeState = new HordeState(this.currentHorde.GetNumberWalkersAlive());
+                if (this.city.GetSoldiers().Count > 0)
+                {
+                    this.turnResults.Add(new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin));
+                }
+                
             }
+            turn++;
+
+
+            this.Turn();
+
         }
 
         public void Turn()
         {
-            
-            turn++;  
+
             if (!this.IsFinished())
             {
+                int goldAtStartOfTurn = this.city.Coin;
+
+
                 // Horde attacks the city (and its soldiers)
                 currentHorde.AttackCity(this.city, this.damageDispatcher);
 
@@ -94,7 +108,7 @@ namespace CholletJaworskiZarwin
 
                 this.Message = "The fight goes on.";
 
-                this.city.ExecuteOrder(turn, waveResults.Count);
+                this.city.ExecuteOrder(turn, waveResults.Count, goldAtStartOfTurn);
 
                 // Update stats
                 this.soldierStates = this.city.GetSoldiersStates();
@@ -102,6 +116,7 @@ namespace CholletJaworskiZarwin
 
                 // Add turn results
                 this.turnResults.Add(new TurnResult(this.soldierStates.ToArray(), this.hordeState, this.city.Wall.Health, city.Coin));
+                turn++;
             }
 
             // Create a new horde if needed.
@@ -126,7 +141,7 @@ namespace CholletJaworskiZarwin
 
         public Result GetResult()
         {
-            return new Result(this.waveResults.ToArray());
+            return new Result("CholletJawordki", this.waveResults.ToArray());
         }
 
         private void ManageHordes()
@@ -139,7 +154,21 @@ namespace CholletJaworskiZarwin
                 if (this.nbHordes > 1)
                 {
                     this.currentWave++;
-                    this.currentHorde = new Horde(this.nbWalkersPerHorde);
+
+                    
+                    if (this.parameters.HordeParameters.Waves.Length > 1)
+                    {
+                        int nb = 0;
+                        for (int i = 0; i < this.parameters.HordeParameters.Waves[currentWave].ZombieParameters.Length; i++)
+                        {
+                            nb += this.parameters.HordeParameters.Waves[currentWave].ZombieParameters[i].Count;
+                        }
+                        this.currentHorde = new Horde(nb);
+                    }
+                    else
+                    {
+                        this.currentHorde = new Horde(this.nbWalkersPerHorde);
+                    }
 
                     this.nbHordes--;
                     
@@ -162,7 +191,11 @@ namespace CholletJaworskiZarwin
 
         public Boolean IsFinished()
         {
-            return (turn >0 && (this.city.NumberSoldiersAlive== 0 || this.currentHorde.GetNumberWalkersAlive() == 0));
+            if (city.GetSoldiers().Count <= 0)
+                return true;
+            if (currentHorde.GetNumberWalkersAlive() == 0)
+                return true;
+            return false;
         }
 
         public String SoldiersStats()

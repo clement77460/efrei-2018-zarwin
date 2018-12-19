@@ -113,5 +113,10 @@ namespace CholletJaworskiZarwin
             return killedWalkers;
         }
 
+        public void oneShotWalker()
+        {
+            walkers.RemoveAt(0);
+        }
+
     }
 }

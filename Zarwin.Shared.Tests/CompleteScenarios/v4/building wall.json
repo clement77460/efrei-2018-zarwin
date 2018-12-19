@@ -22,10 +22,17 @@
       }
     ],
     "city": {
-      "initialMoney": 0,
+      "initialMoney": 15,
       "wallHealthPoints": 0
     },
-    "orders": []
+    "orders": [
+      {
+        "amount": 15,
+        "waveIndex": 0,
+        "turnIndex": 0,
+        "type": "ReinforceWall"
+      }
+    ]
   },
   "expectedOutput": {
     "waves": [
@@ -42,7 +49,7 @@
             "size": 2
           },
           "wallHealthPoints": 0,
-          "money": 0
+          "money": 15
         },
         "turns": [
           {
@@ -56,7 +63,7 @@
             "horde": {
               "size": 2
             },
-            "wallHealthPoints": 0,
+            "wallHealthPoints": 15,
             "money": 0
           },
           {
@@ -64,13 +71,13 @@
               {
                 "id": 1,
                 "level": 2,
-                "healthPoints": 3
+                "healthPoints": 5
               }
             ],
             "horde": {
               "size": 1
             },
-            "wallHealthPoints": 0,
+            "wallHealthPoints": 13,
             "money": 1
           },
           {
@@ -78,13 +85,13 @@
               {
                 "id": 1,
                 "level": 3,
-                "healthPoints": 3
+                "healthPoints": 6
               }
             ],
             "horde": {
               "size": 0
             },
-            "wallHealthPoints": 0,
+            "wallHealthPoints": 12,
             "money": 2
           }
         ]

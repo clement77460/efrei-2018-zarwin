@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,13 +7,17 @@ namespace Zarwin.Shared.Contracts.Input
 {
     public class WaveHordeParameters
     {
-        [JsonProperty("zombieTypes")]
-        public ZombieParameter[] ZombieTypes { get; }
-        
+        [JsonProperty("zombieParameters")]
+        public ZombieParameter[] ZombieParameters { get; }
+
+        [JsonIgnore]
+        [Obsolete("Use " + nameof(ZombieParameters) + " instead")]
+        public ZombieParameter[] ZombieTypes => ZombieParameters;
+
         [JsonConstructor]
-        public WaveHordeParameters(params ZombieParameter[] zombieTypes)
+        public WaveHordeParameters(params ZombieParameter[] zombieParameters)
         {
-            ZombieTypes = zombieTypes;
+            ZombieParameters = zombieParameters;
         }
 
         public WaveHordeParameters(int size)

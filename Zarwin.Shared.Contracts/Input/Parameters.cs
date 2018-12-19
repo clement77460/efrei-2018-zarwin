@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using Zarwin.Shared.Contracts.Core;
+using Zarwin.Shared.Contracts.Input.Orders;
 
 namespace Zarwin.Shared.Contracts.Input
 {
@@ -21,9 +22,8 @@ namespace Zarwin.Shared.Contracts.Input
         private static IDamageDispatcher CreateDispatcher(string typeName)
         {
             var type = Type.GetType(typeName);
-            var dispatcher = Activator.CreateInstance(type) as IDamageDispatcher;
 
-            if (dispatcher == null)
+            if (!(Activator.CreateInstance(type) is IDamageDispatcher dispatcher))
                 throw new InvalidOperationException($"Dispatcher {typeName} does not exist");
 
             return dispatcher;
