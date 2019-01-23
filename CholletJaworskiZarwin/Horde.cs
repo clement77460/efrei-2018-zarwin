@@ -33,14 +33,14 @@ namespace CholletJaworskiZarwin
             this.lastHitWalker = null;
         }
 
-        public Horde(WaveHordeParameters parameters)
+        public Horde(ZombieParameter[] parameters)
         {
             walkers = new List<Walker>();
-            foreach (ZombieParameter walkerParams in parameters.ZombieTypes)
+            for (int n=0;n<parameters.Length;n++ )
             {
-                for (int i = 0; i < walkerParams.Count; ++i)
+                for (int i = 0; i < parameters[n].Count; ++i)
                 {
-                    this.walkers.Add(new Walker(walkerParams));
+                    this.walkers.Add(new Walker(parameters[n]));
                 }
             }
             this.lastHitWalker = null;
@@ -113,7 +113,7 @@ namespace CholletJaworskiZarwin
             return killedWalkers;
         }
 
-        public void oneShotWalker()
+        public void OneShotWalker()
         {
             walkers.RemoveAt(0);
         }

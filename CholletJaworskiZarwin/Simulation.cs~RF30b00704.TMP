@@ -1,0 +1,69 @@
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Zarwin.Shared.Contracts.Input;
+using Zarwin.Shared.Contracts.Output;
+
+namespace CholletJaworskiZarwin
+{
+    class Simulation
+    {
+        [BsonId]
+        public ObjectId Id { get; set; }
+        [BsonElement("parameter")]
+        public Parameters parameter { get; set; }
+
+        [BsonElement("turnInit")]
+        public TurnResult turnInit { get; set; }
+        [BsonElement("turnResults")]
+        public List<TurnResult> turnResults { get; set; }
+        [BsonElement("waveResults")]
+        public List<WaveResult> waveResults { get; set; }
+        
+        public List<ZombieParameter> zp { get; set; }
+        public List<HordeParameters> hp { get; set; }
+        public Simulation(Parameters parameter, List<TurnResult> turnResults, List<WaveResult> waveResults)
+        {
+            this.parameter = parameter;
+            this.turnResults = turnResults;
+            this.waveResults = waveResults;
+        }
+        
+        public Simulation(Parameters param)
+        {
+            zp = new List<ZombieParameter>();
+            zp.AddRange(param.HordeParameters.Waves[0].ZombieParameters);
+
+            hp = new List<HordeParameters>();
+            hp.AddRange(param.HordeParameters);
+            this.parameter = param;
+            this.turnResults = new List<TurnResult>();
+            this.waveResults = new List<WaveResult>();
+        }
+
+        public void addTurnResult(SoldierState[] soldiers, HordeState horde,
+            int wallHealthPoints,int money)
+        {
+            this.turnResults.Add(new TurnResult(soldiers, horde, wallHealthPoints, money));
+
+        }
+
+        public void addWaveResult()
+        {
+            this.waveResults.Add(new WaveResult(turnInit, turnResults.ToArray()));
+        }
+
+        public void removeTurnResults()
+        {
+            this.turnResults.RemoveRange(0, this.turnResults.Count);
+        }
+
+        public void createInitTurn(SoldierState[] soldiers, HordeState horde,
+            int wallHealthPoints, int money)
+        {
+            this.turnInit = new TurnResult(soldiers, horde, wallHealthPoints, money);
+        }
+    }
+}

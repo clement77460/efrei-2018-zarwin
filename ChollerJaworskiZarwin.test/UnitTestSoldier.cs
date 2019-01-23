@@ -87,5 +87,36 @@ namespace CholletJaworskiZarwin.test
             s.Hurt(2);
             Assert.Equal(2, s.HealthPoints);
         }
+
+        [Fact]
+        public void SoldierCanOneShootOnlyIfSniperIsEquipped()
+        {
+            Soldier s = new Soldier();
+            Horde h = new Horde(1);
+            s.Sniping(h);
+
+            Assert.Equal(1, h.GetNumberWalkersAlive());
+
+            s.SetSniper();
+            s.Sniping(h);
+            
+            Assert.Equal(0, h.GetNumberWalkersAlive());
+        }
+
+        [Fact]
+        public void OverHealingThenHealingSoldier()
+        {
+            Soldier s = new Soldier();
+            s.HealMe(3);
+            Assert.Equal(4, s.HealthPoints);
+
+            s.Hurt(2);
+            s.HealMe(1);
+            Assert.Equal(3, s.HealthPoints);
+
+
+            s.HealMe(1);
+            Assert.Equal(4, s.HealthPoints);
+        }
     }
 }

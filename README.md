@@ -1,1 +1,5 @@
-efrei-2018-zarwin
+- Zarwin
+
+Projet de C# - EFREI
+Clément JAWORSKI
+Kilian CHOLLET
