@@ -45,7 +45,7 @@ namespace ApiZarwin.Model
             Game game = new Game(parameters, false);
             games.Add(game);
 
-            game.InitTurn();
+            Task.Run(() => game.InitTurn());
             return game;
         }
 
